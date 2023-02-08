@@ -13,10 +13,13 @@
     },
     mounted() {
       console.log(import.meta.env.VITE_PATH);
-      // const url = VITE_PATH;
-      // this.$http.get(url).then((res)=>{
-      //   console.log(res);
-      // })
+      console.log(import.meta.env.VITE_TEXT);
+      const url = import.meta.env.VITE_PATH;
+      this.$http.get(url).then((res)=>{
+        console.log(res);
+        this.data = res.data.results[0];
+        console.log(res.data);
+      });
     },
   }
 </script>
