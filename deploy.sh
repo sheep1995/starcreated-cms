@@ -1,12 +1,17 @@
 #!/usr/bin/env sh
+# 檢查有沒有 dist 資料夾，如果有的話，就移除
+DIR="./dist"
+if [ -d "$DIR" ]; then
+  yes | rm -r ./dist
+fi
 
 # 发生错误时终止
 set -e
 
-# 构建
+# 构建 產出靜態網站，即 dist 資料夾
 npm run build
 
-# 进入构建文件夹
+# 进入构建文件夹 進到 dist 資料夾
 cd dist
 
 # 放置 .nojekyll 以绕过 Jekyll 的处理。
