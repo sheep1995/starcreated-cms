@@ -1,27 +1,29 @@
 <template>
-  <div class="about">
+  <div class="about col-12">
     <h1>This is an about page</h1>
+  </div>
+  <div class="col-12">
     {{ data }}
   </div>
 </template>
 <script>
-  export default {
-    data() {
-      return {
-        data: {},
-      };
-    },
-    mounted() {
-      console.log(import.meta.env.VITE_PATH);
-      console.log(import.meta.env.VITE_TEXT);
-      const url = import.meta.env.VITE_PATH;
-      this.$http.get(url).then((res)=>{
-        console.log(res);
-        this.data = res.data.results[0];
-        console.log(res.data);
-      });
-    },
-  }
+export default {
+  data() {
+    return {
+      data: {},
+    };
+  },
+  mounted() {
+    console.log(import.meta.env.VITE_PATH);
+    console.log(import.meta.env.VITE_TEXT);
+    const url = import.meta.env.VITE_PATH;
+    this.$http.get(url).then((res) => {
+      console.log(res);
+      this.data = res.data.results[0];
+      console.log(res.data);
+    });
+  },
+};
 </script>
 <style>
 @media (min-width: 1024px) {
