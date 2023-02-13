@@ -25,7 +25,7 @@ import SidebarMenu from "../components/SidebarMenu.vue";
               <div class="col-md-6">
                 <h2 class="text-light text-center mb-4">登入</h2>
                 <!-- login form -->
-                <form class="fs-6">
+                <form class="fs-6" @submit.prevent="login">
                   <div class="mb-3">
                     <label
                       for="exampleInputEmail1"
@@ -65,9 +65,10 @@ import SidebarMenu from "../components/SidebarMenu.vue";
                     >
                   </div>
                   <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary text-light">
+                    <!-- <button type="submit" class="btn btn-primary text-light">
                       登入
-                    </button>
+                    </button> -->
+                    <a href="./"  class="btn btn-primary text-light">登入</a>
                   </div>
                   <!--  -->
                   <!-- <h5>Validation Message</h5>
@@ -132,6 +133,20 @@ export default {
         username: "Maëlyne Roux", //假姓名
       },
     };
+  },
+  methods: {
+    login(){
+      const api = ' ';
+      axios.post(api, this.user).then((response) => {
+        const { token, expired } = response.data;
+        // 寫入 cookie token
+        // expires 設置有效時間
+        document.cookie = `hexToken=${token};expires=${new Date(expired)}; path=/`;
+        this.$router.push("/");
+      }).catch((err) => {
+        alert(err.response.data.message);
+      });
+    }
   },
   mounted() {
     // console.log(import.meta.env.VITE_PATH);
