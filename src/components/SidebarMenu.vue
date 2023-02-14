@@ -3,7 +3,7 @@
   <!-- <nav class="header bg-dark d-flex justify-content-center;" style="z-index: 999">
     <img class="position-fixed" src="@/assets/images/logo.svg" alt="logo" />
   </nav> -->
-  <section class="fs-6">
+  <section class="fs-6 fixed-top">
     <!-- <sidebar-menu :menu="menu" />  -->
     <sidebar-menu :menu="menu">
       <!-- <div> -->
@@ -58,7 +58,7 @@ export default {
           },
         },
         {
-          href: "#",
+          href: "/staff",
           title: "人員管理",
           icon: {
             //adjust element
@@ -67,11 +67,11 @@ export default {
           },
           child: [
             {
-              href: "/charts/sublink",
+              href: "/staff-add",
               title: "新增人員",
             },
             {
-              href: "/charts/sublink",
+              href: "/staff-permissions",
               title: "權限管理",
             },
           ],
