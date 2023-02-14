@@ -1,4 +1,10 @@
-.header{
-    height: 60px;
-    max-width: 290px;
+.header {
+  height: 60px;
+  max-width: 290px;
+
+  a {
+    &:hover {
+      color: $primary;
+    }
+  }
 }

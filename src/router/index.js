@@ -32,11 +32,35 @@ const router = createRouter({
       name: "login",
       component: () => import("../views/LoginView.vue"),
     },
+    //
     {
-      path: "/staff",
-      name: "staff",
-      component: () => import("../views/StaffView.vue"),
+      path: '/staff',
+      name: "Staff",
+      component: () => import('../views/staff/StaffView.vue'),
+      // children: [
+      //   {
+      //     path: 'add',
+      //     name: "Add",
+      //     component: () => import('../views/staff/StaffAddView.vue'),
+      //   },
+      //   {
+      //     path: 'permissions',
+      //     name: 'Permissions',
+      //     component: () => import('../views/staff/StaffPermissionsView.vue'),
+      //   },
+      // ],
     },
+    {
+      path: '/staff-add',
+      name: "Add",
+      component: () => import('../views/staff/StaffAddView.vue'),
+    },
+    {
+      path: '/staff-permissions',
+      name: 'Permissions',
+      component: () => import('../views/staff/StaffPermissionsView.vue'),
+    },
+    //
   ],
 });
 
