@@ -60,7 +60,32 @@ const router = createRouter({
       name: 'Permissions',
       component: () => import('../views/staff/StaffPermissionsView.vue'),
     },
-    //
+    //member
+    {
+      path: '/member',
+      name: "Member",
+      component: () => import('../views/member/MemberView.vue'),
+    },
+    {
+      path: '/member-info',
+      name: 'MemberInfo',
+      component: () => import('../views/member/MemberInfoView.vue'),
+    },
+    {
+      path: '/member-cash',
+      name: "MemberCash",
+      component: () => import('../views/member/MemberCashView.vue'),
+    },
+    {
+      path: '/member-creator-income',
+      name: 'MemberCreatorIncome',
+      component: () => import('../views/member/CreatorIncomeView.vue'),
+    },
+    {
+      path: '/member-check-id',
+      name: 'MemberCheckId',
+      component: () => import('../views/member/CheckIdView.vue'),
+    },
   ],
 });
 

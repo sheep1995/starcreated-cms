@@ -23,7 +23,7 @@ import TopHeader from "@/components/TopHeader.vue";
           </nav>
           <!--  -->
           <div>
-            <h2 class="text-primary mt-4">新增人員</h2>
+            <h2 class="text-primary mt-4 fs-3 fw-bold">新增人員</h2>
           </div>
           <!--  -->
         </section>

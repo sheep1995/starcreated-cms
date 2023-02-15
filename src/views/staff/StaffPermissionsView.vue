@@ -24,7 +24,7 @@ import TopHeader from "@/components/TopHeader.vue";
           </nav>
           <!--  -->
           <div>
-            <h2 class="text-primary mt-4 mb-4 fs-4 fw-bold">權限管理</h2>
+            <h2 class="text-primary mt-4 mb-4 fs-3 fw-bold">權限管理</h2>
           </div>
           <!--  -->
         </section>
@@ -33,7 +33,7 @@ import TopHeader from "@/components/TopHeader.vue";
         <section class="container">
           <!--tab -->
           <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-            <p class="me-2 mt-2">選擇群組類型</p>
+            <p class="me-2 mt-2 fw-bold">選擇群組類型</p>
             <li class="nav-item" role="presentation">
               <button
                 class="nav-link active border-1"
@@ -113,7 +113,7 @@ import TopHeader from "@/components/TopHeader.vue";
                         <div class="d-flex">
                           <label
                             for="inputCity"
-                            class="mt-2 col-auto form-label"
+                            class="mt-2 col-auto form-label fw-bold"
                             >身份</label
                           >
                           <select
@@ -383,7 +383,7 @@ import TopHeader from "@/components/TopHeader.vue";
                         <div class="d-flex">
                           <label
                             for="exampleInputEmail1"
-                            class="col-auto me-2 mt-2 form-label"
+                            class="col-auto me-2 mt-2 form-label fw-bold"
                             >帳號</label
                           >
                           <input
@@ -407,7 +407,12 @@ import TopHeader from "@/components/TopHeader.vue";
                         </button>
                       </div>
                       <hr />
-
+                      <!--  -->
+                      <div>
+                        <h2 class="text-dark mt-4 fs-5 fw-bold">
+                          搜尋結果
+                        </h2>
+                      </div>
                       <!--  -->
                       <div class="row card-group">
                         <div class="col-md-12 mb-4">

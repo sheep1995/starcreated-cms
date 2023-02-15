@@ -14,17 +14,16 @@ import TopHeader from "@/components/TopHeader.vue";
         <!-- <RouterView /> -->
         <section class="container">
           <TopHeader />
-      
           <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
             <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
               <li class="breadcrumb-item"><a href="#">首頁</a></li>
-              <li class="breadcrumb-item active" aria-current="page">通知紀錄</li>
+              <li class="breadcrumb-item active" aria-current="page">人員管理</li>
             </ol>
           </nav>
           <!--  -->
           <div>
-            <h2 class="text-primary mt-4">
-              <span><i class="bi bi-people-fill fs-4 text-secondary"></i></span>
+            <h2 class="text-primary mt-4 fs-3 fw-bold">
+              <span><i class="bi bi-people-fill fs-3 text-secondary"></i></span>
               人員管理
             </h2>
           </div>
@@ -289,7 +288,7 @@ import TopHeader from "@/components/TopHeader.vue";
           <!--  -->
           <div class="col-12">
             <div class="d-flex justify-content-center">
-              <button type="submit" class="btn btn-primary text-light">
+              <button type="submit" class="btn btn-primary text-light" data-bs-dismiss="modal">
                 確認資料
               </button>
             </div>

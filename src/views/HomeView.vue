@@ -26,16 +26,21 @@ import SidebarMenu2 from "@/components/SidebarMenu2.vue";
             Hi, BOSS 歡迎回來 ~ 您有 10 封訊息未讀!
           </div>
           <!--  -->
+          <!--  -->
           <div>
-            <h2 class="text-primary">
-              <span
-                ><img
-                  src="../assets/images/icon-card-list-color.svg"
-                  alt="icon-card-list-color"
-              /></span>
+            <h2 class="text-primary mt-4 fs-3 fw-bold">
+              <span>
+                <span
+                  ><img
+                    class="fs-3"
+                    src="../assets/images/icon-card-list-color.svg"
+                    alt="icon-card-list-color"
+                /></span>
+              </span>
               代辦清單
             </h2>
           </div>
+          <!--  -->
           <!--  -->
           <div class="row card-group">
             <div class="col-md-6 mb-4">
