@@ -314,16 +314,8 @@ import TopHeader from "@/components/TopHeader.vue";
                         <button
                           type="button"
                           class="btn btn-primary text-white mx-2"
-                          data-bs-dismiss="modal"
                         >
-                          確認新增
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-danger"
-                          data-bs-dismiss="modal"
-                        >
-                          <i class="bi bi-trash-fill"></i> 刪除
+                          儲存
                         </button>
                       </div>
                       <!--  -->
@@ -621,16 +613,8 @@ import TopHeader from "@/components/TopHeader.vue";
                         <button
                           type="button"
                           class="btn btn-primary text-white mx-2"
-                          data-bs-dismiss="modal"
                         >
-                          確認新增
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-danger"
-                          data-bs-dismiss="modal"
-                        >
-                          <i class="bi bi-trash-fill"></i> 刪除
+                        儲存
                         </button>
                       </div>
                       <!--  -->

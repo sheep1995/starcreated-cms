@@ -67,6 +67,12 @@ const router = createRouter({
       component: () => import('../views/member/MemberView.vue'),
     },
     {
+      path: '/member-control',
+      name: "MemberControl",
+      component: () => import('../views/member/MemberControlView.vue'),
+    },
+    //MemberControlView.vue
+    {
       path: '/member-info',
       name: 'MemberInfo',
       component: () => import('../views/member/MemberInfoView.vue'),

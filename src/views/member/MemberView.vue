@@ -44,7 +44,7 @@ import TopHeader from "@/components/TopHeader.vue";
                   border border-1
                   rounded-4
                   pt-4
-                  pb-4
+                  pb-4 pb-lg-0
                   flex-column flex-lg-row
                 "
               >
@@ -88,14 +88,14 @@ import TopHeader from "@/components/TopHeader.vue";
           </div>
           <!--  -->
           <div class="table-responsive">
-            <table class="table table-bordered align-middle">
+            <table class="table table-bordered align-middle star-table">
               <thead class="table-primary">
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">星行號</th>
                   <th scope="col">暱稱</th>
-                  <th scope="col">頭像</th>
-                  <th scope="col">背景圖</th>
+                  <th scope="col" class="text-center">頭像</th>
+                  <th scope="col" class="text-center">背景圖</th>
                   <th scope="col">帳號</th>
                   <th scope="col">實名認證</th>
                   <th scope="col">操作</th>
@@ -107,21 +107,73 @@ import TopHeader from "@/components/TopHeader.vue";
                   <th scope="row">1</th>
                   <td>4543413131</td>
                   <td>Mark</td>
-                  <td>img</td>
-                  <td>img</td>
+                  <td>
+                    <div class="d-flex justify-content-center">
+                      <img class="rounded-circle img-user" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="img-user" />
+                  </div>
+                    </td>
+                  <td>
+                    <div class="d-flex justify-content-center">
+                      <img class="img-user-bg" src="https://images.unsplash.com/photo-1587713714775-fa70364f6445?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=782&q=80" alt="img-user-bg">
+                    </div>
+                  </td>
                   <td>123@gmail.com</td>
                   <td>未認證</td>
                   <td>
-                    <button
-                      type="button"
-                      class="btn btn-info text-white me-2"
-                      data-bs-toggle="modal"
-                      data-bs-target="#editModal"
-                    >
-                      <i class="bi bi-person-gear"></i> 管理
-                    </button>
+                    <!-- member-control -->
+                    <router-link to="/member-control" class="btn btn-info text-light">
+                      <i class="bi bi-person-gear"></i> 管理</router-link>
+
                   </td>
                   <td>fb</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>4543413131</td>
+                  <td>Meow</td>
+                  <td>
+                    <div class="d-flex justify-content-center">
+                      <img class="rounded-circle img-user" src="http://placekitten.com/200/300" alt="img-user" />
+                  </div>
+                    </td>
+                  <td>
+                    <div class="d-flex justify-content-center">
+                      <img class="img-user-bg" src="https://images.unsplash.com/photo-1587713714775-fa70364f6445?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=782&q=80" alt="img-user-bg">
+                    </div>
+                  </td>
+                  <td>123@gmail.com</td>
+                  <td>未認證</td>
+                  <td>
+                    <!-- member-control -->
+                    <router-link to="/member-control" class="btn btn-info text-light">
+                      <i class="bi bi-person-gear"></i> 管理</router-link>
+
+                  </td>
+                  <td>apple</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>4543413131</td>
+                  <td>Woof</td>
+                  <td>
+                    <div class="d-flex justify-content-center">
+                      <img class="rounded-circle img-user" src="https://images.dog.ceo/breeds/pitbull/20190710_143021.jpg" alt="img-user" />
+                  </div>
+                    </td>
+                  <td>
+                    <div class="d-flex justify-content-center">
+                      <img class="img-user-bg" src="https://images.unsplash.com/photo-1587713714775-fa70364f6445?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=782&q=80" alt="img-user-bg">
+                    </div>
+                  </td>
+                  <td>123@gmail.com</td>
+                  <td>未認證</td>
+                  <td>
+                    <!-- member-control -->
+                    <router-link to="/member-control" class="btn btn-info text-light">
+                      <i class="bi bi-person-gear"></i> 管理</router-link>
+
+                  </td>
+                  <td>IG</td>
                 </tr>
               </tbody>
             </table>

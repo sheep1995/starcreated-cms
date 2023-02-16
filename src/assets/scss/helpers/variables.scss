@@ -40,13 +40,14 @@ $blue:    #0d6efd !default;
 $indigo:  #6610f2 !default;
 $purple:  #6f42c1 !default;
 $pink:    #d63384 !default;
-$red:     #dc3545 !default;
+$red:     #dc3545 !default;//DE4141
 $orange:  #DC9722 !default; //#fd7e14
 $orange-800:  #EFAB39 !default; //add
 $yellow:  #FEFFC2 !default; //#ffc107
 $yellow-400:  #F9C644 !default;
 $yellow-200:  #FDF2DD !default;//add
-$green:   #198754 !default;
+//$green:   #198754 !default;
+$green:   #98FACC !default;
 $teal:    #20c997 !default;
 $cyan:    #789FEA !default;
 //$cyan:    #0dcaf0 !default;
@@ -75,7 +76,8 @@ $colors: (
 
 // scss-docs-start theme-color-variables
 $primary:       #B962FD !default; // $blue !default;
-$secondary:     #05E4BC !default; //$gray-600 !default;
+$secondary-400:     #05E4BC !default; //$gray-600 !default;
+$secondary:     #09C7A5 !default; //$gray-600 !default;
 $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
@@ -740,7 +742,7 @@ $input-focus-color:                     $input-color !default;
 $input-focus-width:                     $input-btn-focus-width !default;
 $input-focus-box-shadow:                $input-btn-focus-box-shadow !default;
 
-$input-placeholder-color:               $gray-600 !default;
+$input-placeholder-color:               $gray-500 !default; //$gray-600
 $input-plaintext-color:                 $body-color !default;
 
 $input-height-border:                   $input-border-width * 2 !default;

@@ -4,7 +4,6 @@
 import SidebarMenu2 from "../components/SidebarMenu2.vue";
 import { RouterLink, RouterView } from "vue-router";
 import TopHeader from "@/components/TopHeader.vue";
-
 </script>
 <template>
   <div class="container-fluid">
@@ -15,8 +14,8 @@ import TopHeader from "@/components/TopHeader.vue";
       <div class="col py-3">
         <!-- <RouterView /> -->
         <section class="container">
-          <TopHeader/>
-      
+          <TopHeader />
+
           <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
             <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
               <li class="breadcrumb-item"><a href="#">首頁</a></li>
@@ -43,7 +42,9 @@ import TopHeader from "@/components/TopHeader.vue";
                 <!-- login form -->
                 <form class="row fs-6 p-4 border border-0 shadow rounded-4">
                   <div class="col-md-6 mb-3">
-                    <label for="exampleInputEmail1" class="form-label">姓名</label>
+                    <label for="exampleInputEmail1" class="form-label"
+                      >姓名</label
+                    >
                     <input
                       type="email"
                       class="form-control"
@@ -54,7 +55,9 @@ import TopHeader from "@/components/TopHeader.vue";
                     <!-- <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div> -->
                   </div>
                   <div class="col-md-6 mb-3">
-                    <label for="exampleInputEmail1" class="form-label">帳號</label>
+                    <label for="exampleInputEmail1" class="form-label"
+                      >帳號</label
+                    >
                     <input
                       type="email"
                       class="form-control"
@@ -66,7 +69,9 @@ import TopHeader from "@/components/TopHeader.vue";
                   </div>
                   <!--  -->
                   <div class="col-md-6 mb-2">
-                    <label for="exampleInputPassword1" class="form-label">密碼</label>
+                    <label for="exampleInputPassword1" class="form-label"
+                      >密碼</label
+                    >
                     <input
                       type="password"
                       class="form-control"
@@ -77,13 +82,16 @@ import TopHeader from "@/components/TopHeader.vue";
                   <!--  -->
                   <div class="col-md-6 mb-2">
                     <label for="form-select" class="form-label">身份</label>
-                    <select class="form-select" aria-label="Default select example">
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                    >
                       <option selected>選擇身份</option>
                       <option value="1">最高管理員</option>
                       <option value="2">行銷人員</option>
                       <option value="3">開發人員</option>
                     </select>
-      
+
                     <!-- <label for="exampleInputPassword1" class="form-label">身份</label>
                     <input
                       type="password"
@@ -100,19 +108,18 @@ import TopHeader from "@/components/TopHeader.vue";
                       </div> -->
                   <!--  -->
                 </form>
-                            <!--  -->
-                            <div class="col-12 mt-4">
-                              <div class="d-flex justify-content-center">
-                                <button type="submit" class="me-4 btn btn-primary text-light">
-                                  返回
-                                </button>
-                                <button type="submit" class="btn btn-primary text-light">
-                                  儲存
-                                </button>
-                              </div>
-                            </div>
-      
-                            <!--  -->
+                <!--  -->
+                <div class="col-12 mt-4">
+                  <div class="d-flex justify-content-center">
+                    <button type="submit" class="me-4 btn btn-light text-dark">
+                      返回
+                    </button>
+                    <button type="submit" class="btn btn-primary text-light">
+                      儲存
+                    </button>
+                  </div>
+                </div>
+                <!--  -->
               </div>
             </div>
           </div>

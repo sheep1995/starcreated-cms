@@ -12,7 +12,8 @@
       "
     >
     <router-link to="/" class="nav-link px-0 align-middle text-light">
-      <img class=" " src="@/assets/images/logo.svg" alt="logo" />
+      <img class="w-25" src="@/assets/images/icon-logo.svg" alt="icon logo" />
+      <img class="ms-2" src="@/assets/images/logo.svg" alt="logo" />
     </router-link>
       <ul
         class="

@@ -37,12 +37,11 @@ import TopHeader from "@/components/TopHeader.vue";
                 <!-- login form -->
                 <form class="row fs-6 mt-4">
                   <div class="col-md-6 mb-3 text-start">
-                    <label for="exampleInputEmail1" class="form-label">姓名</label>
+                    <label for="exampleInputName" class="form-label">姓名</label>
                     <input
-                      type="email"
+                      type="name"
                       class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
+                      id="exampleInputName"
                       placeholder="王曉明"
                     />
                     <!-- <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div> -->
@@ -81,7 +80,7 @@ import TopHeader from "@/components/TopHeader.vue";
                   <!--  -->
                   <div class="col-12 mt-4">
                     <div class="d-flex justify-content-center">
-                      <button type="submit" class="btn btn-primary text-light">
+                      <button type="button" class="btn btn-primary text-light">
                         確認新增
                       </button>
                     </div>

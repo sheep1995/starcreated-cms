@@ -3,7 +3,9 @@
 //import Header from "../components/Header.vue";
 import { RouterLink, RouterView } from "vue-router";
 import TopHeader from "@/components/TopHeader.vue";
+import SidebarMenu3 from "@/components/SidebarMenu3.vue";
 import SidebarMenu2 from "@/components/SidebarMenu2.vue";
+import Menu from 'primevue/menu';
 </script>
 <template>
   <div class="container-fluid">
@@ -15,14 +17,8 @@ import SidebarMenu2 from "@/components/SidebarMenu2.vue";
         <!-- <RouterView /> -->
         <section class="container">
           <TopHeader />
-          <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
-            <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
-              <li class="breadcrumb-item"><a href="#">首頁</a></li>
-              <!-- <li class="breadcrumb-item active" aria-current="page">通知紀錄</li> -->
-            </ol>
-          </nav>
           <!--  -->
-          <div class="alert bg-warning mt-4 mb-4 text-dark" role="alert">
+          <div class="alert bg-success mt-4 mb-4 text-dark fw-bold" role="alert">
             Hi, BOSS 歡迎回來 ~ 您有 10 封訊息未讀!
           </div>
           <!--  -->
@@ -99,10 +95,10 @@ import SidebarMenu2 from "@/components/SidebarMenu2.vue";
                     實名認證
                   </h5>
                   <ul class="">
-                    <li class="">
+                    <li class="mb-1">
                       待審核: <span class="text-primary">10</span>
                     </li>
-                    <li class="">
+                    <li class="mb-1">
                       認證失敗: <span class="text-primary">9</span>
                     </li>
                   </ul>
@@ -156,13 +152,13 @@ import SidebarMenu2 from "@/components/SidebarMenu2.vue";
                     提領狀態
                   </h5>
                   <ul class="">
-                    <li class="">
+                    <li class="mb-1">
                       審核中: <span class="text-primary">10</span>
                     </li>
-                    <li class="">
+                    <li class="mb-1">
                       處理中: <span class="text-primary">9</span>
                     </li>
-                    <li class="">
+                    <li class="mb-1">
                       審核失敗: <span class="text-primary">9</span>
                     </li>
                   </ul>
@@ -178,3 +174,37 @@ import SidebarMenu2 from "@/components/SidebarMenu2.vue";
     </div>
   </div>
 </template>
+<script>
+export default {
+	data() {
+		return {
+			items: [
+				{
+					label: 'Update',
+					icon: 'pi pi-refresh',
+					command: () => {
+						this.$toast.add({severity:'success', summary:'Updated', detail:'Data Updated', life: 3000});
+					}
+				},
+				{
+					label: 'Delete',
+					icon: 'pi pi-times',
+					command: () => {
+						this.$toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000});
+					}
+				},
+				{
+					label: 'Vue Website',
+					icon: 'pi pi-external-link',
+					url: 'https://vuejs.org/'
+				},
+				{
+                    label: 'Router',
+                    icon: 'pi pi-upload',
+                    to: '/fileupload'
+                }
+			]
+		}
+	}
+}
+</script>
