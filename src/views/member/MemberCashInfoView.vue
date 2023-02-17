@@ -149,7 +149,7 @@ import TopHeader from "@/components/TopHeader.vue";
                       <!-- btn -->
                       <router-link
                         v-if="item.cashState === '審核中'"
-                        to="/member-cash-info"
+                        to="/"
                         :id="item.cashId"
                         class="btn btn-info text-light mb-2"
                       >
@@ -157,7 +157,7 @@ import TopHeader from "@/components/TopHeader.vue";
                       </router-link>
                       <router-link
                         v-else-if="item.cashState === '處理中'"
-                        to="/member-cash-info"
+                        to="/staff"
                         :id="item.cashId"
                         class="btn btn-info text-light mb-2"
                       >
@@ -165,7 +165,7 @@ import TopHeader from "@/components/TopHeader.vue";
                       </router-link>
                       <router-link
                         v-else-if="item.cashState === '提領成功'"
-                        to="/member-cash-info"
+                        to="/staff"
                         :id="item.cashId"
                         class="btn btn-info text-light mb-2"
                       >
@@ -173,7 +173,7 @@ import TopHeader from "@/components/TopHeader.vue";
                       </router-link>
                       <router-link
                         v-else-if="item.cashState === '提領失敗'"
-                        to="/member-cash-info"
+                        to="/staff"
                         :id="item.cashId"
                         class="btn btn-info text-light mb-2"
                       >

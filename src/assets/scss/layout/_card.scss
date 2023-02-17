@@ -5,3 +5,27 @@
     object-fit: cover;
   }
 }
+.post-content{
+  .img-post{
+    width: 230px;
+    height: 230px;
+    object-fit: cover;
+  }
+}
+.member-info{
+  .card-body {
+    &:hover, &:focus, &:active{
+      background-color: $primary-400;
+      color: $light;
+      .card-title, .card-text{
+        color: $light;
+      }
+    }
+    .card-title{
+      color: $gray-900;
+    }
+    .card-text{
+      color: $primary;
+    }
+  }
+}

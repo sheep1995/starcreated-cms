@@ -32,8 +32,7 @@ import TopHeader from "@/components/TopHeader.vue";
             <div class="d-flex justify-content-between">
               <h4 class="fs-5">帳號列表</h4>
               <router-link to="/staff-add" class="btn btn-secondary text-light"
-                ><i class="bi bi-person-fill-add"></i> 新增人員</router-link
-              >
+                ><i class="bi bi-person-fill-add"></i> 新增人員</router-link>
             </div>
           </div>
           <!--  -->

@@ -83,6 +83,11 @@ const router = createRouter({
       component: () => import('../views/member/MemberCashView.vue'),
     },
     {
+      path: '/member-cash-info',
+      name: 'MemberCashInfo',
+      component: () => import('../views/member/MemberCashInfoView.vue'),
+    },
+    {
       path: '/member-creator-income',
       name: 'MemberCreatorIncome',
       component: () => import('../views/member/CreatorIncomeView.vue'),
@@ -91,6 +96,21 @@ const router = createRouter({
       path: '/member-check-id',
       name: 'MemberCheckId',
       component: () => import('../views/member/CheckIdView.vue'),
+    },
+    {
+      path: '/member-fans-list',
+      name: "MemberFansList",
+      component: () => import('../views/member/MemberFansListView.vue'),
+    },
+    {
+      path: '/member-order-list',
+      name: "MemberOrderList",
+      component: () => import('../views/member/MemberOrderListView.vue'),
+    },
+    {
+      path: '/member-block-list',
+      name: "MemberBlockList",
+      component: () => import('../views/member/MemberBlockListView.vue'),
     },
   ],
 });
