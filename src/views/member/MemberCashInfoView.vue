@@ -28,8 +28,24 @@ import TopHeader from "@/components/TopHeader.vue";
           </div>
           <!--  -->
           <!--  -->
-          <div>
-            <h2 class="text-primary mt-4 fs-5 fw-bold">搜尋會員</h2>
+          <div
+            class="alert bg-success mt-4 mb-4 text-dark fw-medium"
+            role="alert"
+          >
+            <p>
+              *需累計達<span class="text-danger">NT$500</span
+              >可提領狀態，最高提領金額為<span class="text-danger"
+                >NT$19,999</span
+              >
+            </p>
+            <p>
+              *限<span class="text-danger">7</span>天提領1次，提領後於<span
+                class="text-danger"
+                >5</span
+              >個工作天內入帳
+            </p>
+            <p>*僅提供中國信託商業銀行帳戶免手續費，其他銀行將收取15元手續費</p>
+            <p class="text-danger">*提領認證須年滿16歲!</p>
           </div>
           <!--  -->
           <div class="mb-4">
@@ -47,16 +63,35 @@ import TopHeader from "@/components/TopHeader.vue";
                 <div class="col-12 col-lg-4 mb-2">
                   <div class="d-flex">
                     <label
+                      for="userName"
+                      class="col-auto col-form-label me-2 ms-1"
+                      >暱稱</label
+                    >
+                    <input
+                      type="text"
+                      id="userName"
+                      class="form-control"
+                      aria-describedby="passwordHelpInline"
+                      value="王曉明"
+                      disabled
+                    />
+                  </div>
+                </div>
+                <!--  -->
+                <div class="col-12 col-lg-4 mb-2">
+                  <div class="d-flex">
+                    <label
                       for="starNumber"
                       class="col-auto col-form-label me-2 ms-1"
                       >星行號</label
                     >
                     <input
-                      type="password"
+                      type="text"
                       id="starNumber"
                       class="form-control"
                       aria-describedby="passwordHelpInline"
-                      placeholder="1234567890"
+                      value="1234567890"
+                      disabled
                     />
                   </div>
                 </div>
@@ -66,30 +101,19 @@ import TopHeader from "@/components/TopHeader.vue";
                     <label
                       for="specificSizeSelect"
                       class="col-auto col-form-label me-2 ms-1"
-                      >提領狀態</label
+                      >實名認證</label
                     >
-                    <select class="form-select" id="specificSizeSelect">
-                      <option selected>選擇類型</option>
-                      <option value="待提領">待提領</option>
-                      <option value="提領成功">提領成功</option>
-                      <option value="處理中">處理中</option>
-                      <option value="提領失敗">提領失敗</option>
-                      <option value="待審核">待審核</option>
+                    <select
+                      class="form-select"
+                      id="specificSizeSelect"
+                      disabled
+                    >
+                      <option value="已認證">已認證</option>
+                      <option value="未認證">未認證</option>
                     </select>
                   </div>
                 </div>
               </div>
-              <!-- btn -->
-              <div class="col-12 d-flex justify-content-center mb-4">
-                <button
-                  type="button"
-                  class="btn btn-primary text-white mx-2"
-                  data-bs-dismiss="modal"
-                >
-                  搜尋
-                </button>
-              </div>
-              <!--  -->
             </form>
           </div>
           <!--  -->
@@ -98,29 +122,7 @@ import TopHeader from "@/components/TopHeader.vue";
             <!--  -->
             <div class="d-flex justify-content-between align-items-center mb-2">
               <div>
-                <h2 class="text-primary mt-4 fs-5 fw-bold">提領狀態</h2>
-              </div>
-              <div class="d-flex align-items-center;">
-                <div class="row g-3 align-items-center">
-                  <div class="col-auto">
-                    <label for="inputType" class="col-form-label"
-                      >提領狀態</label
-                    >
-                  </div>
-                  <div class="col-auto">
-                    <select
-                      class="form-select"
-                      aria-label="Default select example"
-                    >
-                      <!-- <option selected>提領狀態</option> -->
-                      <option value="所有類型">所有類型</option>
-                      <option value="審核中">審核中</option>
-                      <option value="處理中">處理中</option>
-                      <option value="提領成功">提領成功</option>
-                      <option value="提領失敗">提領失敗</option>
-                    </select>
-                  </div>
-                </div>
+                <h2 class="text-secondary mt-4 fs-5 fw-bold">訂單確認</h2>
               </div>
             </div>
             <!--  -->
@@ -128,82 +130,105 @@ import TopHeader from "@/components/TopHeader.vue";
               <table class="table table-bordered align-middle">
                 <thead class="table-primary">
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">申請日期</th>
-                    <th scope="col">星行號</th>
-                    <th scope="col">提領金額</th>
-                    <th scope="col">提領狀態</th>
                     <th scope="col">提領單號</th>
-                    <th scope="col">狀態</th>
+                    <th scope="col">申請日期</th>
+                    <th scope="col">提領人</th>
+                    <th scope="col">提領金額</th>
+                    <th scope="col">手續費</th>
+                    <th scope="col">實際可提領金額</th>
                   </tr>
                 </thead>
                 <tbody class="table-group-divider">
-                  <tr v-for="(item, index) in cashList" :key="index">
-                    <th scope="row">{{ item.id }}</th>
-                    <td>{{ item.date }}</td>
-                    <td>{{ item.starNumber }}</td>
-                    <td>{{ item.cashMoney }}</td>
-                    <td>{{ item.cashState }}</td>
+                  <tr v-for="(item, index) in cashListCheck" :key="index">
                     <td>{{ item.cashId }}</td>
+                    <td>{{ item.date }}</td>
+                    <td>{{ item.cashUser }}</td>
+                    <td>{{ item.cashMoney }}</td>
+                    <td>{{ item.cashMoneyFee }}</td>
                     <td>
-                      <!-- btn -->
-                      <router-link
-                        v-if="item.cashState === '審核中'"
-                        to="/"
-                        :id="item.cashId"
-                        class="btn btn-info text-light mb-2"
-                      >
-                        <i class="bi bi-eye-fill"></i> 檢視
-                      </router-link>
-                      <router-link
-                        v-else-if="item.cashState === '處理中'"
-                        to="/staff"
-                        :id="item.cashId"
-                        class="btn btn-info text-light mb-2"
-                      >
-                        <i class="bi bi-eye-fill"></i> 檢視
-                      </router-link>
-                      <router-link
-                        v-else-if="item.cashState === '提領成功'"
-                        to="/staff"
-                        :id="item.cashId"
-                        class="btn btn-info text-light mb-2"
-                      >
-                        <i class="bi bi-eye-fill"></i> 檢視
-                      </router-link>
-                      <router-link
-                        v-else-if="item.cashState === '提領失敗'"
-                        to="/staff"
-                        :id="item.cashId"
-                        class="btn btn-info text-light mb-2"
-                      >
-                        <i class="bi bi-eye-fill"></i> 檢視
-                      </router-link>
-                      <!-- btn end  -->
+                      {{ item.cashMoney - item.cashMoneyFee }}
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <!-- pagination  -->
-            <nav aria-label=" ">
-              <ul class="pagination d-flex justify-content-center">
-                <li class="page-item disabled">
-                  <span class="page-link">Previous</span>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active" aria-current="page">
-                  <span class="page-link">2</span>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#">Next</a>
-                </li>
-              </ul>
-            </nav>
-            <!-- pagination  -->
+            <!--  -->
+            <!--  -->
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <h2 class="text-primary mt-4 fs-6 fw-bold">提領資訊</h2>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered align-middle">
+                <thead class="table-primary">
+                  <tr>
+                    <th scope="col">銀行代號</th>
+                    <th scope="col">提領銀行</th>
+                    <th scope="col">提領帳號</th>
+                  </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                  <tr v-for="(item, index) in cashListCheck" :key="index">
+                    <td>{{ item.bankNum }}</td>
+                    <td>{{ item.bankName }}</td>
+                    <td>{{ item.bankId }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!--  -->
           </div>
           <!--  -->
+          <div class="col-12 mt-4">
+            <div v-if="cashState === '審核中'" class="d-flex justify-content-center flex-column flex-lg-row">
+              <button
+                type="button"
+                class="btn btn-primary text-light mb-2 me-2"
+                data-bs-toggle="modal"
+                data-bs-target="#viewTaskModal"
+              >
+                審核通過</button
+              ><button
+                type="button"
+                class="btn btn-danger mb-2"
+                data-bs-toggle="modal"
+                data-bs-target="#delModal"
+              >
+                未通過
+              </button>
+            </div>
+            <!--  -->
+            <div v-else-if="cashState === '處理中'" class="d-flex justify-content-center flex-column flex-lg-row">
+              <button
+                type="button"
+                class="btn btn-primary text-light mb-2 me-2"
+                data-bs-toggle="modal"
+                data-bs-target="#viewTaskModal"
+              >
+                確定轉帳</button
+              ><button
+                type="button"
+                class="btn btn-danger mb-2"
+                data-bs-toggle="modal"
+                data-bs-target="#delModal"
+              >
+                轉帳失敗
+              </button>
+            </div>
+            <!--  -->
+            <!--  -->
+            <div v-else-if="cashState === '提領成功' || cashState === '提領失敗'" class="d-flex justify-content-center flex-column flex-lg-row">
+              <button
+                type="button"
+                class="btn btn-primary text-light mb-2 me-2"
+                data-bs-toggle="modal"
+                data-bs-target="#viewTaskModal"
+              >
+                返回</button>
+            </div>
+            <!--  -->
+          </div>
           <!--  -->
         </section>
         <!--  -->
@@ -212,51 +237,71 @@ import TopHeader from "@/components/TopHeader.vue";
     </div>
   </div>
   <!--  -->
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="delModal"
+    tabindex="-1"
+    aria-labelledby="delModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="delModalLabel">審核失敗</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body text-center">
+          <p>訂單不成立</p>
+          <p>請重新確認資料是否正確!</p>
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+            取消
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary text-white"
+            data-bs-dismiss="modal"
+          >
+            確認
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  -->
+  <!--  -->
 </template>
 <script>
+import MemberCashView from "@/views/member/MemberCashView.vue";
 export default {
   data() {
     return {
       products: null,
-      cashList: [
+      cashListCheck: [
         {
-          id: "1",
+          cashId: "ADFJLJ132464",
           date: "2023/01/01",
-          starNumber: "4543413131",
+          cashUser: "陳小弟",
           cashMoney: "7777",
+          cashMoneyFee: "5",
           cashState: "處理中",
-          cashId: "123456789",
-          cashInfo: "viewInfo?", //這邊後端會傳什麼資料進來待討論
-        },
-        {
-          id: "2",
-          date: "2023/01/01",
-          starNumber: "4543413131",
-          cashMoney: "8888",
-          cashState: "提領成功",
-          cashId: "123456789",
-          cashInfo: "viewInfo?", //這邊後端會傳什麼資料進來待討論
-        },
-        {
-          id: "3",
-          date: "2023/01/01",
-          starNumber: "4543413131",
-          cashMoney: "555",
-          cashState: "審核中",
-          cashId: "123456789",
-          cashInfo: "viewInfo?", //這邊後端會傳什麼資料進來待討論
-        },
-        {
-          id: "4",
-          date: "2023/01/01",
-          starNumber: "4543413131",
-          cashMoney: "555",
-          cashState: "提領失敗",
-          cashId: "123456789",
-          cashInfo: "viewInfo?", //這邊後端會傳什麼資料進來待討論
+          bankNum: "004",
+          bankName: "台灣銀行",
+          bankId: "123456456789",
         },
       ],
+      cashState: 'String',
     };
+  },
+  components: {
+    MemberCashView
   },
   methods: {
     viewCashInfo() {

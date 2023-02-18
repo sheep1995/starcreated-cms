@@ -47,13 +47,13 @@ import TopHeader from "@/components/TopHeader.vue";
                 <div class="col-12 col-lg-4 mb-2">
                   <div class="d-flex">
                     <label
-                      for="starNumber"
+                      for="userAppId"
                       class="col-auto col-form-label me-2 ms-1"
                       >星行號</label
                     >
                     <input
                       type="password"
-                      id="starNumber"
+                      id="userAppId"
                       class="form-control"
                       aria-describedby="passwordHelpInline"
                       placeholder="1234567890"
@@ -145,7 +145,7 @@ import TopHeader from "@/components/TopHeader.vue";
                     <td>{{ item.cashMoney }}</td>
                     <td>{{ item.cashState }}</td>
                     <td>{{ item.cashId }}</td>
-                    <td>
+                    <td  id="cash-state">
                       <!-- btn -->
                       <router-link
                         v-if="item.cashState === '審核中'"
@@ -204,6 +204,7 @@ import TopHeader from "@/components/TopHeader.vue";
             <!-- pagination  -->
           </div>
           <!--  -->
+
           <!--  -->
         </section>
         <!--  -->
@@ -222,7 +223,7 @@ export default {
         {
           id: "1",
           date: "2023/01/01",
-          starNumber: "4543413131",
+          userAppId: "4543413131",
           cashMoney: "7777",
           cashState: "處理中",
           cashId: "123456789",
@@ -231,7 +232,7 @@ export default {
         {
           id: "2",
           date: "2023/01/01",
-          starNumber: "4543413131",
+          userAppId: "4543413131",
           cashMoney: "8888",
           cashState: "提領成功",
           cashId: "123456789",
@@ -240,7 +241,7 @@ export default {
         {
           id: "3",
           date: "2023/01/01",
-          starNumber: "4543413131",
+          userAppId: "4543413131",
           cashMoney: "555",
           cashState: "審核中",
           cashId: "123456789",
@@ -249,13 +250,14 @@ export default {
         {
           id: "4",
           date: "2023/01/01",
-          starNumber: "4543413131",
+          userAppId: "4543413131",
           cashMoney: "555",
           cashState: "提領失敗",
           cashId: "123456789",
           cashInfo: "viewInfo?", //這邊後端會傳什麼資料進來待討論
         },
       ],
+      props: ['cashState'],
     };
   },
   methods: {

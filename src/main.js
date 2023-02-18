@@ -114,11 +114,15 @@ import "bootstrap";
 import "./assets/scss/all.scss";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 const app = createApp(App);
 
 app.use(createPinia());
 app.use(VueAxios, axios);
 app.use(PrimeVue);
+app.use(VueSweetalert2);
 // app.use(ConfirmationService);
 // app.use(ToastService);
 // app.use(DialogService);

@@ -18,7 +18,7 @@ import Menu from 'primevue/menu';
         <section class="container">
           <TopHeader />
           <!--  -->
-          <div class="alert bg-success mt-4 mb-4 text-dark fw-bold" role="alert">
+          <div class="alert bg-success mt-4 mb-4 text-dark fw-medium" role="alert">
             Hi, BOSS 歡迎回來 ~ 您有 10 封訊息未讀!
           </div>
           <!--  -->

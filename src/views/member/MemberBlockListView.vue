@@ -68,7 +68,7 @@ import TopHeader from "@/components/TopHeader.vue";
               <tbody class="table-group-divider">
                 <tr v-for="(item, index) in blockList" :key="index" >
                   <th scope="row">{{ item.id }}</th>
-                  <td>{{ item.starNumber}}</td>
+                  <td>{{ item.userAppId}}</td>
                   <td>
                     <div class="d-flex justify-content-center">
                       <img
@@ -122,21 +122,21 @@ export default {
       blockList: [
         {
           id: "1",
-          starNumber: "4543413131",
+          userAppId: "4543413131",
           userImg : "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
           nickname: "Mark",
           mail: "mark@gmail.com",
         },
         {
           id: "2",
-          starNumber: "1243413131",
+          userAppId: "1243413131",
           userImg : "http://placekitten.com/200/300",
           nickname: "Meow",
           mail: "meowww@gmail.com",
         },
         {
           id: "3",
-          starNumber: "3343413131",
+          userAppId: "3343413131",
           userImg : "https://images.dog.ceo/breeds/pitbull/20190710_143021.jpg",
           nickname: "Woof",
           mail: "wongwong@gmail.com",

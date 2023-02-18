@@ -12,13 +12,15 @@ import TopHeader from "@/components/TopHeader.vue";
       <div class="col py-3">
         <!-- <RouterView /> -->
         <section class="container">
-          <TopHeader/>
-      
+          <TopHeader />
+
           <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
             <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
               <li class="breadcrumb-item"><a href="#">首頁</a></li>
               <li class="breadcrumb-item"><a href="#">人員管理</a></li>
-              <li class="breadcrumb-item active" aria-current="page">新增人員</li>
+              <li class="breadcrumb-item active" aria-current="page">
+                新增人員
+              </li>
             </ol>
           </nav>
           <!--  -->
@@ -37,7 +39,9 @@ import TopHeader from "@/components/TopHeader.vue";
                 <!-- login form -->
                 <form class="row fs-6 mt-4">
                   <div class="col-md-6 mb-3 text-start">
-                    <label for="exampleInputName" class="form-label">姓名</label>
+                    <label for="exampleInputName" class="form-label"
+                      >姓名</label
+                    >
                     <input
                       type="name"
                       class="form-control"
@@ -47,7 +51,9 @@ import TopHeader from "@/components/TopHeader.vue";
                     <!-- <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div> -->
                   </div>
                   <div class="col-md-6 mb-3 text-start">
-                    <label for="exampleInputEmail1" class="form-label">帳號</label>
+                    <label for="exampleInputEmail1" class="form-label"
+                      >帳號</label
+                    >
                     <input
                       type="email"
                       class="form-control"
@@ -59,7 +65,9 @@ import TopHeader from "@/components/TopHeader.vue";
                   </div>
                   <!--  -->
                   <div class="col-md-6 mb-2 text-start">
-                    <label for="exampleInputPassword1" class="form-label">密碼</label>
+                    <label for="exampleInputPassword1" class="form-label"
+                      >密碼</label
+                    >
                     <input
                       type="password"
                       class="form-control"
@@ -70,7 +78,10 @@ import TopHeader from "@/components/TopHeader.vue";
                   <!--  -->
                   <div class="col-md-6 mb-2 text-start">
                     <label for="form-select" class="form-label">身份</label>
-                    <select class="form-select" aria-label="Default select example">
+                    <select
+                      class="form-select"
+                      aria-label="Default select example"
+                    >
                       <option selected>選擇身份</option>
                       <option value="1">最高管理員</option>
                       <option value="2">行銷人員</option>
@@ -80,7 +91,7 @@ import TopHeader from "@/components/TopHeader.vue";
                   <!--  -->
                   <div class="col-12 mt-4">
                     <div class="d-flex justify-content-center">
-                      <button type="button" class="btn btn-primary text-light">
+                      <button type="button" @click="showAlert" class="btn btn-primary text-light">
                         確認新增
                       </button>
                     </div>
@@ -90,6 +101,7 @@ import TopHeader from "@/components/TopHeader.vue";
               </div>
             </div>
           </div>
+          <!--  -->
         </section>
         <!--  -->
       </div>
@@ -104,6 +116,22 @@ export default {
     return {
       products: null,
     };
+  },
+  methods: {
+    showAlert() {
+      // Use sweetalert2
+      //this.$swal('Hello Vue world!!!');
+      // 
+      this.$swal({
+        title: "新增成功",
+        text: "請相關人員到信箱查看是否有收到驗證信",
+        icon: "success",
+        //showCancelButton: true,
+        confirmButtonColor: "$primary",
+        //cancelButtonColor: "#d33",
+        confirmButtonText: "關閉",
+      });
+    },
   },
 };
 </script>

@@ -49,14 +49,14 @@ import TopHeader from "@/components/TopHeader.vue";
                 "
               >
                 <div class="col-auto">
-                  <label for="starNumber" class="col-form-label me-2 ms-1"
+                  <label for="userAppId" class="col-form-label me-2 ms-1"
                     >星行號</label
                   >
                 </div>
                 <div class="col-md-4 mb-4">
                   <input
                     type="password"
-                    id="starNumber"
+                    id="userAppId"
                     class="form-control"
                     aria-describedby="passwordHelpInline"
                     placeholder="1234567890"
