@@ -23,8 +23,13 @@ import TopHeader from "@/components/TopHeader.vue";
             </ol>
           </nav>
           <!--  -->
-          <div>
-            <h2 class="text-primary mt-4 fs-3 fw-bold">提領狀態</h2>
+          <div class="d-flex justify-content-between align-items-center mb-2 mt-4">
+            <h2 class="text-primary fs-3 fw-bold">提領狀態</h2>
+            <ul class="list-unstyled d-flex justify-content-center align-items-center align-self-center fw-bold">
+              <li class="text-primary"><span><img class="me-1" src="@/assets/images/bank-step1.svg" alt="bank-step1"></span> 審核中 <i class="bi bi-chevron-right me-2 "></i></li>
+              <li class="text-primary"><span><img class="me-1" src="@/assets/images/bank-step2.svg" alt="bank-step2"></span>處理中 <i class="bi bi-chevron-right me-2"></i></li>
+              <li class="text-gray"><span><img class="me-1" src="@/assets/images/bank-step3-gray.svg" alt="bank-step3"></span>提領成功</li>
+            </ul>
           </div>
           <!--  -->
           <!--  -->
@@ -46,6 +51,20 @@ import TopHeader from "@/components/TopHeader.vue";
             </p>
             <p>*僅提供中國信託商業銀行帳戶免手續費，其他銀行將收取15元手續費</p>
             <p class="text-danger">*提領認證須年滿16歲!</p>
+          </div>
+          <!-- 提領失敗 -->
+          <div
+            class="alert bg-danger mt-4 mb-4 pb-0 text-light fw-medium"
+            role="alert"
+          >
+            <p><i class="bi bi-exclamation-triangle-fill me-2 "></i> 提領失敗! </p>
+          </div>
+          <!-- 提領成功 -->
+          <div
+            class="alert bg-success mt-4 mb-4 pb-0 text-dark fw-medium"
+            role="alert"
+          >
+            <p><i class="bi bi-check-circle-fill me-2"></i>提領成功! </p>
           </div>
           <!--  -->
           <div class="mb-4">
@@ -218,14 +237,13 @@ import TopHeader from "@/components/TopHeader.vue";
             </div>
             <!--  -->
             <!--  -->
-            <div v-else-if="cashState === '提領成功' || cashState === '提領失敗'" class="d-flex justify-content-center flex-column flex-lg-row">
-              <button
-                type="button"
-                class="btn btn-primary text-light mb-2 me-2"
-                data-bs-toggle="modal"
-                data-bs-target="#viewTaskModal"
-              >
-                返回</button>
+            <div v-else class="d-flex justify-content-center flex-column flex-lg-row">
+                                    <router-link
+                        to="/member-cash"
+                        class="btn btn-primary text-light mb-2"
+                      >
+                        返回
+                      </router-link>
             </div>
             <!--  -->
           </div>
