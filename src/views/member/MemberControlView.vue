@@ -1,17 +1,18 @@
 <script setup>
-//import SidebarMenu from "@/components/SidebarMenu.vue";
 import SidebarMenu2 from "@/components/SidebarMenu2.vue";
 import TopHeader from "@/components/TopHeader.vue";
+import Sidebar from "@/components/Sidebar.vue";
 </script>
 <template>
-  <div class="container-fluid">
-    <div class="row flex-nowrap">
-      <!--  -->
-      <SidebarMenu2 />
-      <!--  -->
-      <div class="col py-3">
-        <!-- <RouterView /> -->
-        <section class="container">
+  <div class="wrapper">
+    <!-- Sidebar Menu -->
+    <Sidebar />
+    <!-- Sidebar Menu End -->
+    <div class="page-content-wrapper">
+      <div class="container-fluid">
+        <div class="row">
+          <!--  -->
+        <section class="col-lg-12">
           <TopHeader />
           <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
             <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
@@ -130,8 +131,7 @@ import TopHeader from "@/components/TopHeader.vue";
         </section>
         <!--  -->
         <!--  -->
-
-        <div class="container">
+        <div class="col-lg-12">
           <!--  -->
           <div>
             <h2 class="text-secondary mt-4 fs-5 fw-bold">基本資料</h2>
@@ -335,11 +335,10 @@ import TopHeader from "@/components/TopHeader.vue";
           <!-- pagination  -->
         </div>
         <!--  -->
+        </div>
       </div>
-      <!--  -->
-
-      <!--  -->
     </div>
+    <!--  -->
   </div>
   <!--  -->
   <!-- Modal -->

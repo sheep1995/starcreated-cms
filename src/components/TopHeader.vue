@@ -1,8 +1,14 @@
 <template>
-  <header class="p-3 mb-3 border-bottom top-header">
+  <header class="mb-3 border-bottom top-header">
     <div>
-      <div class="d-flex flex-wrap align-items-center justify-content-end">
-        <ul class="nav col-12 col-lg-auto me-lg-right mb-2 mb-md-0 text-end">
+
+      <div class="d-flex flex-wrap align-items-center justify-content-between">
+      <div class="text-left">
+      <button  @click="isActive = !isActive" class="btn btn-default fs-3" id="menu-toggle">
+      <i class="bi bi-list text-primary"></i>
+      </button>
+      </div>
+        <ul class="nav col-12 col-lg-auto me-lg-right mb-md-0 text-end">
           <!-- <li><a href="#" class="nav-link px-2 link-secondary">設定</a></li> -->
           <li class="position-relative nav-link px-2 link-dark dropdown">
             <!-- <a href="#" class="nav-link px-2 link-dark"> -->
@@ -74,7 +80,7 @@
             </ul>
           </li>
           <li class="nav-link px-2 link-dark mt-2">
-            <RouterLink class="text-decoration-none text-dark" to="/setting"
+            <RouterLink class="text-decoration-none text-dark bg-white" to="/setting"
               >設定</RouterLink
             >
             <!-- <a href="#" class="nav-link px-2 link-dark mt-2">設定</a> -->
@@ -103,3 +109,30 @@
     </div>
   </header>
 </template>
+<script>
+const toggleBtn = document.querySelector("#menu-toggle");
+const sidebar = document.querySelector("#sidebar-wrapper");
+const wrapper = document.querySelector("#wrapper");
+// toggleBtn.addEventListener("click", function () {
+//   wrapper.classList.toggle("toggled");
+// });
+export default {
+    data() {
+    return {
+      isActive: false,
+    };
+  },
+  methods: {
+    toggleMenu() {
+      this.isActive = this.isActive ? false : true;
+    },
+  },
+  // mounted() {
+  //   this.toggleMenu (() =>{
+  //     this.$refs.addEventListener("click", function() {
+  //       wrapper.classList.toggle("toggled");
+  //     })
+  //   });
+  // },
+}
+</script>

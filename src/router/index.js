@@ -3,6 +3,8 @@ import HomeView from "../views/HomeView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  linkActiveClass: 'active-link',
+  linkExactActiveClass: 'exact-active-link',
   routes: [
     {
       path: "/",
@@ -65,6 +67,13 @@ const router = createRouter({
       path: '/member',
       name: "Member",
       component: () => import('../views/member/MemberView.vue'),
+      // children: [
+      //   { 
+      //     path: '/member-control',
+      //     name: "MemberControl",
+      //     component: () => import('../views/member/MemberControlView.vue'),
+      //   }
+      // ]
     },
     {
       path: '/member-control',
@@ -96,6 +105,11 @@ const router = createRouter({
       path: '/member-check-id',
       name: 'MemberCheckId',
       component: () => import('../views/member/CheckIdView.vue'),
+    },
+    {
+      path: '/member-id-info',
+      name: 'MemberCheckIdInfo',
+      component: () => import('../views/member/CheckIdInfoView.vue'),
     },
     {
       path: '/member-fans-list',

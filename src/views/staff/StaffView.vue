@@ -1,44 +1,152 @@
 <script setup>
-//import SidebarMenu from "@/components/SidebarMenu.vue";
 import SidebarMenu2 from "@/components/SidebarMenu2.vue";
 import TopHeader from "@/components/TopHeader.vue";
+import Sidebar from "@/components/Sidebar.vue";
 </script>
 
 <template>
-  <div class="container-fluid">
-    <div class="row flex-nowrap">
-      <!--  -->
-      <SidebarMenu2 />
-      <!--  -->
-      <div class="col py-3">
-        <!-- <RouterView /> -->
-        <section class="container">
-          <TopHeader />
-          <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
-            <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
-              <li class="breadcrumb-item"><a href="#">首頁</a></li>
-              <li class="breadcrumb-item active" aria-current="page">人員管理</li>
-            </ol>
-          </nav>
+  <div class="wrapper">
+    <!-- Sidebar Menu -->
+    <Sidebar />
+    <!-- Sidebar Menu End -->
+    <div class="page-content-wrapper">
+      <div class="container-fluid">
+        <div class="row">
           <!--  -->
-          <div>
-            <h2 class="text-primary mt-4 fs-3 fw-bold">
-              <span><i class="bi bi-people-fill fs-3 text-secondary"></i></span>
-              人員管理
-            </h2>
-          </div>
+          <section class="col-lg-12">
+            <TopHeader />
+            <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
+              <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
+                <li class="breadcrumb-item"><a href="#">首頁</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  人員管理
+                </li>
+              </ol>
+            </nav>
+            <!--  -->
+            <div>
+              <h2 class="text-primary mt-4 fs-3 fw-bold">
+                <span
+                  ><i class="bi bi-people-fill fs-3 text-secondary"></i
+                ></span>
+                人員管理
+              </h2>
+            </div>
+            <!--  -->
+            <div class="col-12 mt-4 mb-2">
+              <div class="d-flex justify-content-between">
+                <h4 class="fs-5">帳號列表</h4>
+                <router-link
+                  to="/staff-add"
+                  class="btn btn-secondary text-light"
+                  ><i class="bi bi-person-fill-add"></i> 新增人員</router-link
+                >
+              </div>
+            </div>
+            <!--  -->
+          </section>
           <!--  -->
-          <div class="col-12 mt-4 mb-2">
-            <div class="d-flex justify-content-between">
-              <h4 class="fs-5">帳號列表</h4>
-              <router-link to="/staff-add" class="btn btn-secondary text-light"
-                ><i class="bi bi-person-fill-add"></i> 新增人員</router-link>
+          <!--  -->
+          <div class="col-lg-12">
+            <div class="table-responsive">
+              <table class="table table-bordered align-middle">
+                <thead class="table-primary">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">姓名</th>
+                    <th scope="col">帳號</th>
+                    <th scope="col">密碼</th>
+                    <th scope="col">身分</th>
+                    <th scope="col">操作</th>
+                  </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>123@gmail.com</td>
+                    <td>564789444</td>
+                    <td>最高管理者</td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-primary text-white me-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editModal"
+                      >
+                        <i class="bi bi-pencil-fill"></i> 編輯
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        data-bs-toggle="modal"
+                        data-bs-target="#delModal"
+                      >
+                        <i class="bi bi-trash-fill"></i> 刪除
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>123@gmail.com</td>
+                    <td>564789444</td>
+                    <td>最高管理者</td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-primary text-white me-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editModal"
+                      >
+                        <i class="bi bi-pencil-fill"></i> 編輯
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        data-bs-toggle="modal"
+                        data-bs-target="#delModal"
+                      >
+                        <i class="bi bi-trash-fill"></i> 刪除
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Amy</td>
+                    <td>123@gmail.com</td>
+                    <td>564789444</td>
+                    <td>最高管理者</td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-primary text-white me-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editModal"
+                      >
+                        <i class="bi bi-pencil-fill"></i> 編輯
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        data-bs-toggle="modal"
+                        data-bs-target="#delModal"
+                      >
+                        <i class="bi bi-trash-fill"></i> 刪除
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
           <!--  -->
-        </section>
-        <!--  -->
-        <!-- <div class="container">
+        </div>
+      </div>
+    </div>
+    <!--  -->
+    <!--  -->
+    <!-- <div class="container">
           <div class="card">
             <DataTable :value="products" responsiveLayout="scroll">
               <template #header> </template>
@@ -71,114 +179,17 @@ import TopHeader from "@/components/TopHeader.vue";
             </DataTable>
           </div>
         </div> -->
-        <!--  -->
-        <!-- test -->
-        <!-- <div class="mb-4">
+    <!--  -->
+    <!-- test -->
+    <!-- <div class="mb-4">
           {{ dataAll }}
         </div>
         {{ data }}
         {{ data2 }} -->
-        <!-- test end -->
-        <!--  -->
-        <div class="container">
-          <div class="table-responsive">
-            <table class="table table-bordered align-middle">
-              <thead class="table-primary">
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">姓名</th>
-                  <th scope="col">帳號</th>
-                  <th scope="col">密碼</th>
-                  <th scope="col">身分</th>
-                  <th scope="col">操作</th>
-                </tr>
-              </thead>
-              <tbody class="table-group-divider">
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>123@gmail.com</td>
-                  <td>564789444</td>
-                  <td>最高管理者</td>
-                  <td>
-                    <button
-                      type="button"
-                      class="btn btn-primary text-white me-2"
-                      data-bs-toggle="modal"
-                      data-bs-target="#editModal"
-                    >
-                    <i class="bi bi-pencil-fill"></i> 編輯
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-danger"
-                      data-bs-toggle="modal"
-                      data-bs-target="#delModal"
-                    >
-                    <i class="bi bi-trash-fill"></i> 刪除
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>123@gmail.com</td>
-                  <td>564789444</td>
-                  <td>最高管理者</td>
-                  <td>
-                    <button
-                      type="button"
-                      class="btn btn-primary text-white me-2"
-                      data-bs-toggle="modal"
-                      data-bs-target="#editModal"
-                    >
-                    <i class="bi bi-pencil-fill"></i> 編輯
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-danger"
-                      data-bs-toggle="modal"
-                      data-bs-target="#delModal"
-                    >
-                    <i class="bi bi-trash-fill"></i> 刪除
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Amy</td>
-                  <td>123@gmail.com</td>
-                  <td>564789444</td>
-                  <td>最高管理者</td>
-                  <td>
-                    <button
-                      type="button"
-                      class="btn btn-primary text-white me-2"
-                      data-bs-toggle="modal"
-                      data-bs-target="#editModal"
-                    >
-                    <i class="bi bi-pencil-fill"></i> 編輯
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-danger"
-                      data-bs-toggle="modal"
-                      data-bs-target="#delModal"
-                    >
-                    <i class="bi bi-trash-fill"></i> 刪除
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <!--  -->
-        <!--  -->
-      </div>
-      <!--  -->
-    </div>
+    <!-- test end -->
+    <!--  -->
   </div>
+  <!--  -->
   <!-- Modal -->
   <div
     class="modal fade modal-lg"
@@ -287,7 +298,11 @@ import TopHeader from "@/components/TopHeader.vue";
           <!--  -->
           <div class="col-12">
             <div class="d-flex justify-content-center">
-              <button type="submit" class="btn btn-primary text-light" data-bs-dismiss="modal">
+              <button
+                type="submit"
+                class="btn btn-primary text-light"
+                data-bs-dismiss="modal"
+              >
                 確認資料
               </button>
             </div>

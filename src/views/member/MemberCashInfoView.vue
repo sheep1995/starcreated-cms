@@ -1,16 +1,17 @@
 <script setup>
-//import SidebarMenu from "@/components/SidebarMenu.vue";
-import SidebarMenu2 from "@/components/SidebarMenu2.vue";
+import { RouterLink, RouterView } from "vue-router";
 import TopHeader from "@/components/TopHeader.vue";
+import Sidebar from "@/components/Sidebar.vue";
 </script>
 <template>
-  <div class="container-fluid">
-    <div class="row flex-nowrap">
-      <!--  -->
-      <SidebarMenu2 />
-      <!--  -->
-      <div class="col py-3">
-        <!-- <RouterView /> -->
+  <div class="wrapper">
+    <!-- Sidebar Menu -->
+    <Sidebar />
+    <!-- Sidebar Menu End -->
+    <div class="page-content-wrapper">
+      <div class="container-fluid">
+        <div class="row">
+          <!--  -->
         <section class="container">
           <TopHeader />
           <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
@@ -23,15 +24,51 @@ import TopHeader from "@/components/TopHeader.vue";
             </ol>
           </nav>
           <!--  -->
-          <div class="d-flex justify-content-between align-items-center mb-2 mt-4">
+          <div
+            class="d-flex justify-content-between align-items-center mb-2 mt-4"
+          >
             <h2 class="text-primary fs-3 fw-bold">提領狀態</h2>
-            <ul class="list-unstyled d-flex justify-content-center align-items-center align-self-center fw-bold">
-              <li class="text-primary"><span><img class="me-1" src="@/assets/images/bank-step1.svg" alt="bank-step1"></span> 審核中 <i class="bi bi-chevron-right me-2 "></i></li>
-              <li class="text-primary"><span><img class="me-1" src="@/assets/images/bank-step2.svg" alt="bank-step2"></span>處理中 <i class="bi bi-chevron-right me-2"></i></li>
-              <li class="text-gray"><span><img class="me-1" src="@/assets/images/bank-step3-gray.svg" alt="bank-step3"></span>提領成功</li>
+            <ul
+              class="
+                list-unstyled
+                d-flex
+                justify-content-center
+                align-items-center align-self-center
+                fw-bold
+              "
+            >
+              <li class="text-primary">
+                <span
+                  ><img
+                    class="me-1"
+                    src="@/assets/images/bank-step1.svg"
+                    alt="bank-step1"
+                /></span>
+                審核中 <i class="bi bi-chevron-right me-2"></i>
+              </li>
+              <li class="text-primary">
+                <span
+                  ><img
+                    class="me-1"
+                    src="@/assets/images/bank-step2.svg"
+                    alt="bank-step2" /></span
+                >處理中 <i class="bi bi-chevron-right me-2"></i>
+              </li>
+              <li class="text-gray">
+                <span
+                  ><img
+                    class="me-1"
+                    src="@/assets/images/bank-step3-gray.svg"
+                    alt="bank-step3" /></span
+                >提領成功
+              </li>
             </ul>
           </div>
           <!--  -->
+          <!-- test -->
+          <!-- <MemberCashView  v-model:customProps="cashState" /> -->
+          <!-- <MemberCashView :inputData="parentData" @update="parentData = $event;" /> -->
+          <!-- <div>{{ cashStateVal }}</div> -->
           <!--  -->
           <div
             class="alert bg-success mt-4 mb-4 text-dark fw-medium"
@@ -57,14 +94,16 @@ import TopHeader from "@/components/TopHeader.vue";
             class="alert bg-danger mt-4 mb-4 pb-0 text-light fw-medium"
             role="alert"
           >
-            <p><i class="bi bi-exclamation-triangle-fill me-2 "></i> 提領失敗! </p>
+            <p>
+              <i class="bi bi-exclamation-triangle-fill me-2"></i> 提領失敗!
+            </p>
           </div>
           <!-- 提領成功 -->
           <div
             class="alert bg-success mt-4 mb-4 pb-0 text-dark fw-medium"
             role="alert"
           >
-            <p><i class="bi bi-check-circle-fill me-2"></i>提領成功! </p>
+            <p><i class="bi bi-check-circle-fill me-2"></i>提領成功!</p>
           </div>
           <!--  -->
           <div class="mb-4">
@@ -200,7 +239,10 @@ import TopHeader from "@/components/TopHeader.vue";
           </div>
           <!--  -->
           <div class="col-12 mt-4">
-            <div v-if="cashState === '審核中'" class="d-flex justify-content-center flex-column flex-lg-row">
+            <div
+              v-if="cashState === '審核中'"
+              class="d-flex justify-content-center flex-column flex-lg-row"
+            >
               <button
                 type="button"
                 class="btn btn-primary text-light mb-2 me-2"
@@ -218,7 +260,10 @@ import TopHeader from "@/components/TopHeader.vue";
               </button>
             </div>
             <!--  -->
-            <div v-else-if="cashState === '處理中'" class="d-flex justify-content-center flex-column flex-lg-row">
+            <div
+              v-else-if="cashState === '處理中'"
+              class="d-flex justify-content-center flex-column flex-lg-row"
+            >
               <button
                 type="button"
                 class="btn btn-primary text-light mb-2 me-2"
@@ -237,22 +282,26 @@ import TopHeader from "@/components/TopHeader.vue";
             </div>
             <!--  -->
             <!--  -->
-            <div v-else class="d-flex justify-content-center flex-column flex-lg-row">
-                                    <router-link
-                        to="/member-cash"
-                        class="btn btn-primary text-light mb-2"
-                      >
-                        返回
-                      </router-link>
+            <div
+              v-else
+              class="d-flex justify-content-center flex-column flex-lg-row"
+            >
+              <router-link
+                to="/member-cash"
+                class="btn btn-primary text-light mb-2"
+              >
+                返回
+              </router-link>
             </div>
             <!--  -->
           </div>
           <!--  -->
         </section>
-        <!--  -->
+            <!--  -->
+        </div>
       </div>
-      <!--  -->
     </div>
+    <!--  -->
   </div>
   <!--  -->
   <!-- Modal -->
@@ -298,6 +347,8 @@ import TopHeader from "@/components/TopHeader.vue";
 </template>
 <script>
 import MemberCashView from "@/views/member/MemberCashView.vue";
+import mitt from "mitt";
+const emitter = mitt();
 export default {
   data() {
     return {
@@ -315,16 +366,34 @@ export default {
           bankId: "123456456789",
         },
       ],
-      cashState: 'String',
+      cashState: "String",
+      cashStateVal: "0",
     };
   },
   components: {
-    MemberCashView
+    MemberCashView,
   },
   methods: {
     viewCashInfo() {
       router.push({ path: "/" });
     },
+    created() {
+      emitter.on("getData", (msg) => {
+        this.cashStateVal = msg;
+      });
+    },
+  },
+  mounted() {
+    // 監聽事件
+    this.eventBus.on(
+      "getData",
+      (cashStateVal) => (this.cashStateVal = cashStateVal)
+    );
+  },
+  // Vue 3 不建議用 beforeDestory
+  beforeUnmount() {
+    // 銷毁監聽
+    this.eventBus.off("getData");
   },
 };
 </script>

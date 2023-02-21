@@ -1,17 +1,18 @@
 <script setup>
-//import SidebarMenu from "@/components/SidebarMenu.vue";
-import SidebarMenu2 from "@/components/SidebarMenu2.vue";
+import { RouterLink, RouterView } from "vue-router";
 import TopHeader from "@/components/TopHeader.vue";
+import Sidebar from "@/components/Sidebar.vue";
 </script>
 <template>
-  <div class="container-fluid">
-    <div class="row flex-nowrap">
-      <!--  -->
-      <SidebarMenu2 />
-      <!--  -->
-      <div class="col py-3">
+  <div class="wrapper">
+    <!-- Sidebar Menu -->
+    <Sidebar />
+    <!-- Sidebar Menu End -->
+    <div class="page-content-wrapper">
+      <div class="container-fluid">
+        <div class="row">
         <!-- <RouterView /> -->
-        <section class="container">
+        <section class="col-lg-12">
           <TopHeader />
           <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
             <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
@@ -145,20 +146,24 @@ import TopHeader from "@/components/TopHeader.vue";
                     <td>{{ item.cashMoney }}</td>
                     <td>{{ item.cashState }}</td>
                     <td>{{ item.cashId }}</td>
-                    <td  id="cash-state">
+                    <td id="cash-state">
                       <!-- btn -->
+                      <!-- {{ cashStateVal }} -->
+
                       <router-link
                         v-if="item.cashState === '審核中'"
                         to="/member-cash-info"
-                        :id="item.cashId"
+                        :cashStateVal="item.cashState"
                         class="btn btn-info text-light mb-2"
+                        @click.prevent="changeCashStateVal"
                       >
-                        <i class="bi bi-eye-fill"></i> 檢視
+                      <i class="bi bi-eye-fill"></i> 檢視
                       </router-link>
                       <router-link
                         v-else-if="item.cashState === '處理中'"
                         to="/member-cash-info"
-                        :id="item.cashId"
+                        :cashStateVal="item.cashState"
+                        @click="changeCashStateVal"
                         class="btn btn-info text-light mb-2"
                       >
                         <i class="bi bi-eye-fill"></i> 檢視
@@ -166,7 +171,8 @@ import TopHeader from "@/components/TopHeader.vue";
                       <router-link
                         v-else-if="item.cashState === '提領成功'"
                         to="/member-cash-info"
-                        :id="item.cashId"
+                        :cashStateVal="item.cashState"
+                        @click="changeCashStateVal"
                         class="btn btn-info text-light mb-2"
                       >
                         <i class="bi bi-eye-fill"></i> 檢視
@@ -174,7 +180,8 @@ import TopHeader from "@/components/TopHeader.vue";
                       <router-link
                         v-else-if="item.cashState === '提領失敗'"
                         to="/member-cash-info"
-                        :id="item.cashId"
+                        :cashStateVal="item.cashState"
+                        @click="changeCashStateVal"
                         class="btn btn-info text-light mb-2"
                       >
                         <i class="bi bi-eye-fill"></i> 檢視
@@ -208,14 +215,18 @@ import TopHeader from "@/components/TopHeader.vue";
           <!--  -->
         </section>
         <!--  -->
+        </div>
       </div>
-      <!--  -->
     </div>
+    <!--  -->
   </div>
-  <!--  -->
 </template>
 <script>
+//import { provide } from "vue";
+import mitt from "mitt";
+const emitter = mitt();
 export default {
+  name: "MemberCashView",
   data() {
     return {
       products: null,
@@ -257,12 +268,26 @@ export default {
           cashInfo: "viewInfo?", //這邊後端會傳什麼資料進來待討論
         },
       ],
-      props: ['cashState'],
+      cashStateVal: "這有一段話",
+      //props: ["cashState"],
+      props: {
+        cashStateVal: {
+          type: String,
+        },
+      },
     };
   },
   methods: {
     viewCashInfo() {
       router.push({ path: "/" });
+    },
+    changeUsername() {
+      this.$emit("changeUsername");
+    },
+    changeCashStateVal() {
+      //emitter.emit('getData', this.cashList.cashState);
+      //emitter.emit('getData', this.cashStateVal);
+      this.eventBus.emit("getData", this.cashStateVal);
     },
   },
 };

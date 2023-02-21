@@ -106,9 +106,12 @@ import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
 import VirtualScroller from 'primevue/virtualscroller';
 
+//
+import mitt from 'mitt'
+
+const eventBus = mitt()
 
 //
-
 import "bootstrap";
 //import "./assets/main.css";
 import "./assets/scss/all.scss";
@@ -224,5 +227,7 @@ app.component('TreeTable', TreeTable);
 app.component('TriStateCheckbox', TriStateCheckbox);
 app.component('VirtualScroller', VirtualScroller);
 
-
+//
+app.config.globalProperties.eventBus = eventBus
+//
 app.mount("#app");

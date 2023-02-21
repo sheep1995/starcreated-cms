@@ -1,21 +1,19 @@
 <script setup>
-//import TheWelcome from "../components/TheWelcome.vue";
-//import SidebarMenu from "../components/SidebarMenu.vue";
-import SidebarMenu2 from "../components/SidebarMenu2.vue";
 import { RouterLink, RouterView } from "vue-router";
 import TopHeader from "@/components/TopHeader.vue";
+import Sidebar from "@/components/Sidebar.vue";
 </script>
 <template>
-  <div class="container-fluid">
-    <div class="row flex-nowrap">
-      <!--  -->
-      <SidebarMenu2 />
-      <!--  -->
-      <div class="col py-3">
-        <!-- <RouterView /> -->
-        <section class="container">
+  <div class="wrapper">
+    <!-- Sidebar Menu -->
+    <Sidebar />
+    <!-- Sidebar Menu End -->
+    <div class="page-content-wrapper">
+      <div class="container-fluid">
+        <div class="row">
+          <!--  -->
+        <section class="col-lg-12">
           <TopHeader />
-
           <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
             <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
               <li class="breadcrumb-item"><a href="#">首頁</a></li>
@@ -125,9 +123,11 @@ import TopHeader from "@/components/TopHeader.vue";
           </div>
           <!--  -->
         </section>
-        <!--  -->
+            <!--  -->
+          <!--  -->
+        </div>
       </div>
-      <!--  -->
     </div>
+    <!--  -->
   </div>
 </template>
