@@ -1,14 +1,13 @@
 <template>
   <header class="mb-3 border-bottom top-header">
     <div>
-
       <div class="d-flex flex-wrap align-items-center justify-content-between">
-      <div class="text-left">
-      <button  @click="isActive = !isActive" class="btn btn-default fs-3" id="menu-toggle">
-      <i class="bi bi-list text-primary"></i>
+      <div class="d-flex">
+      <button class="btn btn-default fs-3 menu-toggle">
+      <!-- <i class="bi bi-list text-primary"></i> -->
       </button>
       </div>
-        <ul class="nav col-12 col-lg-auto me-lg-right mb-md-0 text-end">
+        <ul class="nav  me-lg-right mb-md-0 text-end">
           <!-- <li><a href="#" class="nav-link px-2 link-secondary">設定</a></li> -->
           <li class="position-relative nav-link px-2 link-dark dropdown">
             <!-- <a href="#" class="nav-link px-2 link-dark"> -->
@@ -110,9 +109,9 @@
   </header>
 </template>
 <script>
-const toggleBtn = document.querySelector("#menu-toggle");
-const sidebar = document.querySelector("#sidebar-wrapper");
-const wrapper = document.querySelector("#wrapper");
+const toggleBtn = document.querySelector(".menu-toggle");
+const sidebar = document.querySelector(".sidebar-wrapper");
+const wrapper = document.querySelector(".wrapper");
 // toggleBtn.addEventListener("click", function () {
 //   wrapper.classList.toggle("toggled");
 // });
@@ -125,6 +124,7 @@ export default {
   methods: {
     toggleMenu() {
       this.isActive = this.isActive ? false : true;
+      this.$emit('toggle-menu');
     },
   },
   // mounted() {

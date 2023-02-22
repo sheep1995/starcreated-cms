@@ -16,7 +16,7 @@ import Sidebar from "@/components/Sidebar.vue";
       <div class="container-fluid">
         <div class="row">
           <!--  -->
-            <section class="col-lg-12">
+            <section class="col-12">
               <TopHeader />
               <!--  -->
               <div

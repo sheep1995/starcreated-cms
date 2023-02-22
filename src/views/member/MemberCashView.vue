@@ -95,7 +95,7 @@ import Sidebar from "@/components/Sidebar.vue";
           </div>
           <!--  -->
           <!--  -->
-          <div class="container">
+          <div class="">
             <!--  -->
             <div class="d-flex justify-content-between align-items-center mb-2">
               <div>

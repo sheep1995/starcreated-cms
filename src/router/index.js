@@ -67,13 +67,12 @@ const router = createRouter({
       path: '/member',
       name: "Member",
       component: () => import('../views/member/MemberView.vue'),
-      // children: [
-      //   { 
-      //     path: '/member-control',
-      //     name: "MemberControl",
-      //     component: () => import('../views/member/MemberControlView.vue'),
-      //   }
-      // ]
+      children: [
+        { 
+          path: 'member-control',
+          component: () => import('../views/member/MemberControlView.vue'),
+        }
+      ]
     },
     {
       path: '/member-control',

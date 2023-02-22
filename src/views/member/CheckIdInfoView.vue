@@ -261,7 +261,8 @@ import Sidebar from "@/components/Sidebar.vue";
               </div>
               <div class="row">
                 <div class="col-12 col-lg-6">
-                  <img
+                  <img  data-bs-toggle="modal"
+                        data-bs-target="#idFrontmodal"
                     class="img-fluid img-id"
                     src="@/assets/images/img-id-2.png"
                     alt="id-img-front"
@@ -280,7 +281,8 @@ import Sidebar from "@/components/Sidebar.vue";
                   </div>
                 </div>
                 <div class="col-12 col-lg-6">
-                  <img
+                  <img data-bs-toggle="modal"
+                        data-bs-target="#idBackmodal"
                     class="img-fluid img-id"
                     src="@/assets/images/img-id-1.png"
                     alt="id-img-back"
@@ -346,6 +348,58 @@ import Sidebar from "@/components/Sidebar.vue";
     </div>
     <!--  -->
   </div>
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="idFrontmodal"
+    tabindex="-1"
+    aria-labelledby="idFrontmodalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content border-0">
+        <div class="modal-header border-bottom-0">
+          <h1 class="modal-title fs-5" id="idFrontmodalLabel"> </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body text-center">
+        <img class="img-fluid" src="@/assets/images/img-id-2.png" alt="id-img-front"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  -->
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="idBackmodal"
+    tabindex="-1"
+    aria-labelledby="idBackmodalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content border-0">
+        <div class="modal-header border-bottom-0">
+          <h1 class="modal-title fs-5" id="idBackmodalLabel"> </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body text-center">
+        <img class="img-fluid" src="@/assets/images/img-id-1.png" alt="id-img-front"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  -->
 </template>
 <script>
 export default {

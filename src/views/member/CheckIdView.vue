@@ -102,7 +102,7 @@ import Sidebar from "@/components/Sidebar.vue";
             </form>
           </div>
           <!-- search end -->
-          <div class="container">
+          <div class=" ">
             <!--  -->
             <div class="d-flex justify-content-between align-items-center mb-2">
               <div>

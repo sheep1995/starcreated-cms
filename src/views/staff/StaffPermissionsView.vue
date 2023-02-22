@@ -129,7 +129,7 @@ import Sidebar from "@/components/Sidebar.vue";
                         </div>
                       </div>
                       <!--  -->
-                      <div class="container mt-4 mb-4">
+                      <div class="mt-4 mb-4">
                         <div class="table-responsive">
                           <table class="table table-bordered align-middle">
                             <thead class="table-primary">

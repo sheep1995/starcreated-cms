@@ -1,5 +1,5 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
+//import { RouterLink, RouterView } from "vue-router";
 import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
 </script>
@@ -93,7 +93,7 @@ import Sidebar from "@/components/Sidebar.vue";
           </div>
           <!--  -->
           <!--  -->
-          <div class="container">
+          <div class=" ">
             <!--  -->
             <div>
               <h2 class="text-primary mt-4 fs-5 fw-bold">收益紀錄</h2>

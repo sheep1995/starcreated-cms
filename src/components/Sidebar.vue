@@ -1,11 +1,12 @@
 <template>
+  <!-- <div class="sidebar-wrapper" v-if="isActive"> -->
   <div class="sidebar-wrapper">
     <ul class="sidebar-nav">
       <li class="sidebar-brand mt-3">
         <router-link to="/" class="nav-link align-middle bg-gray-bg">
           <img
             class="icon-logo"
-            src="@/assets/images/icon-logo.svg"
+            src="@/assets/images/icon-logo.png"
             alt="icon logo"
           />
           <img class="ms-2" src="@/assets/images/logo.svg" alt="logo" />
@@ -62,3 +63,32 @@
     </ul>
   </div>
 </template>
+<script lang="ts" >
+const toggleBtn = document.querySelector(".menu-toggle");
+const sidebar = document.querySelector(".sidebar-wrapper");
+const wrapper = document.querySelector(".wrapper");
+// toggleBtn.addEventListener("click", function () {
+//   wrapper.classList.toggle("toggled");
+// });
+//const isActive = ref(false)
+export default {
+    data() {
+    return {
+      isActive: false,
+    };
+  },
+  methods: {
+    toggleMenu() {
+      this.isActive = this.isActive ? false : true;
+      this.$emit('toggle-menu');
+    },
+  },
+  // mounted() {
+  //   this.toggleMenu (() =>{
+  //     this.$refs.addEventListener("click", function() {
+  //       wrapper.classList.toggle("toggled");
+  //     })
+  //   });
+  // },
+}
+</script>
