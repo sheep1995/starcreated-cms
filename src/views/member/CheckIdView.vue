@@ -63,7 +63,7 @@ import Sidebar from "@/components/Sidebar.vue";
                       >星行號</label
                     >
                     <input
-                      type="password"
+                      type="text"
                       id="userAppId"
                       class="form-control"
                       aria-describedby="passwordHelpInline"

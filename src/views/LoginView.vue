@@ -37,7 +37,9 @@ import SidebarMenu from "../components/SidebarMenu.vue";
                       class="form-control"
                       id="exampleInputEmail1"
                       aria-describedby="emailHelp"
-                      placeholder="hi@westar.tw"
+                      placeholder="hi@westar.tw" 
+                      v-model="user.email"
+                      required
                     />
                     <!-- <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div> -->
                   </div>
@@ -45,14 +47,20 @@ import SidebarMenu from "../components/SidebarMenu.vue";
                     <label
                       for="exampleInputPassword1"
                       class="form-label text-light"
-                      >Password</label
+                      >密碼</label
                     >
                     <input
                       type="password"
                       class="form-control"
                       id="exampleInputPassword1"
-                      placeholder="123456"
+                      placeholder="Abc123456"
+                      v-model="user.password" 
+                      required
                     />
+                    <!-- <button class="button" @click="toggleShow"><span class="icon is-small is-right">
+                      <i class="bi" :class="{ 'bi-eye-slash-fill': showPassword, 'bi-eye-fill': !showPassword }"></i>
+                    </span>
+                  </button> -->
                   </div>
                   <div class="mb-4">
                     <!-- Button trigger modal -->
@@ -65,10 +73,10 @@ import SidebarMenu from "../components/SidebarMenu.vue";
                     >
                   </div>
                   <div class="d-flex justify-content-center">
-                    <!-- <button type="submit" class="btn btn-primary text-light">
+                    <button type="submit" class="btn btn-primary text-light" @click="showAlert" >
                       登入
-                    </button> -->
-                    <a href="./"  class="btn btn-primary text-light">登入</a>
+                    </button>
+                    <!-- <a href="./"  class="btn btn-primary text-light">登入</a> -->
                   </div>
                   <!--  -->
                   <!-- <h5>Validation Message</h5>
@@ -120,40 +128,104 @@ import SidebarMenu from "../components/SidebarMenu.vue";
 //C:\Users\user\Documents\GitHub\starcreated-cms\src\assets\images\img-login-bg.svg
 // import { useVuelidate } from '@vuelidate/core'
 // import { required, email } from '@vuelidate/validators'
-import { onMounted, ref } from "vue";
-const handelOpenModal = () => {
-  deleteModal.show();
-};
+//import { onMounted, ref } from "vue";
+// const handelOpenModal = () => {
+//   deleteModal.show();
+// };
+console.log(import.meta.env.VITE_PATH);
+console.log(`${import.meta.env.VITE_PATH}/login`);
+// console.log(import.meta.env.VITE_PATH2);
+
+// const api = `${import.meta.env.VITE_PATH}/login`;
+// axios({
+//   headers: { 'Content-Type': 'application/json' },
+//     method: 'post',
+//     url: 'api',
+// });
+const api = `${import.meta.env.VITE_PATH}/login`;
+
 export default {
   data() {
     return {
       data: {},
-      fakedata: {
-        accountId: "aa1234", //假帳號
-        username: "Maëlyne Roux", //假姓名
+      //1.1 LOGIN
+      user: {
+        "email": "rd14@westar.tw",
+        "password": "1234"
       },
+      showPassword: false,
     };
   },
   methods: {
-    login(){
-      const api = ' ';
-      axios.post(api, this.user).then((response) => {
-        const { token, expired } = response.data;
-        // 寫入 cookie token
-        // expires 設置有效時間
-        document.cookie = `hexToken=${token};expires=${new Date(expired)}; path=/`;
-        this.$router.push("/");
-      }).catch((err) => {
-        alert(err.response.data.message);
+    // login() {
+    //   const api = ' ';
+    //   axios.post(api, this.user).then((response) => {
+    //     const { token, expired } = response.data;
+    //     //寫入 cookie token
+    //    // expires 設置有效時間
+    //     // document.cookie = `OurToken=${token};expires=${new Date(expired)}; path=/`;
+    //     // this.$router.push("/");
+    //   }).catch((err) => {
+    //     alert(err.response.data.message);
+    //   });
+    // }
+    login() {
+      this.$http.post(api, this.user).then((response) => {
+        const { expired } = response.data;
+        //const { token, expired } = res.user;
+        //document.cookie = `ourToken=${token};expires=${new Date(expired)};`
+        document.cookie = `expires=${new Date(expired)};`
+        //this.$router.push("/");
+        console.log(response.data.result.message);
+        console.log(response.data.result);
+        console.log(response.data.data);
+        //alert(response.data.result.message);
+      }).catch((err) =>{
+        alert(err.data.result.message);
+        //this.$httpMessageState(error.response, '登入');
+        console.log(err.data.result.message);
       });
+    },
+    showAlert() {
+      this.$http.post(api, this.user).then((response) => {
+        const message = response.data.result.message;
+        console.log(response.data.result.message);
+        if ( message === "登入成功" ) {
+        this.$swal({
+        title: "登入成功",
+        //text: "請相關人員到信箱查看是否有收到驗證信",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(function(){
+        window.location.href = "/";
+      });
+      } else {
+        this.$swal({
+        title: "登入失敗",
+        text: "請確認資料是否輸入正確",
+        icon: "warning",
+        showConfirmButton: false,
+        timer: 1500,
+      })
+      }
+      }).catch((err) =>{
+        console.log(err.data.result.message);
+        this.$swal({
+        title: "登入失敗",
+        text: "請確認資料是否輸入正確",
+        icon: "warning",
+        showConfirmButton: false,
+        timer: 1500,
+      })
+      });
+    },
+    //
+    toggleShow() {
+      this.showPassword = !this.showPassword;
     }
+    //
   },
-  mounted() {
-    // console.log(import.meta.env.VITE_PATH);
-    // const url = VITE_PATH;
-    // this.$http.get(url).then((res)=>{
-    //   console.log(res);
-    // })
-  },
+
 };
 </script>

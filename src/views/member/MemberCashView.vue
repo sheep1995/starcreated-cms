@@ -53,7 +53,7 @@ import Sidebar from "@/components/Sidebar.vue";
                       >星行號</label
                     >
                     <input
-                      type="password"
+                      type="text"
                       id="userAppId"
                       class="form-control"
                       aria-describedby="passwordHelpInline"
@@ -142,7 +142,7 @@ import Sidebar from "@/components/Sidebar.vue";
                   <tr v-for="(item, index) in cashList" :key="index">
                     <th scope="row">{{ item.id }}</th>
                     <td>{{ item.date }}</td>
-                    <td>{{ item.starNumber }}</td>
+                    <td>{{ item.userAppId }}</td>
                     <td>{{ item.cashMoney }}</td>
                     <td>{{ item.cashState }}</td>
                     <td>{{ item.cashId }}</td>

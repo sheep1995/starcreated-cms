@@ -43,7 +43,7 @@ import Sidebar from "@/components/Sidebar.vue";
                   <div class="d-flex">
                     <label for="starNumber" class="col-auto col-form-label me-2 ms-1">星行號</label>
                   <input
-                  type="password"
+                  type="text"
                   id="starNumber"
                   class="form-control"
                   aria-describedby="passwordHelpInline"

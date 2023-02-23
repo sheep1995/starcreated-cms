@@ -6,7 +6,7 @@
         <router-link to="/" class="nav-link align-middle bg-gray-bg">
           <img
             class="icon-logo"
-            src="@/assets/images/icon-logo.png"
+            src="@/assets/images/icon-logo.svg"
             alt="icon logo"
           />
           <img class="ms-2" src="@/assets/images/logo.svg" alt="logo" />
@@ -90,5 +90,6 @@ export default {
   //     })
   //   });
   // },
+  
 }
 </script>

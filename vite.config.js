@@ -3,6 +3,8 @@ import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 
+//const config = loadEnv(mode, './')
+
 // https://vitejs.dev/config/
 export default defineConfig({
   base: "/starcreated-cms/",
@@ -25,5 +27,18 @@ export default defineConfig({
         }
       }
     }
-  }
+  },
+  // server: {
+  //   //open: true,
+  //   //port: 5173,
+  //   proxy: {
+  //     '/login' : {
+  //       //target: 'http://localhost:5173/starcreated-cms/',
+  //       target: 'https://stage.westar-cms.com/v1/login',
+  //       //target: config.VITE_PATH,
+  //       changeOrigin: true,
+  //       rewrite: (path) => path.replace(/^\/login/, '')
+  //     },
+  //   },
+  // },
 });
