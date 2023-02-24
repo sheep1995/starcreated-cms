@@ -16,8 +16,8 @@ import Sidebar from "@/components/Sidebar.vue";
           <TopHeader />
           <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
             <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
-              <li class="breadcrumb-item"><a href="#">首頁</a></li>
-              <li class="breadcrumb-item"><a href="#">會員管理</a></li>
+              <router-link to="/" class="breadcrumb-item">首頁</router-link>
+              <router-link to="/member-control" class="breadcrumb-item">會員管理</router-link>
               <li class="breadcrumb-item active" aria-current="page">
                 提領狀態
               </li>
@@ -373,27 +373,15 @@ export default {
   components: {
     MemberCashView,
   },
-  methods: {
-    viewCashInfo() {
-      router.push({ path: "/" });
-    },
-    created() {
-      emitter.on("getData", (msg) => {
-        this.cashStateVal = msg;
-      });
-    },
-  },
-  mounted() {
-    // 監聽事件
-    this.eventBus.on(
-      "getData",
-      (cashStateVal) => (this.cashStateVal = cashStateVal)
-    );
-  },
-  // Vue 3 不建議用 beforeDestory
-  beforeUnmount() {
-    // 銷毁監聽
-    this.eventBus.off("getData");
-  },
+  // methods: {
+  //   viewCashInfo() {
+  //     router.push({ path: "/" });
+  //   },
+  //   created() {
+  //     emitter.on("getData", (msg) => {
+  //       this.cashStateVal = msg;
+  //     });
+  //   },
+  // },
 };
 </script>

@@ -14,10 +14,17 @@
 }
 .member-info{
   .card-body {
+    //border: solid 4px $primary;
     &:hover, &:focus, &:active{
-      background-color: $primary-400;
+      background-color: $primary-600;
       color: $light;
-      .card-title, .card-text{
+      border-radius: .75rem ;
+      -webkit-border-radius: .75rem ;
+      -moz-border-radius: .75rem ;
+      -ms-border-radius: .75rem ;
+      -o-border-radius: .75rem ;
+
+      .card-title,.card-text{
         color: $light;
       }
     }

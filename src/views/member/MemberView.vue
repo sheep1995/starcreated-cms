@@ -1,7 +1,9 @@
 <script setup>
-import SidebarMenu2 from "@/components/SidebarMenu2.vue";
+// import SidebarMenu2 from "@/components/SidebarMenu2.vue";
 import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
+// import Breadcrumb from "@/components/Breadcrumb.vue";
+
 </script>
 <template>
   <div class="wrapper">
@@ -14,9 +16,10 @@ import Sidebar from "@/components/Sidebar.vue";
           <!--  -->
           <section class="col-lg-12">
             <TopHeader />
+          <!-- <Breadcrumb /> -->
             <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
               <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
-                <li class="breadcrumb-item"><a href="#">首頁</a></li>
+                <router-link to="/" class="breadcrumb-item">首頁</router-link>
                 <li class="breadcrumb-item active" aria-current="page">
                   會員管理
                 </li>

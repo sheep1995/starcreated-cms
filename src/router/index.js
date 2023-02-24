@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import Breadcrumb from "@/components/Breadcrumb.vue";
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,19 +9,67 @@ const router = createRouter({
   linkExactActiveClass: 'exact-active-link',
   routes: [
     {
+      path: "/login",
+      name: "Login",
+      component: () => import("../views/LoginView.vue"),
+      meta: {
+        breadcrumb: [{
+          name: '登入'
+        }]
+      }
+    },
+    {
       path: "/",
-      name: "home",
+      name: "Home",
       component: HomeView,
+      meta: {
+        breadcrumb: [{
+          name: '首頁'
+        }]
+      },
+      children: [
+    //member
+    {
+      path: '/member',
+      name: "Member",
+      component: () => import('../views/member/MemberView.vue'),
+      meta: {
+        breadcrumb: [{
+          name: '會員管理'
+        }]
+      }
+    },
+    {
+      path: '/member-order-list',
+      name: "MemberOrderList",
+      component: () => import('../views/member/MemberOrderListView.vue'),
+      meta: {
+        breadcrumb: [{
+          name: '訂閱人數'
+        }]
+      }
+    },
+      ]
     },
     {
       path: "/notice",
       name: "notice",
       component: () => import("../views/NoticeView.vue"),
+      meta: {
+        breadcrumb: [{
+          name: '通知'
+        }]
+      }
     },
     {
       path: "/setting",
       name: "setting",
       component: () => import("../views/SettingView.vue"),
+      meta: {
+        breadcrumb: [{
+          name: '設定'
+        }]
+      }
     },
     {
       path: "/about",
@@ -28,11 +78,11 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import("../views/AboutView.vue"),
-    },
-    {
-      path: "/login",
-      name: "Login",
-      component: () => import("../views/LoginView.vue"),
+      meta: {
+        breadcrumb: [{
+          name: '關於'
+        }]
+      }
     },
     //
     {
@@ -67,12 +117,17 @@ const router = createRouter({
       path: '/member',
       name: "Member",
       component: () => import('../views/member/MemberView.vue'),
-      children: [
-        { 
-          path: 'member-control',
-          component: () => import('../views/member/MemberControlView.vue'),
-        }
-      ]
+      // children: [
+      //   { 
+      //     path: 'member-control',
+      //     component: () => import('../views/member/MemberControlView.vue'),
+      //   }
+      // ]
+      meta: {
+        breadcrumb: [{
+          name: '會員管理'
+        }]
+      }
     },
     {
       path: '/member-control',
@@ -119,6 +174,11 @@ const router = createRouter({
       path: '/member-order-list',
       name: "MemberOrderList",
       component: () => import('../views/member/MemberOrderListView.vue'),
+      meta: {
+        breadcrumb: [{
+          name: '訂閱人數'
+        }]
+      }
     },
     {
       path: '/member-block-list',

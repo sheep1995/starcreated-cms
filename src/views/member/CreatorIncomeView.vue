@@ -16,8 +16,8 @@ import Sidebar from "@/components/Sidebar.vue";
           <TopHeader />
           <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
             <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
-              <li class="breadcrumb-item"><a href="#">首頁</a></li>
-              <li class="breadcrumb-item"><a href="#">會員管理</a></li>
+              <router-link to="/" class="breadcrumb-item">首頁</router-link>
+              <router-link to="/member-control" class="breadcrumb-item">會員管理</router-link>
               <li class="breadcrumb-item active" aria-current="page">
                 收益紀錄
               </li>
@@ -67,15 +67,17 @@ import Sidebar from "@/components/Sidebar.vue";
                 </div>
                 <div class="col-12 col-lg-4 mb-2">
                   <div class="d-flex">
-                    <label for="starNumber" class="col-auto col-form-label me-2 ms-1"
-                    >日期</label
-                  >
-                  <select class="form-select" id="specificSizeSelect">
+                    <label for="memberDate" class="col-auto col-form-label me-2 ms-1">日期</label>
+                  <!-- <select class="form-select" id="specificSizeSelect">
                     <option selected>選擇日期</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
-                  </select>
+                  </select> -->
+                  <div class="field">
+                    <label for="icon" class="bg-primary" id="memberDate"></label>
+                    <Calendar inputId="icon" v-model="date3" :showIcon="true" />
+                </div>
                   </div>
                 </div>
               </div>
@@ -174,11 +176,46 @@ import Sidebar from "@/components/Sidebar.vue";
   </div>
 </template>
 <script>
+import Calendar from 'primevue/calendar';
+
 export default {
   data() {
     return {
       products: null,
-    };
+      date3: null,
+      minDate: null,
+            maxDate: null,
+            invalidDates: null,
+            responsiveOptions: [
+                {
+					breakpoint: '1400px',
+					numMonths: 2
+				},
+				{
+					breakpoint: '1200px',
+					numMonths: 1
+				}
+			]
+    }
   },
+  created() {
+        let today = new Date();
+        let month = today.getMonth();
+        let year = today.getFullYear();
+        let prevMonth = (month === 0) ? 11 : month -1;
+        let prevYear = (prevMonth === 11) ? year - 1 : year;
+        let nextMonth = (month === 11) ? 0 : month + 1;
+        let nextYear = (nextMonth === 0) ? year + 1 : year;
+        this.minDate = new Date();
+        this.minDate.setMonth(prevMonth);
+        this.minDate.setFullYear(prevYear);
+        this.maxDate = new Date();
+        this.maxDate.setMonth(nextMonth);
+        this.maxDate.setFullYear(nextYear);
+
+        let invalidDate = new Date();
+        invalidDate.setDate(today.getDate() - 1);
+        this.invalidDates = [today,invalidDate];
+    },
 };
 </script>

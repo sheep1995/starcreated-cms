@@ -16,8 +16,8 @@ import Sidebar from "@/components/Sidebar.vue";
           <TopHeader />
           <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
             <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
-              <li class="breadcrumb-item"><a href="#">首頁</a></li>
-              <li class="breadcrumb-item"><a href="#">會員管理</a></li>
+              <router-link to="/" class="breadcrumb-item">首頁</router-link>
+              <router-link to="/member-control" class="breadcrumb-item">會員管理</router-link>
               <li class="breadcrumb-item active" aria-current="page">
                 封鎖人數
               </li>
@@ -26,10 +26,10 @@ import Sidebar from "@/components/Sidebar.vue";
           <!--  -->
           <div class="d-flex justify-content-between align-items-center mb-2">
             <div>
-              <h2 class="text-primary mt-4 fs-3 fw-bold">封鎖人數</h2>
+              <h2 class="text-white mt-4 fs-3 fw-bold">封鎖人數</h2>
             </div>
             <div class="d-flex align-items-center;">
-              <div class="text-dark fw-bold">
+              <div class="text-dark fw-bold fs-5">
                 <span class="me-1">
                   <img
                     src="@/assets/images/icon-block-color.svg"
@@ -103,7 +103,17 @@ import Sidebar from "@/components/Sidebar.vue";
           </nav>
           <!--pagination end  -->
           <!-- BTN -->
-          <div class="d-flex justify-content-center"><button type="submit" class="btn btn-primary text-light"> 返回 </button></div>
+          <div
+          class="d-flex justify-content-center flex-column flex-lg-row"
+        >
+          <router-link
+            to="/member"
+            class="btn btn-primary text-light mb-2"
+          >
+            返回
+          </router-link>
+        </div>
+          <!-- <div class="d-flex justify-content-center"><button type="submit" class="btn btn-primary text-light"> 返回 </button></div> -->
           <!-- BTN END -->
         </div>
         <!--  -->

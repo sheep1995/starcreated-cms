@@ -10,3 +10,11 @@
 @import "./layout/card";
 @import "./layout/sidebar";
 @import "./vendors/vueSidebarMenu";
+//@import "./vendors/primeicons";
+
+.p-button{
+  background-color: $primary;
+  &:hover, &:focus, &:active {
+  background-color: $primary-400;
+  }
+}

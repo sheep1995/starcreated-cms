@@ -16,8 +16,8 @@ import Sidebar from "@/components/Sidebar.vue";
 
             <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
               <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
-                <li class="breadcrumb-item"><a href="#">首頁</a></li>
-                <li class="breadcrumb-item"><a href="#">人員管理</a></li>
+                <router-link to="/" class="breadcrumb-item">首頁</router-link>
+                <router-link to="/staff" class="breadcrumb-item">人員管理</router-link>
                 <li class="breadcrumb-item active" aria-current="page">
                   新增人員
                 </li>

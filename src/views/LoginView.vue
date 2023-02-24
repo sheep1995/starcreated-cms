@@ -198,7 +198,7 @@ export default {
         showConfirmButton: false,
         timer: 1500,
       }).then(function(){
-        window.location.href = "/";
+        window.location.href = "/starcreated-cms/";
       });
       } else {
         this.$swal({

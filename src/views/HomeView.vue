@@ -172,6 +172,14 @@ import Sidebar from "@/components/Sidebar.vue";
               </div>
               <!--  -->
             </section>
+            <!-- <VForm>
+              <VField
+                name="email"
+                type="email"
+                rules="required|email"
+              />
+              <ErrorMessage name="email"/>
+            </VForm> -->
             <!--  -->
         </div>
       </div>

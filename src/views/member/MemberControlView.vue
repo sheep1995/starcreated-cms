@@ -16,7 +16,7 @@ import Sidebar from "@/components/Sidebar.vue";
           <TopHeader />
           <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
             <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
-              <li class="breadcrumb-item"><a href="#">首頁</a></li>
+              <router-link to="/" class="breadcrumb-item">首頁</router-link>
               <li class="breadcrumb-item active" aria-current="page">
                 會員管理
               </li>
@@ -39,13 +39,12 @@ import Sidebar from "@/components/Sidebar.vue";
             <div class="row">
               <div class="col-sm-12 col-md-2 mb-3 mb-sm-0 member-info">
                 <router-link to="/member-order-list" class="text-decoration-none">
-                  <div class="card border border-3 border-primary">
+                  <div class="card border border-2 rounded-4 border-primary">
                     <div class="card-body d-flex">
                       <div>
                         <img
-                          src="@/assets/images/icon-focus.svg"
-                          alt="icon-focus"
-                        />
+                          src="@/assets/images/icon-focus.svg" alt="icon-focus">
+                        <!-- src="@/assets/images/icon-focus.svg" :src="pictureHover" @mouseover="hover = true" @mouseleave="hover = false"> -->
                       </div>
                       <div class="ms-2">
                         <h5 class="card-title fs-6">訂閱人數</h5>
@@ -57,7 +56,7 @@ import Sidebar from "@/components/Sidebar.vue";
               </div>
               <div class="col-sm-12 col-md-2 mb-3 mb-sm-0 member-info">
                 <router-link to="/member-fans-list" class="text-decoration-none">
-                  <div class="card border border-3 border-primary">
+                  <div class="card border border-2 rounded-4 border-primary">
                     <div class="card-body d-flex">
                       <div>
                         <img
@@ -73,42 +72,9 @@ import Sidebar from "@/components/Sidebar.vue";
                   </div>
                 </router-link>
               </div>
-
-              <div class="col-sm-12 col-md-2 mb-3 mb-sm-0">
-                <div class="card border border-3 border-primary">
-                  <div class="card-body d-flex">
-                    <div>
-                      <img
-                        src="@/assets/images/icon-thumb.svg"
-                        alt="icon-thumb"
-                      />
-                    </div>
-                    <div class="ms-2">
-                      <h5 class="card-title fs-6">按讚次數</h5>
-                      <p class="card-text fs-4 fw-bold text-primary">123</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-12 col-md-2 mb-3 mb-sm-0">
-                <div class="card border border-3 border-primary">
-                  <div class="card-body d-flex">
-                    <div>
-                      <img
-                        src="@/assets/images/icon-collect.svg"
-                        alt="icon-collect"
-                      />
-                    </div>
-                    <div class="ms-2">
-                      <h5 class="card-title fs-6">秘藏數量</h5>
-                      <p class="card-text fs-4 fw-bold text-primary">123</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
               <div class="col-sm-12 col-md-2 mb-3 mb-sm-0 member-info">
                 <router-link to="/member-block-list" class="text-decoration-none">
-                  <div class="card border border-3 border-primary">
+                  <div class="card border border-2 rounded-4 border-primary">
                     <div class="card-body d-flex">
                       <div>
                         <img
@@ -124,6 +90,40 @@ import Sidebar from "@/components/Sidebar.vue";
                   </div>
                 </router-link>
               </div>
+              <!--  -->
+              <div class="col-sm-12 col-md-2 mb-3 mb-sm-0">
+                <div class="card border border-2 rounded-4 border-gray-c1">
+                  <div class="card-body d-flex">
+                    <div>
+                      <img
+                        src="@/assets/images/icon-thumb.svg"
+                        alt="icon-thumb"
+                      />
+                    </div>
+                    <div class="ms-2">
+                      <h5 class="card-title fs-6">按讚次數</h5>
+                      <p class="card-text fs-4 fw-bold text-primary">123</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-2 mb-3 mb-sm-0">
+                <div class="card border border-2 rounded-4 border-gray-c1">
+                  <div class="card-body d-flex">
+                    <div>
+                      <img
+                        src="@/assets/images/icon-collect.svg"
+                        alt="icon-collect"
+                      />
+                    </div>
+                    <div class="ms-2">
+                      <h5 class="card-title fs-6">秘藏數量</h5>
+                      <p class="card-text fs-4 fw-bold text-primary">123</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
           <!--  -->

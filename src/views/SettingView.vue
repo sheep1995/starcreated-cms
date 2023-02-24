@@ -16,7 +16,7 @@ import Sidebar from "@/components/Sidebar.vue";
           <TopHeader />
           <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
             <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
-              <li class="breadcrumb-item"><a href="#">首頁</a></li>
+              <router-link to="/" class="breadcrumb-item">首頁</router-link>
               <li class="breadcrumb-item active" aria-current="page">設定</li>
             </ol>
           </nav>
