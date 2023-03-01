@@ -61,68 +61,21 @@ import Sidebar from "@/components/Sidebar.vue";
                   </tr>
                 </thead>
                 <tbody class="table-group-divider">
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>123@gmail.com</td>
-                    <td>564789444</td>
-                    <td>最高管理者</td>
+                  <!-- v-for="item in products" :key="item.id" -->
+                  <tr v-for="(item, index) in dataAll" :key="index">
+                    <th scope="row"> {{ index+1 }}</th>
+                    <td>{{ item.userName }}</td>
+                    <td v-if="item.email != ''">{{ item.email }}</td>
+                    <td v-else-if="item.email.length == '0'" > NULL </td>
+                    <td>{{ item.password }} </td>
+                    <td>{{ item.identity }}</td>
                     <td>
                       <button
                         type="button"
                         class="btn btn-primary text-white me-2"
                         data-bs-toggle="modal"
                         data-bs-target="#editModal"
-                      >
-                        <i class="bi bi-pencil-fill"></i> 編輯
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-danger"
-                        data-bs-toggle="modal"
-                        data-bs-target="#delModal"
-                      >
-                        <i class="bi bi-trash-fill"></i> 刪除
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>123@gmail.com</td>
-                    <td>564789444</td>
-                    <td>最高管理者</td>
-                    <td>
-                      <button
-                        type="button"
-                        class="btn btn-primary text-white me-2"
-                        data-bs-toggle="modal"
-                        data-bs-target="#editModal"
-                      >
-                        <i class="bi bi-pencil-fill"></i> 編輯
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-danger"
-                        data-bs-toggle="modal"
-                        data-bs-target="#delModal"
-                      >
-                        <i class="bi bi-trash-fill"></i> 刪除
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Amy</td>
-                    <td>123@gmail.com</td>
-                    <td>564789444</td>
-                    <td>最高管理者</td>
-                    <td>
-                      <button
-                        type="button"
-                        class="btn btn-primary text-white me-2"
-                        data-bs-toggle="modal"
-                        data-bs-target="#editModal"
+                        @click="editStaff"
                       >
                         <i class="bi bi-pencil-fill"></i> 編輯
                       </button>
@@ -352,19 +305,40 @@ import Sidebar from "@/components/Sidebar.vue";
 <script>
 import ProductService from "@/assets/js/ProductService.js";
 
+const api = `${import.meta.env.VITE_PATH}/user`;
+
 export default {
   name: "Staff",
   data() {
     return {
       products: null,
-      dataAll: {},
-      data: {},
-      data2: {},
+      dataAll: [],
+      apiListLength:0,
+      index:0,
+      user: {
+      },
     };
   },
   productService: null,
   created() {
     this.productService = new ProductService();
+  },
+  methods: {
+    editStaff() {
+      this.$http.patch(api, this.user, {
+        "userName": "Admin Test",
+    "password": "Abc123456",
+    "identity": "最高管理者"
+      })
+      .then((response) => {
+        
+        console.log(response.data.result);
+        //alert(response.data.result.message);
+      }).catch((err) =>{
+        alert(err.data.result.message);
+        console.log(err.data.result.message);
+      });
+    },
   },
   mounted() {
     this.productService
@@ -374,13 +348,17 @@ export default {
     console.log(import.meta.env.VITE_PATH);
     console.log(import.meta.env.VITE_TEXT);
     const url = import.meta.env.VITE_PATH;
-    this.$http.get(url).then((res) => {
+    this.$http.get(api).then((res) => {
       console.log(res);
-      this.dataAll = res.data.results[0];
-      this.data = res.data.results[0].gender;
-      this.data2 = `${res.data.results[0].name.title} ${res.data.results[0].name.first}`;
+      console.log(res.data.data.list[0]);
+      this.dataAll = res.data.data.list;
+      this.apiListLength = res.data.data.list;
+
+      // this.data = res.data.results[0].gender;
+      // this.data2 = `${res.data.results[0].name.title} ${res.data.results[0].name.first}`;
       console.log(res.data);
     });
+    //
   },
 };
 </script>

@@ -1,0 +1,38 @@
+{
+  "result": {
+      "state": "success",
+      "code": 220,
+      "message": "讀取成功"
+  },
+  "data": {
+      "list": [
+          {
+              "userId": "e8207da0-5d8b-43c5-8977-c9e48c2fd89c",
+              "userName": "綿羊2",
+              "password": "1234",
+              "identity": "一般管理者"
+          },
+          {
+              "userId": "6c241818-c33a-4cda-9b00-99c18be31532",
+              "userName": "Admin Test",
+              "email": "rd14@westar.tw",
+              "password": "1234",
+              "identity": "最高管理者"
+          },
+          {
+              "userId": "ab96d8e4-7d44-4616-a33f-b06ff7838328",
+              "userName": "綿羊",
+              "email": "rd13@westar.tw",
+              "password": "1234",
+              "identity": "一般管理者"
+          },
+          {
+              "userId": "7a0c485d-7d25-462c-b25d-ee7ffed1f272",
+              "userName": "Tina Chen",
+              "email": "rd5288892@gmail.com",
+              "password": "1234567",
+              "identity": "一般管理者"
+          }
+      ]
+  }
+}

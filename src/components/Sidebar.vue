@@ -30,12 +30,12 @@
           新增人員
         </router-link>
       </li>
-      <li>
+      <!-- <li>
         <router-link to="/staff-permissions" class="nav-link text-light">
           <i class="fs-5 bi bi-caret-right-fill me-2 text-gray-bg"></i>
           權限管理
         </router-link>
-      </li>
+      </li> -->
       <li>
         <router-link to="/member" class="nav-link align-middle text-light">
           <i class="fs-5 bi bi-person-fill me-2"></i>

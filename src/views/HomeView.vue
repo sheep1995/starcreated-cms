@@ -19,11 +19,12 @@ import Sidebar from "@/components/Sidebar.vue";
             <section class="col-12">
               <TopHeader />
               <!--  -->
+                <!-- Hi, BOSS 歡迎回來 ~ 您有 10 封訊息未讀! -->
               <div
                 class="alert bg-success mt-4 mb-4 text-dark fw-medium"
                 role="alert"
               >
-                Hi, BOSS 歡迎回來 ~ 您有 10 封訊息未讀!
+                Hi, {{ userName }} 歡迎回來 ~ 
               </div>
               <!--  -->
               <!--  -->
@@ -227,7 +228,36 @@ export default {
           to: "/fileupload",
         },
       ],
+      user: {},
+      isLoggedIn: true,
     };
+  },
+  created() {
+    const token = document.cookie.replace(
+        // hexToken cookie名稱
+      /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
+      "$1"
+    );
+    console.log(token);
+    // this.$http.default.headers.common["Authorization"] = token;
+  },
+  methods: {
+    login() {
+      this.$http.get(api, this.user).then((response) => {
+        const { expired } = response.data;
+        //const { token, expired } = res.user;
+        //document.cookie = `ourToken=${token};expires=${new Date(expired)};`
+        document.cookie = `expires=${new Date(expired)};`
+        //this.$router.push("/");
+        console.log(response.data.result.message);
+        console.log(response.data.data.list);
+        console.log(response.data.data.list[`{ $userName }`]);
+        //alert(response.data.result.message);
+      }).catch((err) =>{
+        alert(err.data.result.message);
+        console.log(err.data.result.message);
+      });
+    },
   },
 };
 </script>

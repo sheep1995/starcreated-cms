@@ -14,10 +14,7 @@ import SidebarMenu from "../components/SidebarMenu.vue";
                     創星球內部管理系統
                   </h2>
                   <div class="d-flex justify-content-center">
-                    <img
-                      src="../assets/images/img-login.svg"
-                      alt="img-login.svg"
-                    />
+                    <img src="../assets/images/img-login.svg" alt="img-login.svg" />
                   </div>
                 </div>
               </div>
@@ -27,64 +24,40 @@ import SidebarMenu from "../components/SidebarMenu.vue";
                 <!-- login form -->
                 <form class="fs-6" @submit.prevent="login">
                   <div class="mb-3">
-                    <label
-                      for="exampleInputEmail1"
-                      class="form-label text-light"
-                      >E-mail</label
-                    >
-                    <input
-                      type="email"
-                      class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      placeholder="hi@westar.tw" 
-                      v-model="user.email"
-                      required
-                    />
+                    <label for="exampleInputEmail1" class="form-label text-light">E-mail</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                      placeholder="hi@westar.tw" v-model="user.email" required />
                     <!-- <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div> -->
                   </div>
                   <div class="mb-2">
-                    <label
-                      for="exampleInputPassword1"
-                      class="form-label text-light"
-                      >密碼</label
-                    >
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="exampleInputPassword1"
-                      placeholder="Abc123456"
-                      v-model="user.password" 
-                      required
-                    />
-                    <!-- <button class="button" @click="toggleShow"><span class="icon is-small is-right">
-                      <i class="bi" :class="{ 'bi-eye-slash-fill': showPassword, 'bi-eye-fill': !showPassword }"></i>
-                    </span>
-                  </button> -->
+                    <label for="loginPw" class="form-label text-light">密碼</label>
+                    <!-- <Password id="loginPw" v-model="user.password" toggleMask placeholder="Abc514913" :feedback="false" ></Password> -->
+                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Abc123456"
+                    v-model="user.password" required />
+                  <!-- <button class="button" @click="toggleShow"><span class="icon is-small is-right">
+                        <i class="bi" :class="{ 'bi-eye-slash-fill': showPassword, 'bi-eye-fill': !showPassword }"></i>
+                      </span>
+                    </button> -->
                   </div>
                   <div class="mb-4">
                     <!-- Button trigger modal -->
-                    <a
-                      href="#"
-                      class="text-decoration-underline text-secondary"
-                      data-bs-toggle="modal"
-                      data-bs-target="#exampleModal"
-                      >忘記密碼 ?</a
-                    >
+                    <a href="#" class="text-decoration-underline text-secondary" data-bs-toggle="modal"
+                      data-bs-target="#exampleModal">忘記密碼 ?</a>
                   </div>
                   <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary text-light" @click="showAlert" >
+                    <!-- <button type="submit" class="btn btn-primary text-light" @click="showAlert"> -->
+                      <button type="submit" class="btn btn-primary text-light">
                       登入
                     </button>
                     <!-- <a href="./"  class="btn btn-primary text-light">登入</a> -->
-                  </div>
-                  <!--  -->
-                  <!-- <h5>Validation Message</h5>
+                </div>
+                <!--  -->
+                <!-- <h5>Validation Message</h5>
                       <div class="formgroup-inline" style="margin-bottom:.5rem">
                           <label for="username" class="p-sr-only">Username</label>
-                          <InputText id="username" placeholder="Username" class="p-invalid" />
-                          <InlineMessage>Username is required</InlineMessage>
-                      </div> -->
+                            <InputText id="username" placeholder="Username" class="p-invalid" />
+                            <InlineMessage>Username is required</InlineMessage>
+                        </div> -->
                   <!--  -->
                 </form>
               </div>
@@ -96,23 +69,12 @@ import SidebarMenu from "../components/SidebarMenu.vue";
   </section>
 
   <!-- Modal -->
-  <div
-    class="modal fade"
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">忘記密碼?</h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body text-center">請聯絡管理員: help@westar.tw</div>
         <div class="modal-footer d-flex justify-content-center">
@@ -132,8 +94,8 @@ import SidebarMenu from "../components/SidebarMenu.vue";
 // const handelOpenModal = () => {
 //   deleteModal.show();
 // };
-console.log(import.meta.env.VITE_PATH);
-console.log(`${import.meta.env.VITE_PATH}/login`);
+// console.log(import.meta.env.VITE_PATH);
+// console.log(`${import.meta.env.VITE_PATH}/login`);
 // console.log(import.meta.env.VITE_PATH2);
 
 // const api = `${import.meta.env.VITE_PATH}/login`;
@@ -142,20 +104,37 @@ console.log(`${import.meta.env.VITE_PATH}/login`);
 //     method: 'post',
 //     url: 'api',
 // });
+import Password from 'primevue/password';
+import { email, required } from "@vuelidate/validators";
+import { useVuelidate } from "@vuelidate/core";
 const api = `${import.meta.env.VITE_PATH}/login`;
 
+
 export default {
+  setup: () => ({ v$: useVuelidate() }),
   data() {
     return {
       data: {},
       //1.1 LOGIN
       user: {
         "email": "rd14@westar.tw",
-        "password": "1234"
+        "password": "Abc123456"
       },
       showPassword: false,
+      isLoggedIn: false,
     };
   },
+  validations() {
+        return {
+            email: {
+                required,
+                email
+            },
+            password: {
+                required
+            },
+        }
+    },
   methods: {
     // login() {
     //   const api = ' ';
@@ -172,53 +151,80 @@ export default {
     login() {
       this.$http.post(api, this.user).then((response) => {
         const { expired } = response.data;
-        //const { token, expired } = res.user;
-        //document.cookie = `ourToken=${token};expires=${new Date(expired)};`
+        const message = response.data.result.message;
+        let self = this;
+        //const { token, expired } = response.data.accessToken;
+        //const { token } = response.data.accessToken;
+        const { token } = response.data;
+        document.cookie = `ourToken=${token};expires=${new Date(expired)};`
         document.cookie = `expires=${new Date(expired)};`
-        //this.$router.push("/");
         console.log(response.data.result.message);
+        console.log(response.data.result.code);
         console.log(response.data.result);
-        console.log(response.data.data);
+        if (message === "登入成功") {
+          this.$swal({
+            title: "登入成功",
+            //text: "請相關人員到信箱查看是否有收到驗證信",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+          }).then(function () {
+            //window.location.href = "/starcreated-cms/";
+            //this.$router.push('/starcreated-cms/');
+            self.$router.push({name: "Home"});
+            this.isLoggedIn = true;
+          });
+          } else {
+            this.$swal({
+            title: "登入失敗",
+            text: "請確認資料是否輸入正確",
+            icon: "warning",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          }
         //alert(response.data.result.message);
-      }).catch((err) =>{
-        alert(err.data.result.message);
-        //this.$httpMessageState(error.response, '登入');
-        console.log(err.data.result.message);
-      });
+      }).catch((error) => {
+        //alert(error.data.result.message);
+        //alert(error.response, '請確認資料是否輸入正確');
+        this.$httpMessageState(error.response, '請確認資料是否輸入正確');
+    });
     },
     showAlert() {
       this.$http.post(api, this.user).then((response) => {
         const message = response.data.result.message;
-        console.log(response.data.result.message);
-        if ( message === "登入成功" ) {
-        this.$swal({
-        title: "登入成功",
-        //text: "請相關人員到信箱查看是否有收到驗證信",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 1500,
-      }).then(function(){
-        window.location.href = "/starcreated-cms/";
-      });
-      } else {
-        this.$swal({
-        title: "登入失敗",
-        text: "請確認資料是否輸入正確",
-        icon: "warning",
-        showConfirmButton: false,
-        timer: 1500,
+        //console.log(response.data.result.message);
+        if (message === "登入成功") {
+          this.$swal({
+            title: "登入成功",
+            //text: "請相關人員到信箱查看是否有收到驗證信",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+          }).then(function () {
+            //window.location.href = "/starcreated-cms/";
+            this.$router.push('/starcreated-cms/');
+          });
+        } else {
+          this.$swal({
+            title: "登入失敗",
+            text: "信箱密碼有誤，請確認資料是否輸入正確",
+            icon: "warning",
+            showConfirmButton: false,
+            timer: 1500,
+          })
+        }
       })
-      }
-      }).catch((err) =>{
-        console.log(err.data.result.message);
-        this.$swal({
-        title: "登入失敗",
-        text: "請確認資料是否輸入正確",
-        icon: "warning",
-        showConfirmButton: false,
-        timer: 1500,
-      })
-      });
+      // .catch((err) =>{
+      //   //console.log(err.data.result.message);
+      //   this.$swal({
+      //   title: "登入失敗",
+      //   text: "請確認資料是否輸入正確",
+      //   icon: "warning",
+      //   showConfirmButton: false,
+      //   timer: 1500,
+      // })
+      // });
     },
     //
     toggleShow() {
@@ -229,3 +235,6 @@ export default {
 
 };
 </script>
+<!-- <style lang="scss">
+  @import "@/assets/scss/vendors/primevuePw.scss";
+</style> -->

@@ -50,13 +50,13 @@ import Sidebar from "@/components/Sidebar.vue";
                       <!-- <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div> -->
                     </div>
                     <div class="col-md-6 mb-3 text-start">
-                      <label for="exampleInputEmail1" class="form-label"
+                      <label for="addEmail" class="form-label"
                         >帳號</label
                       >
                       <input
                         type="email"
                         class="form-control"
-                        id="exampleInputEmail1"
+                        id="addEmail"
                         aria-describedby="emailHelp"
                         placeholder="hi@westar.tw"
                       />
@@ -64,13 +64,13 @@ import Sidebar from "@/components/Sidebar.vue";
                     </div>
                     <!--  -->
                     <div class="col-md-6 mb-2 text-start">
-                      <label for="exampleInputPassword1" class="form-label"
+                      <label for="addPassword" class="form-label"
                         >密碼</label
                       >
                       <input
-                        type="password"
+                        type="text"
                         class="form-control"
-                        id="exampleInputPassword1"
+                        id="addPassword"
                         placeholder="123456"
                       />
                     </div>
