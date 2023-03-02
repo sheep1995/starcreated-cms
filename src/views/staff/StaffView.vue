@@ -75,7 +75,8 @@ import Sidebar from "@/components/Sidebar.vue";
                         class="btn btn-primary text-white me-2"
                         data-bs-toggle="modal"
                         data-bs-target="#editModal"
-                        @click="editStaff"
+                        :id="item.userId"
+                        @click="getUser(index)"
                       >
                         <i class="bi bi-pencil-fill"></i> 編輯
                       </button>
@@ -84,6 +85,7 @@ import Sidebar from "@/components/Sidebar.vue";
                         class="btn btn-danger"
                         data-bs-toggle="modal"
                         data-bs-target="#delModal"
+                        :id="item.userId"
                       >
                         <i class="bi bi-trash-fill"></i> 刪除
                       </button>
@@ -168,46 +170,50 @@ import Sidebar from "@/components/Sidebar.vue";
           <!--  -->
           <div class="row card-group">
             <div class="col-md-12 mb-4">
+              <div v-if="selectedUser">
+                123{{ selectedUser }}
+                <div>
+                  {{ selectedUser.userName }}
+                </div>
+              </div>
               <div class="col-md-12">
                 <!-- <h2 class=" text-center mb-4">登入</h2> -->
-                <!-- login form -->
+                <!-- edit form -->
                 <form class="row fs-6 p-4">
                   <div class="col-md-6 mb-3 text-start">
-                    <label for="exampleInputEmail1" class="form-label"
+                    <label for="staffUserName" class="form-label"
                       >姓名</label
                     >
                     <input
-                      type="email"
+                      type="text"
                       class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      placeholder="王曉明"
+                      id="staffUserName"
                     />
                     <!-- <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div> -->
                   </div>
                   <div class="col-md-6 mb-3 text-start">
-                    <label for="exampleInputEmail1" class="form-label"
+                    <label for="staffEmail" class="form-label"
                       >帳號</label
                     >
                     <input
                       type="email"
                       class="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      placeholder="hi@westar.tw"
+                      id="staffEmail"
+                      disabled
+                      
                     />
                     <!-- <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div> -->
                   </div>
                   <!--  -->
                   <div class="col-md-6 mb-2 text-start">
-                    <label for="exampleInputPassword1" class="form-label"
+                    <label for="staffPassword" class="form-label"
                       >密碼</label
                     >
                     <input
-                      type="password"
+                      type="text"
                       class="form-control"
-                      id="exampleInputPassword1"
-                      placeholder="123456"
+                      id="staffPassword"
+                      placeholder="Abc123456"
                     />
                   </div>
                   <!--  -->
@@ -217,26 +223,10 @@ import Sidebar from "@/components/Sidebar.vue";
                       class="form-select"
                       aria-label="Default select example"
                     >
-                      <option selected>選擇身份</option>
-                      <option value="1">最高管理員</option>
-                      <option value="2">行銷人員</option>
-                      <option value="3">開發人員</option>
+                      <option value="最高管理者">最高管理者</option>
+                      <option value="一般管理者" selected>一般管理者</option>
                     </select>
-
-                    <!-- <label for="exampleInputPassword1" class="form-label">身份</label>
-              <input
-                type="password"
-                class="form-control"
-                id="exampleInputPassword1"
-                placeholder="行銷人員"
-              /> -->
                   </div>
-                  <!-- <h5>Validation Message</h5>
-                <div class="formgroup-inline" style="margin-bottom:.5rem">
-                    <label for="username" class="p-sr-only">Username</label>
-                    <InputText id="username" placeholder="Username" class="p-invalid" />
-                    <InlineMessage>Username is required</InlineMessage>
-                </div> -->
                   <!--  -->
                 </form>
               </div>
@@ -255,6 +245,7 @@ import Sidebar from "@/components/Sidebar.vue";
                 type="submit"
                 class="btn btn-primary text-light"
                 data-bs-dismiss="modal"
+                @click="editStaff"
               >
                 確認資料
               </button>
@@ -292,7 +283,7 @@ import Sidebar from "@/components/Sidebar.vue";
           <button
             type="button"
             class="btn btn-primary text-white"
-            data-bs-dismiss="modal"
+            @click="delStaff"
           >
             確認
           </button>
@@ -315,8 +306,13 @@ export default {
       dataAll: [],
       apiListLength:0,
       index:0,
-      user: {
-      },
+      user: [],
+      users: [],
+      userId: {},
+      isNew: false,
+      //
+      selectedUser: null
+
     };
   },
   productService: null,
@@ -324,40 +320,78 @@ export default {
     this.productService = new ProductService();
   },
   methods: {
+    async getUser(userId) {
+  try {
+    const response = await axios.get(`/users/${userId}`)
+    this.selectedUser = response.data.name
+  } catch (error) {
+    console.error(error)
+  }
+},
+
+    getUsers() {
+      this.$http.get(api).then((res) => {
+      //const userId = res.data.data.list[0].userId;
+      this.dataAll = res.data.data.list;
+      this.apiListLength = res.data.data.list;
+      //this.userId = 'res.data.data.list[i].userId';
+      this.userId = 'res.data.data.list[i].userId';
+
+      this.users = res.data.data.list;
+      this.user = this.users.find(user => user.userId === this.userId);
+
+      console.log(res.data.data.list[0].userId);
+      console.log(this.user);
+      console.log(res.data);
+    });
+    },
     editStaff() {
-      this.$http.patch(api, this.user, {
-        "userName": "Admin Test",
-    "password": "Abc123456",
-    "identity": "最高管理者"
+      //const userId = res.data.data.list[0].userId;
+      const newUserId = this.newUserId;
+      const newUserName = this.newUserName;
+      const newEmail = this.newEmail;
+      const newPassword = this.newPassword;
+      const newIdentity = this.newIdentity;
+      this.$http.patch(`api/?userId=${newUserId}`, {
+        // "userId": "6c241818-c33a-4cda-9b00-99c18be31532",
+        userName: newUserName,
+        email: newEmail,
+        password: newPassword,
+        identity: newIdentity,
       })
       .then((response) => {
-        
         console.log(response.data.result);
-        //alert(response.data.result.message);
+        this.item.userName = newUserName;
+        this.item.email = newEmail;
+        this.item.password = newPassword;
+        this.item.identity = newIdentity;
       }).catch((err) =>{
-        alert(err.data.result.message);
+        //alert(err.data.result.message);
         console.log(err.data.result.message);
+      });
+    },
+    delStaff(item) {
+      this.$http.delete(`api/${this.dataAll.id}`, {
+      })
+      .then((response) => {
+        console.log(response.data);
+        this.getUsers();
+        this.dataAll.splice(this.getIndex(item.id), 1)//get user list
+      }).catch((err) =>{
+        //alert(err.data.result.message);
+        console.log(err.data.result);
       });
     },
   },
   mounted() {
-    this.productService
-      .getProductsSmall()
-      .then((data) => (this.products = data));
-    //
-    console.log(import.meta.env.VITE_PATH);
-    console.log(import.meta.env.VITE_TEXT);
-    const url = import.meta.env.VITE_PATH;
-    this.$http.get(api).then((res) => {
-      console.log(res);
-      console.log(res.data.data.list[0]);
-      this.dataAll = res.data.data.list;
-      this.apiListLength = res.data.data.list;
-
-      // this.data = res.data.results[0].gender;
-      // this.data2 = `${res.data.results[0].name.title} ${res.data.results[0].name.first}`;
-      console.log(res.data);
-    });
+    // this.productService
+    //   .getProductsSmall()
+    //   .then((data) => (this.products = data));
+    // //
+    // console.log(import.meta.env.VITE_PATH);
+    // console.log(import.meta.env.VITE_TEXT);
+    // const url = import.meta.env.VITE_PATH;
+    this.getUsers();
     //
   },
 };

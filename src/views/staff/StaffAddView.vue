@@ -36,7 +36,7 @@ import Sidebar from "@/components/Sidebar.vue";
                 <div class="col-md-12">
                   <!-- <h2 class=" text-center mb-4">登入</h2> -->
                   <!-- login form -->
-                  <form class="row fs-6 mt-4">
+                  <form class="row fs-6 mt-4"  @submit.prevent="addStaff">
                     <div class="col-md-6 mb-3 text-start">
                       <label for="exampleInputName" class="form-label"
                         >姓名</label
@@ -58,7 +58,8 @@ import Sidebar from "@/components/Sidebar.vue";
                         class="form-control"
                         id="addEmail"
                         aria-describedby="emailHelp"
-                        placeholder="hi@westar.tw"
+                        placeholder="hi@westar.tw" 
+                        required 
                       />
                       <!-- <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div> -->
                     </div>
@@ -71,7 +72,8 @@ import Sidebar from "@/components/Sidebar.vue";
                         type="text"
                         class="form-control"
                         id="addPassword"
-                        placeholder="123456"
+                        placeholder="Abc123456"
+                        required 
                       />
                     </div>
                     <!--  -->
@@ -80,11 +82,12 @@ import Sidebar from "@/components/Sidebar.vue";
                       <select
                         class="form-select"
                         aria-label="Default select example"
+                        required 
                       >
                         <option selected>選擇身份</option>
-                        <option value="1">最高管理員</option>
-                        <option value="2">行銷人員</option>
-                        <option value="3">開發人員</option>
+                        <option value="最高管理者">最高管理者</option>
+                        <option value="一般管理者">一般管理者</option>
+                        <!-- <option value="3">開發人員</option> -->
                       </select>
                     </div>
                     <!--  -->
@@ -92,7 +95,7 @@ import Sidebar from "@/components/Sidebar.vue";
                       <div class="d-flex justify-content-center">
                         <button
                           type="button"
-                          @click="showAlert"
+                          @click="addStaff"
                           class="btn btn-primary text-light"
                         >
                           確認新增
@@ -114,13 +117,45 @@ import Sidebar from "@/components/Sidebar.vue";
   </div>
 </template>
 <script>
+const api = `${import.meta.env.VITE_PATH}/user`;
+
 export default {
   data() {
     return {
       products: null,
+      addUser: null,
     };
   },
   methods: {
+    addStaff(){
+      this.$http.post(api, this.addUser).then((response) => {
+        const message = response.data.result.message;
+        let self = this;
+        console.log(response.data.result);
+        if (message === "新增成功") {
+          this.$swal({
+            title: "新增成功",
+            text: "請相關人員到信箱查看是否有收到驗證信",
+            icon: "success",
+            confirmButtonColor: "$primary",
+            confirmButtonText: "關閉",
+          });
+          } else {
+            this.$swal({
+            title: "資料輸入有誤",
+            text: "請確認資料欄位是否都有填寫!",
+            icon: "warning",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          }
+        //alert(response.data.result.message);
+      }).catch((error) => {
+        //this.$httpMessageState(error.response, '請確認資料欄位是否都有填寫');
+        console.log(error);
+
+    });
+    },
     showAlert() {
       // Use sweetalert2
       //this.$swal('Hello Vue world!!!');
