@@ -81,7 +81,7 @@
             >
           </li> -->
           <li class="nav-link px-2 link-dark mt-2">
-            <RouterLink class="text-decoration-none text-dark" to="/login"
+            <RouterLink class="text-decoration-none text-dark" to="/"
               >登出</RouterLink
             >
           </li>

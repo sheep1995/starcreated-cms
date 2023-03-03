@@ -19,7 +19,7 @@ import Sidebar from "@/components/Sidebar.vue";
           <!-- <Breadcrumb /> -->
             <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
               <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
-                <router-link to="/" class="breadcrumb-item">首頁</router-link>
+                <router-link to="/dshboard" class="breadcrumb-item">首頁</router-link>
                 <li class="breadcrumb-item active" aria-current="page">
                   會員管理
                 </li>

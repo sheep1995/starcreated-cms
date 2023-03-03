@@ -9,7 +9,7 @@ const router = createRouter({
   linkExactActiveClass: 'exact-active-link',
   routes: [
     {
-      path: "/login",
+      path: "/",
       name: "Login",
       component: () => import("../views/LoginView.vue"),
       meta: {
@@ -19,7 +19,7 @@ const router = createRouter({
       }
     },
     {
-      path: "/",
+      path: "/dshboard",
       name: "Home",
       component: HomeView,
       meta: {

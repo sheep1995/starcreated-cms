@@ -13,7 +13,7 @@
         </router-link>
       </li>
       <li>
-        <router-link to="/" class="nav-link text-light">
+        <router-link to="/dshboard" class="nav-link text-light">
           <i class="fs-5 bi bi-speedometer2 me-2"></i>
           首頁
         </router-link>

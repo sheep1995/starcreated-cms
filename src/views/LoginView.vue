@@ -104,7 +104,6 @@ import SidebarMenu from "../components/SidebarMenu.vue";
 //     method: 'post',
 //     url: 'api',
 // });
-import Password from 'primevue/password';
 import { email, required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 const api = `${import.meta.env.VITE_PATH}/login`;
@@ -172,7 +171,7 @@ export default {
             //window.location.href = "/starcreated-cms/";
             //this.$router.push('/starcreated-cms/');
             self.$router.push({name: "Home"});
-            this.isLoggedIn = true;
+            // this.isLoggedIn = true;
           });
           } else {
             this.$swal({

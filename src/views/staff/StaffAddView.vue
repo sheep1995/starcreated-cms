@@ -13,10 +13,9 @@ import Sidebar from "@/components/Sidebar.vue";
         <div class="row">
           <section class="col-lg-12">
             <TopHeader />
-
             <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
               <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
-                <router-link to="/" class="breadcrumb-item">首頁</router-link>
+                <router-link to="/dshboard" class="breadcrumb-item">首頁</router-link>
                 <router-link to="/staff" class="breadcrumb-item">人員管理</router-link>
                 <li class="breadcrumb-item active" aria-current="page">
                   新增人員
@@ -24,6 +23,13 @@ import Sidebar from "@/components/Sidebar.vue";
               </ol>
             </nav>
             <!--  -->
+              <!-- <div
+                class="alert bg-danger mt-4 mb-4 text-white fw-medium"
+                role="alert"
+              >
+              此信箱已被使用
+              </div> -->
+              <!--  -->
             <div>
               <h2 class="text-primary mt-4 fs-3 fw-bold">新增人員</h2>
             </div>
@@ -35,8 +41,9 @@ import Sidebar from "@/components/Sidebar.vue";
               <div class="col-md-12 mb-4">
                 <div class="col-md-12">
                   <!-- <h2 class=" text-center mb-4">登入</h2> -->
-                  <!-- login form -->
-                  <form class="row fs-6 mt-4"  @submit.prevent="addStaff">
+                  <!-- add user form  @click.prevent="addNewUser()"-->
+                  <form class="row fs-6 mt-4" @submit.prevent="addStaff" >
+                    <!-- <form class="row fs-6 mt-4"  @submit.prevent="addStaff"> -->
                     <div class="col-md-6 mb-3 text-start">
                       <label for="exampleInputName" class="form-label"
                         >姓名</label
@@ -46,6 +53,7 @@ import Sidebar from "@/components/Sidebar.vue";
                         class="form-control"
                         id="exampleInputName"
                         placeholder="王曉明"
+                        v-model="addUser.userName"
                       />
                       <!-- <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div> -->
                     </div>
@@ -60,6 +68,7 @@ import Sidebar from "@/components/Sidebar.vue";
                         aria-describedby="emailHelp"
                         placeholder="hi@westar.tw" 
                         required 
+                        v-model="addUser.email"
                       />
                       <!-- <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div> -->
                     </div>
@@ -74,6 +83,7 @@ import Sidebar from "@/components/Sidebar.vue";
                         id="addPassword"
                         placeholder="Abc123456"
                         required 
+                        v-model="addUser.password"
                       />
                     </div>
                     <!--  -->
@@ -82,12 +92,11 @@ import Sidebar from "@/components/Sidebar.vue";
                       <select
                         class="form-select"
                         aria-label="Default select example"
+                        v-model="addUser.identity"
                         required 
                       >
-                        <option selected>選擇身份</option>
-                        <option value="最高管理者">最高管理者</option>
-                        <option value="一般管理者">一般管理者</option>
-                        <!-- <option value="3">開發人員</option> -->
+                        <!-- <option disabled="disabled" value=" " >選擇身份</option> -->
+                        <option v-for="identityOption in identityOptions" :value="identityOption.value" > {{ identityOption.text }}</option>
                       </select>
                     </div>
                     <!--  -->
@@ -95,9 +104,12 @@ import Sidebar from "@/components/Sidebar.vue";
                       <div class="d-flex justify-content-center">
                         <button
                           type="button"
-                          @click="addStaff"
                           class="btn btn-primary text-light"
+                          @click="addStaff()"
+                          :disabled="isFormInvalid()"
                         >
+                        <!-- @click="addStaff" -->
+                        <!-- @click.prevent="addNewUser(userName, email, password, identity)" -->
                           確認新增
                         </button>
                       </div>
@@ -123,38 +135,55 @@ export default {
   data() {
     return {
       products: null,
-      addUser: null,
+      addUser: {
+        username: '',
+        email: '',
+        password: '',
+        identity: '',
+      },
+      identityOptions: [
+        { text: '一般管理者', value: '一般管理者' },
+        { text: '最高管理者', value: '最高管理者' },
+      ]
     };
   },
   methods: {
     addStaff(){
       this.$http.post(api, this.addUser).then((response) => {
-        const message = response.data.result.message;
-        let self = this;
+        const code = response.data.result.code;
+        // let self = this;
         console.log(response.data.result);
-        if (message === "新增成功") {
+        if (code === 210) {
           this.$swal({
             title: "新增成功",
             text: "請相關人員到信箱查看是否有收到驗證信",
             icon: "success",
             confirmButtonColor: "$primary",
             confirmButtonText: "關閉",
+          }).then(function () {
+           //self.$router.push({name: "Home"});
           });
           } else {
             this.$swal({
             title: "資料輸入有誤",
-            text: "請確認資料欄位是否都有填寫!",
+            //text: "請確認資料欄位是否都有填寫!",
             icon: "warning",
             showConfirmButton: false,
             timer: 1500,
           });
+          
           }
         //alert(response.data.result.message);
       }).catch((error) => {
         //this.$httpMessageState(error.response, '請確認資料欄位是否都有填寫');
         console.log(error);
-
     });
+    //
+    //
+    },
+    isFormInvalid() {
+      const { userName, email, password, identity } = this.addUser;
+      return !userName || !email || !password || !identity
     },
     showAlert() {
       // Use sweetalert2
@@ -173,3 +202,37 @@ export default {
   },
 };
 </script>
+<!-- <script>
+import { ref } from 'vue';
+
+const identity = ref('一般管理者')
+
+const identityOptions = ref([
+  { text: '最高管理者', value: '最高管理者' },
+  { text: '一般管理者', value: '一般管理者' },
+])
+// this.$http.post(api, this.addUser).then((response) => {
+export default {
+  setup() {
+    const api = `${import.meta.env.VITE_PATH}/user`;
+
+    const addNewUser = async (userName, email, password, identity ) => {
+      try {
+        const response = await this.$http.post('api', {
+          userName: userName,
+          email: email,
+          password: password,
+          identity: identity,
+        });
+        console.log(response.data); // 處理返回的數據
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    return {
+      addNewUser
+    }
+  }
+}
+
+</script> -->
