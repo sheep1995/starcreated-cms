@@ -81,8 +81,8 @@
             >
           </li> -->
           <li class="nav-link px-2 link-dark mt-2">
-            <RouterLink class="text-decoration-none text-dark" to="/"
-              >登出</RouterLink
+            <RouterLink class="text-decoration-none fw-bold d-flex align-items-center" to="/"
+              ><i class="bi bi-box-arrow-right fs-4 mx-2"></i> 登出</RouterLink
             >
           </li>
         </ul>

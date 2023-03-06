@@ -117,7 +117,7 @@ export default {
       //1.1 LOGIN
       user: {
         "email": "rd14@westar.tw",
-        "password": "Abc123456"
+        "password": "Acc123456"
       },
       showPassword: false,
       isLoggedIn: false,
@@ -181,6 +181,7 @@ export default {
             showConfirmButton: false,
             timer: 1500,
           });
+          this.$router.push("/")
           }
         //alert(response.data.result.message);
       }).catch((error) => {

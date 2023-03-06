@@ -2,6 +2,8 @@
 import SidebarMenu2 from "@/components/SidebarMenu2.vue";
 import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
+// import StaffModal from "@/components/StaffModal.vue"
+
 </script>
 
 <template>
@@ -66,11 +68,15 @@ import Sidebar from "@/components/Sidebar.vue";
                     <td>{{ item.identity }}</td>
                     <td>
                       <button type="button" class="btn btn-primary text-white me-2" data-bs-toggle="modal"
-                        data-bs-target="#editModal" :id="item.userId" @click="getUsers(userId)">
+                        data-bs-target="#editModal" 
+                        :id="item.userId"
+                        @click="saveUserIdClick(item.userId)"
+                        >
                         <i class="bi bi-pencil-fill"></i> 編輯
                       </button>
                       <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delModal"
-                        :id="item.userId" 
+                        
+                        @click="saveUserIdClick(item.userId)"
                         >
                         <i class="bi bi-trash-fill"></i> 刪除
                       </button>
@@ -141,15 +147,9 @@ import Sidebar from "@/components/Sidebar.vue";
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body text-center">
-          <!--  -->
+          <!-- @click="getUsers(true, item)" -->
           <div class="row card-group">
             <div class="col-md-12 mb-4">
-              <div v-if="selectedUser">
-                123{{ selectedUser }}
-                <div>
-                  {{ selectedUser.userName }}
-                </div>
-              </div>
               <div class="col-md-12">
                 <!-- <h2 class=" text-center mb-4">登入</h2> -->
                 <!-- edit form -->
@@ -157,7 +157,7 @@ import Sidebar from "@/components/Sidebar.vue";
                   <div class="col-md-6 mb-3 text-start">
                     <label for="staffUserName" class="form-label">姓名</label>
                     <input type="text" class="form-control" id="staffUserName" />
-                    <!-- {{ item.name }} -->
+                    <!-- {{ saveUserId.name }} -->
                     <!-- <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div> -->
                   </div>
                   <div class="col-md-6 mb-3 text-start">
@@ -213,7 +213,9 @@ import Sidebar from "@/components/Sidebar.vue";
           <button type="button" class="btn btn-light" data-bs-dismiss="modal">
             取消
           </button>
-          <button type="button" class="btn btn-primary text-white" @click="delStaff">
+          <button type="button" class="btn btn-primary text-white" @click="delStaff()"
+          data-bs-dismiss="modal"
+          >
             確認
           </button>
         </div>
@@ -224,6 +226,7 @@ import Sidebar from "@/components/Sidebar.vue";
 </template>
 <script>
 import ProductService from "@/assets/js/ProductService.js";
+
 
 const api = `${import.meta.env.VITE_PATH}/user`;
 
@@ -244,6 +247,13 @@ export default {
       //
       selectedUser: null,
       //newUserId:[],
+      //del
+      items: [],
+      userIds: [] ,
+      //save user id here
+      saveUserId: null,
+      //edit
+      
     };
   },
   productService: null,
@@ -251,18 +261,25 @@ export default {
     this.productService = new ProductService();
   },
   methods: {
-    async getUser(userId) {
-      try {
-        const response = await axios.get(`/users/${userId}`)
-        this.selectedUser = response.data.name
-      } catch (error) {
-        console.error(error)
-      }
-    },
+    // async getUser(userId) {
+    //   try {
+    //     const response = await axios.get(`/users/${userId}`)
+    //     this.selectedUser = response.data.name
+    //   } catch (error) {
+    //     console.error(error)
+    //   }
+    // },
 
+    // getUsers(isNew, item) {
+    //   if (isNew) {
+    //     this.tempProduct = {};
+    //   } else {
+    //     this.tempProduct = {...item};
+    //   }
     getUsers() {
       this.$http.get(api).then((res) => {
         //const userId = res.data.data.list[0].userId;
+        const userList = res.data.data.list;
         this.products = res.data.data.list;
         this.apiListLength = res.data.data.list;
         //this.userId = 'res.data.data.list[i].userId';
@@ -271,9 +288,14 @@ export default {
         this.users = res.data.data.list;
         this.user = this.users.find(user => user.userId === this.userId);
 
-        console.log(res.data.data.list[0].userId);
-        console.log(this.user);
+        // console.log(res.data.data.list[0].userId);
+        // console.log(this.user);
         console.log(res.data);
+        //del
+        // const updatedUsers = data.users.filter(user => user.userId !== this.userId);
+        // this.$http.delete(api, { users: updatedUsers}).then((res) => {
+        //   console.log("del!!");
+        // })
       });
     },
     editStaff(product) {
@@ -303,18 +325,87 @@ export default {
           console.log(err.data.result.message);
         });
     },
-    delStaff(item) {
-      this.$http.delete(`api/${this.dataAll.id}`, {
+    //save userId
+    saveUserIdClick(saveUserId){
+      this.saveUserId = saveUserId;
+      console.log(saveUserId);
+    },
+    // delStaff(id) {
+    //   this.$http.delete(`api/${id}`, {
+    //   })
+    //     .then((response) => {
+    //       console.log(response.data);
+    //     //this.getUsers();
+    //       //this.dataAll.splice(this.getIndex(item.id), 1)//get user list
+    //     }).catch((err) => {
+    //       //alert(err.data.result.message);
+    //       console.log(err);
+    //     });
+    //   },
+    delStaff() {
+      // const index = this.items.findIndex(item =>item.userId === id);
+      // this.items.splice(index, 1);
+        this.$http.delete( api, {
+          data: {userId : this.saveUserId} //傳入對應的USERID
       })
         .then((response) => {
-          console.log(response.data);
+          console.log(response);
+      const code = response.data.result.code;
+          if (code === 240) {
+          this.$swal({
+            title: "刪除成功",
+            //text: "請相關人員到信箱查看是否有收到驗證信",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          // this.$router.push("/staff")
           this.getUsers();
-          this.dataAll.splice(this.getIndex(item.id), 1)//get user list
+          } else {
+            this.$swal({
+            title: "刪除失敗",
+            icon: "warning",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          //this.$router.push("/")
+          }
+        //this.getUsers();
+          //this.dataAll.splice(this.getIndex(item.id), 1)//get user list
         }).catch((err) => {
           //alert(err.data.result.message);
-          console.log(err.data.result);
+          console.log(err);
         });
+      //console.log(saveUserId);
+
+      // if(index !== -1){
+      //   this.items.splice(index, 1);
+      //   // this.$http.delete(`api/${id}`, {
+      //   this.$http.delete( api, {
+      //     data: {userId: this.userIds[index]} //傳入對應的USERID
+      // })
+      //   .then((response) => {
+      //     console.log(response);
+      //   //this.getUsers();
+      //     //this.dataAll.splice(this.getIndex(item.id), 1)//get user list
+      //   }).catch((err) => {
+      //     //alert(err.data.result.message);
+      //     console.log(err);
+      //   });
+      // }
     },
+    // delStaff(item) {
+    //   this.$http.delete(`api/${this.dataAll.id}`, {
+    //   })
+    //     .then((response) => {
+    //       console.log(response.data);
+    //       this.getUsers();
+    //       this.dataAll.splice(this.getIndex(item.id), 1)//get user list
+    //     }).catch((err) => {
+    //       //alert(err.data.result.message);
+    //       console.log(err.data.result);
+    //     });
+    // },
     //
     findIndexById(id) {
       let index = -1;

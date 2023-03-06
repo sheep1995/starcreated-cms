@@ -95,7 +95,7 @@ import Sidebar from "@/components/Sidebar.vue";
                         v-model="addUser.identity"
                         required 
                       >
-                        <!-- <option disabled="disabled" value=" " >選擇身份</option> -->
+                        <option disabled value="" >選擇身份</option>
                         <option v-for="identityOption in identityOptions" :value="identityOption.value" > {{ identityOption.text }}</option>
                       </select>
                     </div>
@@ -184,20 +184,6 @@ export default {
     isFormInvalid() {
       const { userName, email, password, identity } = this.addUser;
       return !userName || !email || !password || !identity
-    },
-    showAlert() {
-      // Use sweetalert2
-      //this.$swal('Hello Vue world!!!');
-      //
-      this.$swal({
-        title: "新增成功",
-        text: "請相關人員到信箱查看是否有收到驗證信",
-        icon: "success",
-        //showCancelButton: true,
-        confirmButtonColor: "$primary",
-        //cancelButtonColor: "#d33",
-        confirmButtonText: "關閉",
-      });
     },
   },
 };

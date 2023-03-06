@@ -34,12 +34,12 @@ export default defineConfig({
   //   //open: true,
   //   //port: 5173,
   //   proxy: {
-  //     '/login' : {
+  //     '/dshboard' : {
   //       //target: 'http://localhost:5173/starcreated-cms/',
-  //       target: 'https://stage.westar-cms.com/v1/login',
+  //       target: 'https://stage.westar-cms.com/v1/dshboard',
   //       //target: config.VITE_PATH,
   //       changeOrigin: true,
-  //       rewrite: (path) => path.replace(/^\/login/, '')
+  //       rewrite: (path) => path.replace(/^\/dshboard/, '')
   //     },
   //   },
   // },
