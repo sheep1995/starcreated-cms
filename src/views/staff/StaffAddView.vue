@@ -95,7 +95,7 @@ import Sidebar from "@/components/Sidebar.vue";
                         v-model="addUser.identity"
                         required 
                       >
-                        <option disabled value="" >選擇身份</option>
+                        <option disabled value="" class="text-gray-500" >選擇身份</option>
                         <option v-for="identityOption in identityOptions" :value="identityOption.value" > {{ identityOption.text }}</option>
                       </select>
                     </div>

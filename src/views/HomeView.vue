@@ -24,7 +24,8 @@ import Sidebar from "@/components/Sidebar.vue";
                 class="alert bg-success mt-4 mb-4 text-dark fw-medium"
                 role="alert"
               >
-                Hi, {{ userName }} 歡迎回來 ~ 
+                <!-- Hi, {{ userName }} 歡迎回來 ~  -->
+                Hi, 歡迎回來 ~ 
               </div>
               <!--  -->
               <!--  -->

@@ -91,49 +91,6 @@ import Sidebar from "@/components/Sidebar.vue";
     </div>
   </div>
   <!--  -->
-  <!--  -->
-  <!-- <div class="container">
-          <div class="card">
-            <DataTable :value="products" responsiveLayout="scroll">
-              <template #header> </template>
-              <Column field="code" header="Code"></Column>
-              <Column field="name" header="Name"></Column>
-              <Column field="category" header="Category"></Column>
-              <Column field="quantity" header="Quantity"></Column>
-              <Column field="inventoryStatus" header="Status">
-                <template #body="slotProps">
-                  <span
-                    :class="
-                      'product-badge status-' +
-                      (slotProps.data.inventoryStatus
-                        ? slotProps.data.inventoryStatus.toLowerCase()
-                        : '')
-                    "
-                    >{{ slotProps.data.inventoryStatus }}</span
-                  >
-                </template>
-              </Column>
-              <Column field="rating" header="Rating">
-                <template #body="slotProps">
-                  <Rating
-                    :modelValue="slotProps.data.rating"
-                    :readonly="true"
-                    :cancel="false"
-                    />
-                  </template>
-                </Column>
-            </DataTable>
-          </div>
-        </div> -->
-  <!--  -->
-    <!-- test -->
-    <!-- <div class="mb-4">
-            {{ dataAll }}
-          </div>
-          {{ data }}
-          {{ data2 }} -->
-    <!-- test end -->
-    <!--  -->
   </div>
   <!--  -->
   <!-- Modal -->
@@ -150,32 +107,40 @@ import Sidebar from "@/components/Sidebar.vue";
           <!-- @click="getUsers(true, item)" -->
           <div class="row card-group">
             <div class="col-md-12 mb-4">
-              <div class="col-md-12">
+              <div class="col-md-12" >
+                <!-- <div class="col-md-12" v-if="isEditingStaff"> -->
                 <!-- <h2 class=" text-center mb-4">登入</h2> -->
                 <!-- edit form -->
-                <form class="row fs-6 p-4">
+                <form class="row fs-6 p-4" @submit.prevent="editStaffClick()"  v-for="(item, index) in products" :key="index.userId"
+                v-if="items.userId === id"
+                >
                   <div class="col-md-6 mb-3 text-start">
                     <label for="staffUserName" class="form-label">姓名</label>
-                    <input type="text" class="form-control" id="staffUserName" />
-                    <!-- {{ saveUserId.name }} -->
+                    <input type="text" class="form-control" id="staffUserName" v-model="item.userName" required />
+                    <!-- {{ item.userName }} -->
+                    <!-- {{ editStaff.userName }} -->
                     <!-- <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div> -->
                   </div>
                   <div class="col-md-6 mb-3 text-start">
                     <label for="staffEmail" class="form-label">帳號</label>
-                    <input type="email" class="form-control" id="staffEmail" disabled />
+                    <!-- {{ item.email }} -->
+                    <!-- {{ editStaff.email }} -->
+                    <input type="email" class="form-control" id="staffEmail" v-model="item.email" disabled />
                     <!-- <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div> -->
                   </div>
                   <!--  -->
                   <div class="col-md-6 mb-2 text-start">
                     <label for="staffPassword" class="form-label">密碼</label>
-                    <input type="text" class="form-control" id="staffPassword" placeholder="Abc123456" />
+                    <input type="text" class="form-control" id="staffPassword" v-model="item.password" required />
+                    <!-- {{ editStaff.password }} -->
+                    <!-- {{ item.password }} -->
                   </div>
                   <!--  -->
                   <div class="col-md-6 mb-2 text-start">
-                    <label for="form-select" class="form-label">身份</label>
-                    <select class="form-select" aria-label="Default select example">
+                    <label for="idSelected" class="form-label">身份</label>
+                    <select class="form-select" aria-label="idSelected" v-model="item.identity" required>
                       <option value="最高管理者">最高管理者</option>
-                      <option value="一般管理者" selected>一般管理者</option>
+                      <option value="一般管理者">一般管理者</option>
                     </select>
                   </div>
                   <!--  -->
@@ -189,8 +154,9 @@ import Sidebar from "@/components/Sidebar.vue";
         <div class="modal-footer d-flex justify-content-center border-top-0 mb-4">
           <!--  -->
           <div class="col-12">
-            <div class="d-flex justify-content-center">
-              <button type="submit" class="btn btn-primary text-light" data-bs-dismiss="modal" @click="editStaff">
+            <div class="d-flex justify-content-center"> 
+              <!-- <button type="submit" class="btn btn-primary text-light" data-bs-dismiss="modal" @click="editStaff()"> -->
+                <button type="submit" class="btn btn-primary text-light" data-bs-dismiss="modal" @click="updateStaff()">
                 確認資料
               </button>
             </div>
@@ -226,10 +192,7 @@ import Sidebar from "@/components/Sidebar.vue";
 </template>
 <script>
 import ProductService from "@/assets/js/ProductService.js";
-
-
 const api = `${import.meta.env.VITE_PATH}/user`;
-
 export default {
   name: "Staff",
   data() {
@@ -252,8 +215,18 @@ export default {
       userIds: [] ,
       //save user id here
       saveUserId: null,
-      //edit
-      
+      saveUserIdSelected: null,
+      //edit true false
+      isEditingStaff: false,
+      // code: 230 更新成功
+      editStaff: {
+        userName: '',
+        password:'',
+        identity: '',
+        //email: '',
+      },
+      //
+      staff: {},
     };
   },
   productService: null,
@@ -296,39 +269,122 @@ export default {
         // this.$http.delete(api, { users: updatedUsers}).then((res) => {
         //   console.log("del!!");
         // })
+        //
       });
     },
-    editStaff(product) {
-      const userId = res.data.data.list[1].userId;
-      const newUserId = this.newUserId;
-      const newUserName = this.newUserName;
-      const newEmail = this.newEmail;
-      const newPassword = this.newPassword;
-      const newIdentity = this.newIdentity;
-      this.product = {...product};
-      this.$http.patch(`api/:id`, {
+    //code: 230 更新成功
+    getStaffInfo() {
+      this.$http.get(`api/?userId=${this.dataAll.id}`).then((res) => {
+        const editStaff = res.data.data.list;
+          this.userName = editStaff.userName;
+          this.email = editStaff.email;
+          this.password = editStaff.password;
+          this.identity = editStaff.identity;
+          console.log(editStaff)
+        //
+      });
+    },
+    //editStaff(product) {
+    editStaffClick(item) {
+      this.staff = item;
+      //const index = this.items.findIndex(item =>item.userId === id);
+
+      //isEditingStaff = true;
+      //const userId = res.data.data.list[1].userId;
+      //const newUserId = this.newUserId;
+      // const newUserName = this.newUserName;
+      // const newEmail = this.newEmail;
+      // const newPassword = this.newPassword;
+      // const newIdentity = this.newIdentity;
+      //
+      ////this.product = {...product};
+      //
+      // this.$http.patch(`api/:id`, {
+      //this.$http.patch(`api/?userId=${this.dataAll.id}`, {
+      this.$http.get( api+`/?userId=${this.saveUserId}`, {
         //this.$http.patch(`api/?userId=${newUserId}`, {
         // "userId": "6c241818-c33a-4cda-9b00-99c18be31532",
-        userName: newUserName,
-        email: newEmail,
-        password: newPassword,
-        identity: newIdentity,
+        data: {
+        userName: userName,
+        password: password,
+        identity: identity,
+        email: email,
+        } 
       })
         .then((response) => {
-          console.log(response.data.data.list[1]);
-          this.item.userName = newUserName;
-          this.item.email = newEmail;
-          this.item.password = newPassword;
-          this.item.identity = newIdentity;
+          console.log(response.data);
+          // console.log(response.data.data.list[1]);
+          // this.item.userName = newUserName;
+          // this.item.email = newEmail;
+          // this.item.password = newPassword;
+          // this.item.identity = newIdentity;
         }).catch((err) => {
           //alert(err.data.result.message);
           console.log(err.data.result.message);
         });
     },
+    //updateStaff
+    // updateStaff(editStaff) {
+    //   this.$http.patch(api+`/?userId=${this.saveUserId}`, {
+    //     data: {
+    //     //userId : this.saveUserId,
+    //     userName: this.userName,
+    //     email: this.email,
+    //     password: this.password,
+    //     identity: this.identity,
+    //     }
+    //   })
+    //     .then((res) => {
+    //       this.getUsers(saveUserId);
+    //       this.userName = editStaff.userName;
+    //       this.email = editStaff.email;
+    //       this.password = editStaff.password;
+    //       this.identity = editStaff.identity;
+    //       console.log(res.data);
+    //     }).catch((err) => {
+    //       // console.log(err.data.result.message);
+    //       console.log(err);
+    //     }); 
+    // },
+    async updateStaff() {
+    //this.getUsers();
+      try {
+        const response = await this.axios.patch( api+`/?userId=${this.saveUserId}`, this.editStaff);
+        console.log(response.data); // 印出更新後的使用者資料
+        //this.cancelEditingUser(); // 關閉彈跳視窗並重新載入列表
+        //this.loadUsers();
+        const code = response.data.result.code;
+          if (code === 230) {
+          this.$swal({
+            title: "更新成功",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          //this.getUsers();
+          } else {
+            this.$swal({
+            title: "更新失敗",
+            icon: "warning",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          }
+      } catch (error) {
+        console.log(error.data);
+      }
+    },
     //save userId
     saveUserIdClick(saveUserId){
       this.saveUserId = saveUserId;
       console.log(saveUserId);
+    },
+    async getStaff(saveUserId) {
+      const userId = saveUserId;
+      const response = await this.$http.get( api+`/?userId=${this.saveUserId}`);
+      this.userId = response.data;
+      console.log(response.data);
+
     },
     // delStaff(id) {
     //   this.$http.delete(`api/${id}`, {
@@ -432,6 +488,7 @@ export default {
     // console.log(import.meta.env.VITE_TEXT);
     // const url = import.meta.env.VITE_PATH;
     this.getUsers();
+    //this.getStaff();
     //
   },
 };
