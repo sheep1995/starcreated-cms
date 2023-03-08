@@ -107,16 +107,17 @@ import Sidebar from "@/components/Sidebar.vue";
           <!-- @click="getUsers(true, item)" -->
           <div class="row card-group">
             <div class="col-md-12 mb-4">
-              <div class="col-md-12" >
+              <div class="col-md-12" v-if="isEditingStaff">
                 <!-- <div class="col-md-12" v-if="isEditingStaff"> -->
                 <!-- <h2 class=" text-center mb-4">登入</h2> -->
-                <!-- edit form -->
-                <form class="row fs-6 p-4" @submit.prevent="editStaffClick()"  v-for="(item, index) in products" :key="index.userId"
-                v-if="items.userId === id"
+                <!-- edit form  -->
+                <!-- v-if="userId === saveUserId" v-if="saveUserIdSelected"-->
+                <form class="row fs-6 p-4" @submit.prevent="editStaffClick()"
+                
                 >
                   <div class="col-md-6 mb-3 text-start">
                     <label for="staffUserName" class="form-label">姓名</label>
-                    <input type="text" class="form-control" id="staffUserName" v-model="item.userName" required />
+                    <input type="text" class="form-control" id="staffUserName" v-model="saveUserIdSelected.userName" required />
                     <!-- {{ item.userName }} -->
                     <!-- {{ editStaff.userName }} -->
                     <!-- <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div> -->
@@ -125,20 +126,20 @@ import Sidebar from "@/components/Sidebar.vue";
                     <label for="staffEmail" class="form-label">帳號</label>
                     <!-- {{ item.email }} -->
                     <!-- {{ editStaff.email }} -->
-                    <input type="email" class="form-control" id="staffEmail" v-model="item.email" disabled />
+                    <input type="email" class="form-control" id="staffEmail" v-model="saveUserIdSelected.email" disabled />
                     <!-- <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div> -->
                   </div>
                   <!--  -->
                   <div class="col-md-6 mb-2 text-start">
                     <label for="staffPassword" class="form-label">密碼</label>
-                    <input type="text" class="form-control" id="staffPassword" v-model="item.password" required />
+                    <input type="text" class="form-control" id="staffPassword" v-model="saveUserIdSelected.password" required />
                     <!-- {{ editStaff.password }} -->
                     <!-- {{ item.password }} -->
                   </div>
                   <!--  -->
                   <div class="col-md-6 mb-2 text-start">
                     <label for="idSelected" class="form-label">身份</label>
-                    <select class="form-select" aria-label="idSelected" v-model="item.identity" required>
+                    <select class="form-select" aria-label="idSelected" v-model="saveUserIdSelected.identity" required>
                       <option value="最高管理者">最高管理者</option>
                       <option value="一般管理者">一般管理者</option>
                     </select>
@@ -146,6 +147,7 @@ import Sidebar from "@/components/Sidebar.vue";
                   <!--  -->
                 </form>
               </div>
+              <div class="d-none" v-else ></div>
             </div>
           </div>
           <!--  -->
@@ -215,7 +217,7 @@ export default {
       userIds: [] ,
       //save user id here
       saveUserId: null,
-      saveUserIdSelected: null,
+      saveUserIdSelected: [],
       //edit true false
       isEditingStaff: false,
       // code: 230 更新成功
@@ -233,6 +235,11 @@ export default {
   created() {
     this.productService = new ProductService();
   },
+  // computed: {
+  //   filterStaff() {
+  //     return this.products.filter (product => product.saveUserId === this.userId);
+  //   }
+  // },
   methods: {
     // async getUser(userId) {
     //   try {
@@ -283,6 +290,13 @@ export default {
           console.log(editStaff)
         //
       });
+    },
+    //save userId
+    saveUserIdClick(saveUserId){
+      this.saveUserId = saveUserId;
+      this.saveUserIdSelected = this.products.find( data => data.userId === saveUserId);
+      //console.log(this.saveUserId); //check id save info
+      //console.log(this.saveUserIdSelected); //check id save info
     },
     //editStaff(product) {
     editStaffClick(item) {
@@ -374,16 +388,29 @@ export default {
         console.log(error.data);
       }
     },
-    //save userId
-    saveUserIdClick(saveUserId){
-      this.saveUserId = saveUserId;
-      console.log(saveUserId);
-    },
-    async getStaff(saveUserId) {
-      const userId = saveUserId;
-      const response = await this.$http.get( api+`/?userId=${this.saveUserId}`);
-      this.userId = response.data;
-      console.log(response.data);
+
+    //save edit staff info
+    async getStaff() {
+      //this.saveUserIdSelected = this.products.find( data => data.userId === saveUserId);
+
+      // const userId = this.saveUserId;
+      //const response = await this.$http.get( api+`/?userId=${this.saveUserId}`, {
+      const response = await this.$http.get( api , {
+        // data: {
+        //   userName: this.editStaff.userName, 
+        //   password: this.editStaff.password, 
+        //   identity: this.editStaff.identity, 
+        // }
+        data: {userId : this.saveUserId}
+      })
+      //this.searchResults = response.data.data.find(data => data.list[0].userId === parseInt(saveUserId));
+      this.isEditingStaff = true;
+      //let info = this.saveUserId;
+      // saveUserIdSelected.email
+      this.editStaff.userName = response.data.data.list[3].userName;
+      this.editStaff.password = response.data.data.list[3].password;
+      this.editStaff.identity = response.data.data.list[3].identity;
+      
 
     },
     // delStaff(id) {
@@ -406,7 +433,7 @@ export default {
       })
         .then((response) => {
           console.log(response);
-      const code = response.data.result.code;
+          const code = response.data.result.code;
           if (code === 240) {
           this.$swal({
             title: "刪除成功",
@@ -487,8 +514,10 @@ export default {
     // console.log(import.meta.env.VITE_PATH);
     // console.log(import.meta.env.VITE_TEXT);
     // const url = import.meta.env.VITE_PATH;
+    //const foundData = this.products.find(item => item.userId === saveUserId);
     this.getUsers();
-    //this.getStaff();
+    this.getStaff();
+    this.saveUserIdClick();
     //
   },
 };
