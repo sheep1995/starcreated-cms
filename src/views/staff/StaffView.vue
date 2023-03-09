@@ -1,11 +1,3 @@
-<script setup>
-import SidebarMenu2 from "@/components/SidebarMenu2.vue";
-import TopHeader from "@/components/TopHeader.vue";
-import Sidebar from "@/components/Sidebar.vue";
-// import StaffModal from "@/components/StaffModal.vue"
-
-</script>
-
 <template>
   <div class="wrapper">
     <!-- Sidebar Menu -->
@@ -58,8 +50,12 @@ import Sidebar from "@/components/Sidebar.vue";
                   </tr>
                 </thead>
                 <tbody class="table-group-divider">
+                  <!-- <div class="d-flex align-items-center">
+                    <strong>Loading...</strong>
+                    <div class="spinner-border ms-auto" role="status" aria-hidden="true"></div>
+                  </div> -->
                   <!-- v-for="item in products" :key="item.id" -->
-                  <tr v-for="(item, index) in products" :key="index">
+                  <tr v-for="(item, index) in products" :key="index" >
                     <th scope="row"> {{ index + 1 }}</th>
                     <td>{{ item.userName }}</td>
                     <td v-if="item.email != ''">{{ item.email }}</td>
@@ -87,6 +83,8 @@ import Sidebar from "@/components/Sidebar.vue";
             </div>
           </div>
           <!--  -->
+          <!-- {{ saveUserIdSelected }} -->
+          <!--  -->
       </div>
     </div>
   </div>
@@ -113,28 +111,21 @@ import Sidebar from "@/components/Sidebar.vue";
                 <!-- edit form  -->
                 <!-- v-if="userId === saveUserId" v-if="saveUserIdSelected"-->
                 <form class="row fs-6 p-4" @submit.prevent="editStaffClick()"
-                
+                v-if="saveUserIdSelected"
                 >
                   <div class="col-md-6 mb-3 text-start">
                     <label for="staffUserName" class="form-label">姓名</label>
                     <input type="text" class="form-control" id="staffUserName" v-model="saveUserIdSelected.userName" required />
-                    <!-- {{ item.userName }} -->
-                    <!-- {{ editStaff.userName }} -->
                     <!-- <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div> -->
                   </div>
                   <div class="col-md-6 mb-3 text-start">
                     <label for="staffEmail" class="form-label">帳號</label>
-                    <!-- {{ item.email }} -->
-                    <!-- {{ editStaff.email }} -->
                     <input type="email" class="form-control" id="staffEmail" v-model="saveUserIdSelected.email" disabled />
-                    <!-- <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div> -->
                   </div>
                   <!--  -->
                   <div class="col-md-6 mb-2 text-start">
                     <label for="staffPassword" class="form-label">密碼</label>
                     <input type="text" class="form-control" id="staffPassword" v-model="saveUserIdSelected.password" required />
-                    <!-- {{ editStaff.password }} -->
-                    <!-- {{ item.password }} -->
                   </div>
                   <!--  -->
                   <div class="col-md-6 mb-2 text-start">
@@ -193,10 +184,17 @@ import Sidebar from "@/components/Sidebar.vue";
   <!--  -->
 </template>
 <script>
+import TopHeader from "@/components/TopHeader.vue";
+import Sidebar from "@/components/Sidebar.vue";
+
 import ProductService from "@/assets/js/ProductService.js";
 const api = `${import.meta.env.VITE_PATH}/user`;
 export default {
   name: "Staff",
+  components: {
+    TopHeader,
+    Sidebar,
+  },
   data() {
     return {
       products: [],
@@ -217,7 +215,12 @@ export default {
       userIds: [] ,
       //save user id here
       saveUserId: null,
-      saveUserIdSelected: [],
+      saveUserIdSelected: {
+        //email: '',
+        userName: '',
+        password:'',
+        identity: '',
+      },
       //edit true false
       isEditingStaff: false,
       // code: 230 更新成功
@@ -229,6 +232,8 @@ export default {
       },
       //
       staff: {},
+      //loading
+      isLoading: true,
     };
   },
   productService: null,
@@ -257,7 +262,9 @@ export default {
     //     this.tempProduct = {...item};
     //   }
     getUsers() {
+      const vm = this;
       this.$http.get(api).then((res) => {
+        vm.isLoading = false;
         //const userId = res.data.data.list[0].userId;
         const userList = res.data.data.list;
         this.products = res.data.data.list;
@@ -294,9 +301,21 @@ export default {
     //save userId
     saveUserIdClick(saveUserId){
       this.saveUserId = saveUserId;
+      //this.saveUserId.userName = saveUserIdSelectedName;
+      const saveUserIdSelected = this.saveUserIdSelected;
       this.saveUserIdSelected = this.products.find( data => data.userId === saveUserId);
+      this.isEditingStaff = true;
       //console.log(this.saveUserId); //check id save info
       //console.log(this.saveUserIdSelected); //check id save info
+
+      // this.editStaff.userName = this.products.find( data => data.userName);
+      // this.editStaff.password = this.products.find( data => data.password);
+      // this.editStaff.identity = this.products.find( data => data.identity);
+      this.editStaff.userName = saveUserIdSelected.userName;
+      this.editStaff.password = saveUserIdSelected.password;
+      this.editStaff.identity = saveUserIdSelected.identity;
+      
+      //this.editStaff.email = saveUserIdSelected.email;
     },
     //editStaff(product) {
     editStaffClick(item) {
@@ -322,7 +341,6 @@ export default {
         userName: userName,
         password: password,
         identity: identity,
-        email: email,
         } 
       })
         .then((response) => {
@@ -363,7 +381,15 @@ export default {
     async updateStaff() {
     //this.getUsers();
       try {
-        const response = await this.axios.patch( api+`/?userId=${this.saveUserId}`, this.editStaff);
+        // const response = await this.axios.patch( api+`/?userId=${this.saveUserId}`, this.editStaff);
+        const response = await this.axios.patch( api+`/?userId=${this.saveUserId}`, 
+        {
+          userName: this.saveUserIdSelected.userName,
+          password: this.saveUserIdSelected.password,
+          identity: this.saveUserIdSelected.identity,
+        
+        }
+        );
         console.log(response.data); // 印出更新後的使用者資料
         //this.cancelEditingUser(); // 關閉彈跳視窗並重新載入列表
         //this.loadUsers();
@@ -375,7 +401,7 @@ export default {
             showConfirmButton: false,
             timer: 1500,
           });
-          //this.getUsers();
+          this.getUsers();
           } else {
             this.$swal({
             title: "更新失敗",
@@ -383,6 +409,7 @@ export default {
             showConfirmButton: false,
             timer: 1500,
           });
+          this.getUsers();
           }
       } catch (error) {
         console.log(error.data);
@@ -396,20 +423,20 @@ export default {
       // const userId = this.saveUserId;
       //const response = await this.$http.get( api+`/?userId=${this.saveUserId}`, {
       const response = await this.$http.get( api , {
-        // data: {
-        //   userName: this.editStaff.userName, 
-        //   password: this.editStaff.password, 
-        //   identity: this.editStaff.identity, 
-        // }
-        data: {userId : this.saveUserId}
+        data: {
+          userName: this.editStaff.userName, 
+          password: this.editStaff.password, 
+          identity: this.editStaff.identity, 
+        }
+        //data: {userId : this.saveUserId}
       })
       //this.searchResults = response.data.data.find(data => data.list[0].userId === parseInt(saveUserId));
-      this.isEditingStaff = true;
+      //this.isEditingStaff = true;
       //let info = this.saveUserId;
-      // saveUserIdSelected.email
-      this.editStaff.userName = response.data.data.list[3].userName;
-      this.editStaff.password = response.data.data.list[3].password;
-      this.editStaff.identity = response.data.data.list[3].identity;
+      // saveUserIdSelected.email saveUserIdSelected  saveUserIdSelected.userName
+      // this.editStaff.userName = response.data.data.list[3].userName;
+      // this.editStaff.password = response.data.data.list[3].password;
+      // this.editStaff.identity = response.data.data.list[3].identity;
       
 
     },

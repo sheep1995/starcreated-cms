@@ -1,8 +1,8 @@
-<script setup>
+<!-- <script setup>
 import { RouterLink, RouterView } from "vue-router";
 import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
-</script>
+</script> -->
 <template>
   <div class="wrapper">
     <!-- Sidebar Menu -->
@@ -142,11 +142,11 @@ import Sidebar from "@/components/Sidebar.vue";
                   </tr>
                 </thead>
                 <tbody class="table-group-divider">
-                  <tr v-for="(item, index) in idList" :key="index">
-                    <th scope="row">{{ item.id }}</th>
+                  <tr v-for="(item, index) in idLists" :key="index">
+                    <th scope="row"> {{ index + 1 }}</th>
                     <td>{{ item.date }}</td>
                     <td>{{ item.userAppId }}</td>
-                    <td>{{ item.idState }}</td>
+                    <td>{{ item.realNameState }}</td>
                     <td id="cash-state">
                       <!-- btn -->
                       <router-link
@@ -191,10 +191,21 @@ import Sidebar from "@/components/Sidebar.vue";
   </div>
 </template>
 <script>
+import TopHeader from "@/components/TopHeader.vue";
+import Sidebar from "@/components/Sidebar.vue";
+
+const api = `${import.meta.env.VITE_PATH}/realname`;
+
 export default {
+  //name: "Member",
+  components: {
+    TopHeader,
+    Sidebar,
+  },
   data() {
     return {
       products: null,
+      idLists: null,
       idList: [
         {
           id: "1",
@@ -222,6 +233,29 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    getMembers() {
+      const vm = this;
+      this.$http.get(api).then((res) => {
+        //vm.isLoading = false;
+        this.idLists = res.data.data.realNameList;
+        console.log(res.data);
+      });
+    },
+    findIndexById(id) {
+      let index = -1;
+      for (let i = 0; i < this.idLists.length; i++) {
+        if (this.idLists[i].userAppId === id) {
+          index = i;
+          break;
+        }
+      }
+      return index;
+    },
+  },
+  mounted() {
+    this.getMembers();
   },
 };
 </script>

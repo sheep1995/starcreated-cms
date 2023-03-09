@@ -1,10 +1,3 @@
-<script setup>
-// import SidebarMenu2 from "@/components/SidebarMenu2.vue";
-import TopHeader from "@/components/TopHeader.vue";
-import Sidebar from "@/components/Sidebar.vue";
-// import Breadcrumb from "@/components/Breadcrumb.vue";
-
-</script>
 <template>
   <div class="wrapper">
     <!-- Sidebar Menu -->
@@ -94,6 +87,7 @@ import Sidebar from "@/components/Sidebar.vue";
             <div class="table-responsive">
               <table class="table table-bordered align-middle star-table">
                 <thead class="table-primary">
+                  <!-- <tr v-for="(item, index) in products" :key="index" ></tr> -->
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">星行號</th>
@@ -107,6 +101,10 @@ import Sidebar from "@/components/Sidebar.vue";
                   </tr>
                 </thead>
                 <tbody class="table-group-divider">
+                  <!-- <tr v-for="(item, member) in members" :key="member" >
+                    <th scope="row">1</th>
+                    <th> </th>
+                  </tr> -->
                   <tr>
                     <th scope="row">1</th>
                     <td>4543413131</td>
@@ -224,11 +222,36 @@ import Sidebar from "@/components/Sidebar.vue";
   </div>
 </template>
 <script>
+import TopHeader from "@/components/TopHeader.vue";
+import Sidebar from "@/components/Sidebar.vue";
+
+const api = `${import.meta.env.VITE_PATH}/realname`;
+
+
 export default {
+  name: "Member",
+  components: {
+    TopHeader,
+    Sidebar,
+  },
   data() {
     return {
-      products: null,
+      //products: null,
+      member: null,
     };
+  },
+  methods: {
+    getMembers() {
+      const vm = this;
+      this.$http.get(api).then((res) => {
+        //vm.isLoading = false;
+        this.products = res.data.data.list;
+        console.log(res.data);
+      });
+    },
+  },
+  mounted() {
+    this.getMembers();
   },
 };
 </script>

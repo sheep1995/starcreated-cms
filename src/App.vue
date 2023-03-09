@@ -16,6 +16,7 @@ import { RouterLink, RouterView } from "vue-router";
   </div> -->
   <!-- <RouterView></RouterView> -->
   <RouterView />
+  <!-- <LoadingBar :active.sync='isLoading'/> -->
 </template>
 <script>
 const toggleBtn = document.querySelector(".menu-toggle"); 
@@ -25,9 +26,14 @@ const wrapper = document.querySelector(".wrapper");
 //   wrapper.classList.toggle('toggled');
 // });
 export default {
+  name: "App",
+  // components: {
+  //   LoadingBar
+  // },
     data() {
     return {
       isActive: false,
+      //isLoading: false,
     };
   },
   methods: {

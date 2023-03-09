@@ -5,6 +5,8 @@ import "@/assets/text/text.css";
 import axios from "axios";
 import VueAxios from "vue-axios";
 
+import Loading from 'vue-loading-overlay';
+
 
 // 引入 VeeValidate 元件跟功能
 import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate';
@@ -19,6 +21,11 @@ import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 import App from "./App.vue";
 import router from "./router";
 import PrimeVue from "primevue/config";
+
+//loading
+//import Loading from 'vue-loading-overlay';
+//import 'vue-loading-overlay/dist/vue-loading.css';
+
 //
 import "bootstrap";
 //import "./assets/main.css";
@@ -55,6 +62,7 @@ app.use(VueSweetalert2);
 app.component('VField', Field);
 app.component('VForm', Form);
 app.component('ErrorMessage', ErrorMessage);
+app.component('Loading', Loading);
 
 app.use(router);
 app.use(pinia)

@@ -1,8 +1,3 @@
-<script setup>
-import SidebarMenu2 from "@/components/SidebarMenu2.vue";
-import TopHeader from "@/components/TopHeader.vue";
-import Sidebar from "@/components/Sidebar.vue";
-</script>
 <template>
   <div class="wrapper">
     <!-- Sidebar Menu -->
@@ -129,9 +124,16 @@ import Sidebar from "@/components/Sidebar.vue";
   </div>
 </template>
 <script>
+import TopHeader from "@/components/TopHeader.vue";
+import Sidebar from "@/components/Sidebar.vue";
 const api = `${import.meta.env.VITE_PATH}/user`;
 
 export default {
+  name: "Add",
+  components: {
+    TopHeader,
+    Sidebar,
+  },
   data() {
     return {
       products: null,
@@ -144,11 +146,14 @@ export default {
       identityOptions: [
         { text: '一般管理者', value: '一般管理者' },
         { text: '最高管理者', value: '最高管理者' },
-      ]
+      ],
+      isLoading: false,
     };
   },
   methods: {
     addStaff(){
+      const vm = this;
+      vm.isLoading = true;
       this.$http.post(api, this.addUser).then((response) => {
         const code = response.data.result.code;
         // let self = this;
@@ -161,7 +166,9 @@ export default {
             confirmButtonColor: "$primary",
             confirmButtonText: "關閉",
           }).then(function () {
-           //self.$router.push({name: "Home"});
+          //self.$router.push({ name: "Add"});
+          location.reload();
+          vm.isLoading = false;
           });
           } else {
             this.$swal({
@@ -176,9 +183,9 @@ export default {
         //alert(response.data.result.message);
       }).catch((error) => {
         //this.$httpMessageState(error.response, '請確認資料欄位是否都有填寫');
-        console.log(error);
+        //console.log(error);
+        vm.isLoading = false;
     });
-    //
     //
     },
     isFormInvalid() {
@@ -188,37 +195,3 @@ export default {
   },
 };
 </script>
-<!-- <script>
-import { ref } from 'vue';
-
-const identity = ref('一般管理者')
-
-const identityOptions = ref([
-  { text: '最高管理者', value: '最高管理者' },
-  { text: '一般管理者', value: '一般管理者' },
-])
-// this.$http.post(api, this.addUser).then((response) => {
-export default {
-  setup() {
-    const api = `${import.meta.env.VITE_PATH}/user`;
-
-    const addNewUser = async (userName, email, password, identity ) => {
-      try {
-        const response = await this.$http.post('api', {
-          userName: userName,
-          email: email,
-          password: password,
-          identity: identity,
-        });
-        console.log(response.data); // 處理返回的數據
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    return {
-      addNewUser
-    }
-  }
-}
-
-</script> -->

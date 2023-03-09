@@ -29,11 +29,14 @@ import SidebarMenu from "../components/SidebarMenu.vue";
                       placeholder="hi@westar.tw" v-model="user.email" required />
                     <!-- <div id="emailHelp" class="form-text text-light">We'll never share your email with anyone else.</div> -->
                   </div>
-                  <div class="mb-2">
+                  <div class="mb-2 position-relative">
                     <label for="loginPw" class="form-label text-light">密碼</label>
                     <!-- <Password id="loginPw" v-model="user.password" toggleMask placeholder="Abc514913" :feedback="false" ></Password> -->
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Abc123456"
+                  <input :type="showPassword ? 'password':'text' " class="form-control" id="exampleInputPassword1" placeholder="Abc123456"
                     v-model="user.password" required />
+                    <span class="position-absolute end-0 translate-middle" style="top: 70%;">
+                      <i :class="[ showPassword ? 'bi-eye-slash-fill': 'bi-eye-fill', 'bi' ]" @click="showPassword = !showPassword"></i>
+                    </span>
                   <!-- <button class="button" @click="toggleShow"><span class="icon is-small is-right">
                         <i class="bi" :class="{ 'bi-eye-slash-fill': showPassword, 'bi-eye-fill': !showPassword }"></i>
                       </span>
@@ -119,7 +122,7 @@ export default {
         "email": "rd14@westar.tw",
         "password": "Acc123456"
       },
-      showPassword: false,
+      showPassword: true,
       isLoggedIn: false,
     };
   },

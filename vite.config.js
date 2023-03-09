@@ -4,7 +4,6 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import pluginRewriteAll from 'vite-plugin-rewrite-all';
 
-
 //const config = loadEnv(mode, './')
 
 // https://vitejs.dev/config/
