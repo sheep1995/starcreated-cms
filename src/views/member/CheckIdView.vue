@@ -66,7 +66,6 @@ import Sidebar from "@/components/Sidebar.vue";
                       type="text"
                       id="userAppId"
                       class="form-control"
-                      aria-describedby="passwordHelpInline"
                       placeholder="1234567890"
                     />
                   </div>
@@ -146,7 +145,7 @@ import Sidebar from "@/components/Sidebar.vue";
                     <th scope="row"> {{ index + 1 }}</th>
                     <td>{{ item.date }}</td>
                     <td>{{ item.userAppId }}</td>
-                    <td>{{ item.realNameState }}</td>
+                    <td>{{ item.realNameState }} </td>
                     <td id="cash-state">
                       <!-- btn -->
                       <router-link
@@ -241,6 +240,14 @@ export default {
         //vm.isLoading = false;
         this.idLists = res.data.data.realNameList;
         console.log(res.data);
+      const realNameState = this.idLists?.realNameState;
+        if (realNameState === 'review') {
+        return '未認證';
+      } else if ( realNameState === 'finish') {
+        return '已認證';
+      } else if (realNameState === 'fail'){
+        return '認證失敗';
+      }
       });
     },
     findIndexById(id) {
@@ -253,6 +260,18 @@ export default {
       }
       return index;
     },
+  },
+  computed: {
+    realNameState() {
+      const realNameState = this.idLists?.realNameState;
+      if (realNameState === 'review') {
+        return '未認證';
+      } else if ( realNameState === 'finish') {
+        return '已認證';
+      } else if (realNameState === 'fail'){
+        return '認證失敗';
+      }
+    }
   },
   mounted() {
     this.getMembers();

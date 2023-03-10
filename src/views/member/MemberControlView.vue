@@ -1,5 +1,4 @@
 <script setup>
-import SidebarMenu2 from "@/components/SidebarMenu2.vue";
 import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
 </script>
@@ -43,7 +42,8 @@ import Sidebar from "@/components/Sidebar.vue";
                     <div class="card-body d-flex">
                       <div>
                         <img
-                          src="@/assets/images/icon-focus.svg" alt="icon-focus">
+                        :src="focusIcon" @mouseover="focusIcon = focusIconWhite"
+                        alt="icon-focus">
                         <!-- src="@/assets/images/icon-focus.svg" :src="pictureHover" @mouseover="hover = true" @mouseleave="hover = false"> -->
                       </div>
                       <div class="ms-2">
@@ -542,6 +542,7 @@ import Sidebar from "@/components/Sidebar.vue";
 </template>
 <script>
 import focusIcon from "@/assets/images/icon-focus.svg";
+import focusIconWhite from "@/assets/images/icon-focus-fff.svg";
 import fansIcon from "@/assets/images/icon-fans.svg";
 import thumbIcon from "@/assets/images/icon-thumb.svg";
 import collectIcon from "@/assets/images/icon-collect.svg";
@@ -555,6 +556,9 @@ export default {
       //image:
       //"https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80",
       //loading: true,
+      focusIcon: focusIcon,
+      focusIconWhite: focusIconWhite,
+      hover: false,
       userWork: [
         {
           imgType: "照片",
@@ -637,6 +641,14 @@ export default {
       ],
     };
   },
-  //props: ['source'],
+  computed: {
+    pictureHover () {
+      if (this.hover == true) {
+        return this.focusIcon
+      } else {
+        return this.fansIcon
+      }
+    }
+  },
 };
 </script>

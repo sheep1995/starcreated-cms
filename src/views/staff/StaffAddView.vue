@@ -126,6 +126,8 @@
 <script>
 import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
+//import { Field, Form, ErrorMessage } from 'vee-validate';
+
 const api = `${import.meta.env.VITE_PATH}/user`;
 
 export default {
@@ -133,6 +135,7 @@ export default {
   components: {
     TopHeader,
     Sidebar,
+    //Field, Form, ErrorMessage,
   },
   data() {
     return {
