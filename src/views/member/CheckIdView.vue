@@ -115,14 +115,14 @@ import Sidebar from "@/components/Sidebar.vue";
                     >
                   </div>
                   <div class="col-auto">
-                    <select
+                    <select v-model="selectedState" @change="onStateChange"
                       class="form-select"
                       aria-label="Default select example"
                     >
-                      <option value="所有類型">所有類型</option>
-                      <option value="已認證">已認證</option>
-                      <option value="未認證">未認證</option>
-                      <option value="認證失敗">認證失敗</option>
+                      <option value="">所有類型</option>
+                      <option value="finish">已認證</option>
+                      <option value="review">未認證</option>
+                      <option value="fail">認證失敗</option>
                     </select>
                   </div>
                 </div>
@@ -141,11 +141,11 @@ import Sidebar from "@/components/Sidebar.vue";
                   </tr>
                 </thead>
                 <tbody class="table-group-divider">
-                  <tr v-for="(item, index) in idLists" :key="index">
+                  <tr v-for="(item, index) in filteredList" :key="index">
                     <th scope="row"> {{ index + 1 }}</th>
                     <td>{{ item.date }}</td>
                     <td>{{ item.userAppId }}</td>
-                    <td>{{ item.realNameState }} </td>
+                    <td>{{ statusText[item.realNameState] }} </td>
                     <td id="cash-state">
                       <!-- btn -->
                       <router-link
@@ -161,7 +161,7 @@ import Sidebar from "@/components/Sidebar.vue";
               </table>
             </div>
             <!-- pagination  -->
-            <nav aria-label=" ">
+            <nav aria-label="">
               <ul class="pagination d-flex justify-content-center">
                 <li class="page-item disabled">
                   <span class="page-link">Previous</span>
@@ -177,6 +177,9 @@ import Sidebar from "@/components/Sidebar.vue";
               </ul>
             </nav>
             <!-- pagination  -->
+            <!-- test -->
+
+            <!-- test -->
           </div>
           <!--  -->
           <!--  -->
@@ -192,9 +195,14 @@ import Sidebar from "@/components/Sidebar.vue";
 <script>
 import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
+//
 
 const api = `${import.meta.env.VITE_PATH}/realname`;
-
+const statusText = {
+  "review" : '未認證',
+  "finish" : '已認證',
+  "fail" : '認證失敗',
+}
 export default {
   //name: "Member",
   components: {
@@ -231,23 +239,38 @@ export default {
           idState: "認證失敗",
         },
       ],
+      //
+      customers: null,
+      //id type option
+      selectedIdType: '',
+      idType: [],
+      //
+      selectedState: '',
+      //filteredList: [],
+      statusText: {
+        "review" : '未認證',
+        "finish" : '已認證',
+        "fail" : '認證失敗',
+}
     };
   },
   methods: {
-    getMembers() {
+    async getMembers() {
       const vm = this;
       this.$http.get(api).then((res) => {
         //vm.isLoading = false;
         this.idLists = res.data.data.realNameList;
+        this.filteredList = [...this.idLists];
+
         console.log(res.data);
-      const realNameState = this.idLists?.realNameState;
-        if (realNameState === 'review') {
-        return '未認證';
-      } else if ( realNameState === 'finish') {
-        return '已認證';
-      } else if (realNameState === 'fail'){
-        return '認證失敗';
-      }
+      // const realNameState = this.idLists?.realNameState;
+      //   if (realNameState === 'review') {
+      //   return '未認證';
+      // } else if ( realNameState === 'finish') {
+      //   return '已認證';
+      // } else if (realNameState === 'fail'){
+      //   return '認證失敗';
+      // }
       });
     },
     findIndexById(id) {
@@ -260,21 +283,38 @@ export default {
       }
       return index;
     },
+    //
+    onStateChange() {
+      this.idLists = this.idLists.filter( item =>{
+        return !this.selectedState || item.realNameState === this.selectedState;
+      });
+      //location.reload();
+    },
   },
   computed: {
-    realNameState() {
-      const realNameState = this.idLists?.realNameState;
-      if (realNameState === 'review') {
-        return '未認證';
-      } else if ( realNameState === 'finish') {
-        return '已認證';
-      } else if (realNameState === 'fail'){
-        return '認證失敗';
-      }
+    // realNameState() {
+    //   //const realNameState = this.idLists?.realNameState;
+    //   const realNameState = this.selectedIdType;
+    //   if (realNameState === 'review') {
+    //     return '未認證';
+    //   } else if ( realNameState === 'finish') {
+    //     return '已認證';
+    //   } else if (realNameState === 'fail'){
+    //     return '認證失敗';
+    //   }
+    // },
+    // idLists() {
+    //   return this.idLists
+    // },
+    filteredList() {
+      return this.idLists;
     }
+
   },
   mounted() {
     this.getMembers();
+    //
+    //this.idType = [...new Set(this.idLists.map(realNameList.realNameState))]
   },
 };
 </script>
