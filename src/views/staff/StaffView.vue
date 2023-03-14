@@ -277,7 +277,7 @@ export default {
 
         // console.log(res.data.data.list[0].userId);
         // console.log(this.user);
-        console.log(res.data);
+        //console.log(res.data);
         //del
         // const updatedUsers = data.users.filter(user => user.userId !== this.userId);
         // this.$http.delete(api, { users: updatedUsers}).then((res) => {
@@ -344,7 +344,7 @@ export default {
         } 
       })
         .then((response) => {
-          console.log(response.data);
+          //console.log(response.data);
           // console.log(response.data.data.list[1]);
           // this.item.userName = newUserName;
           // this.item.email = newEmail;
@@ -390,7 +390,7 @@ export default {
         
         }
         );
-        console.log(response.data); // 印出更新後的使用者資料
+        //console.log(response.data); // 印出更新後的使用者資料
         //this.cancelEditingUser(); // 關閉彈跳視窗並重新載入列表
         //this.loadUsers();
         const code = response.data.result.code;
@@ -459,7 +459,7 @@ export default {
           data: {userId : this.saveUserId} //傳入對應的USERID
       })
         .then((response) => {
-          console.log(response);
+          //console.log(response);
           const code = response.data.result.code;
           if (code === 240) {
           this.$swal({

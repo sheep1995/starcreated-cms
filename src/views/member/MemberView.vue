@@ -101,46 +101,40 @@
                   </tr>
                 </thead>
                 <tbody class="table-group-divider">
-                  <!-- <tr v-for="(item, member) in members" :key="member" >
-                    <th scope="row">1</th>
-                    <th> </th>
-                  </tr> -->
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>4543413131</td>
-                    <td>Mark</td>
+                  <tr v-for="(item, index) in members" :key="index">
+                    <th scope="row"> {{ index + 1 }}</th>
+                    <td>{{ item.userAppId }}</td>
+                    <td>{{ item.nickname }}</td>
                     <td>
                       <div class="d-flex justify-content-center">
-                        <img
-                          class="rounded-circle img-user"
-                          src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                          alt="img-user"
-                        />
+                        <img v-if="item.avatar === '' " src="@/assets/images/img-user.svg" alt="img-404" class="rounded-circle img-user">
+                        <img v-else :src="item.avatar" alt="img-user" class="rounded-circle img-user">
                       </div>
                     </td>
                     <td>
                       <div class="d-flex justify-content-center">
-                        <img
-                          class="img-user-bg"
-                          src="https://images.unsplash.com/photo-1587713714775-fa70364f6445?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=782&q=80"
-                          alt="img-user-bg"
-                        />
+                        <img v-if="item.background === '' " class="img-user-bg" src="@/assets/images/img-login-bg.png" alt="img-404"/>
+                        <img v-else class="img-user-bg" :src="item.background" alt="img-user-bg"/>
                       </div>
                     </td>
-                    <td>123@gmail.com</td>
-                    <td>未認證</td>
-                    <td>
+                    <td v-if="item.account === 'null'" >{{ nullText[item.account] }} </td>
+                    <td v-else>{{ item.account }}</td>
+                    <td>{{ statusText[item.realNameVerify] }} </td>
+                    <td id="cash-state">
+                      <!-- btn -->
                       <!-- member-control -->
                       <router-link
                         to="/member-control"
                         class="btn btn-info text-light"
                       >
-                        <i class="bi bi-person-gear"></i> 管理</router-link
-                      >
+                        <i class="bi bi-person-gear"></i> 管理
+                      </router-link>
                     </td>
-                    <td>fb</td>
+                      <!-- btn end  -->
+                    <td>{{ item.loginType }} </td>
                   </tr>
-                  <tr>
+                  <!--  -->
+                  <!-- <tr>
                     <th scope="row">2</th>
                     <td>4543413131</td>
                     <td>Meow</td>
@@ -165,7 +159,6 @@
                     <td>123@gmail.com</td>
                     <td>未認證</td>
                     <td>
-                      <!-- member-control -->
                       <router-link
                         to="/member-control"
                         class="btn btn-info text-light"
@@ -174,42 +167,7 @@
                       >
                     </td>
                     <td>apple</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>4543413131</td>
-                    <td>Woof</td>
-                    <td>
-                      <div class="d-flex justify-content-center">
-                        <img
-                          class="rounded-circle img-user"
-                          src="https://images.dog.ceo/breeds/pitbull/20190710_143021.jpg"
-                          alt="img-user"
-                        />
-                      </div>
-                    </td>
-                    <td>
-                      <div class="d-flex justify-content-center">
-                        <img
-                          class="img-user-bg"
-                          src="https://images.unsplash.com/photo-1587713714775-fa70364f6445?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=782&q=80"
-                          alt="img-user-bg"
-                        />
-                      </div>
-                    </td>
-                    <td>123@gmail.com</td>
-                    <td>未認證</td>
-                    <td>
-                      <!-- member-control -->
-                      <router-link
-                        to="/member-control"
-                        class="btn btn-info text-light"
-                      >
-                        <i class="bi bi-person-gear"></i> 管理</router-link
-                      >
-                    </td>
-                    <td>IG</td>
-                  </tr>
+                  </tr> -->
                 </tbody>
               </table>
             </div>
@@ -224,10 +182,7 @@
 <script>
 import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
-
-const api = `${import.meta.env.VITE_PATH}/realname`;
-
-
+const api = `${import.meta.env.VITE_PATH}/member`;
 export default {
   name: "Member",
   components: {
@@ -237,7 +192,15 @@ export default {
   data() {
     return {
       //products: null,
-      member: null,
+      members: [],
+      //
+      statusText: {
+        "false": '未認證',
+        "true": '已認證',
+      },
+      nullText: {
+        "null": '無帳號'
+      }
     };
   },
   methods: {
@@ -245,8 +208,8 @@ export default {
       const vm = this;
       this.$http.get(api).then((res) => {
         //vm.isLoading = false;
-        this.products = res.data.data.list;
-        console.log(res.data);
+        this.members = res.data.data.userList;
+        //console.log(res.data.data.userList);
       });
     },
   },

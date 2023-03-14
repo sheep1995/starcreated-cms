@@ -1,8 +1,3 @@
-<script setup>
-import SidebarMenu2 from "@/components/SidebarMenu2.vue";
-import TopHeader from "@/components/TopHeader.vue";
-import Sidebar from "@/components/Sidebar.vue";
-</script>
 <template>
   <div class="wrapper">
     <!-- Sidebar Menu -->
@@ -637,12 +632,17 @@ import Sidebar from "@/components/Sidebar.vue";
   </div>
 </template>
 <script>
+import TopHeader from "@/components/TopHeader.vue";
+import Sidebar from "@/components/Sidebar.vue";
 export default {
   data() {
     return {
       products: null,
     };
   },
-  components: {},
+  components: {
+    TopHeader,
+    Sidebar,
+  },
 };
 </script>
