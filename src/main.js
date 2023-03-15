@@ -20,7 +20,9 @@ import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
 
 import App from "./App.vue";
 import router from "./router";
+
 import PrimeVue from "primevue/config";
+import Tooltip from 'primevue/tooltip';
 
 //loading
 //import Loading from 'vue-loading-overlay';
@@ -34,6 +36,8 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+//import Paginate from 'vuejs-paginate/dist/index.js';
+
 
 const app = createApp(App);
 const pinia = createPinia()
@@ -63,6 +67,10 @@ app.component('VField', Field);
 app.component('VForm', Form);
 app.component('ErrorMessage', ErrorMessage);
 app.component('Loading', Loading);
+
+//app.component('paginate', Paginate)
+
+app.directive('tooltip', Tooltip);
 
 app.use(router);
 app.use(pinia)

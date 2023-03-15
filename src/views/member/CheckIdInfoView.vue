@@ -1,8 +1,3 @@
-<script setup>
-import { RouterLink, RouterView } from "vue-router";
-import TopHeader from "@/components/TopHeader.vue";
-import Sidebar from "@/components/Sidebar.vue";
-</script>
 <template>
   <div class="wrapper">
     <!-- Sidebar Menu -->
@@ -402,14 +397,41 @@ import Sidebar from "@/components/Sidebar.vue";
   <!--  -->
 </template>
 <script>
+import TopHeader from "@/components/TopHeader.vue";
+import Sidebar from "@/components/Sidebar.vue";
+const api = `${import.meta.env.VITE_PATH}/realname?realNameId=realName-1237370937-1678329764994`;
+
 export default {
+  components: {
+    TopHeader,
+    Sidebar,
+  },
   data() {
     return {
       checkedNames: [],
+      realNameId: 'realName-1237370937-1678329764994',
+      idLists: [],
+      filteredList: [],
+      cashState: '審核中',
     };
   },
   // components: {
   //   MemberCashView,
   // },
-};
+  mounted() {
+    this.getMembers();
+  },
+  methods: {
+    async getMembers() {
+      const res = await this.$http.get(api);
+      // if (res.data.data.realNameId.length === 0) {
+      //   this.idLists = [];
+      // } else {
+      //   this.idLists = res.data.data.realNameId;
+      // }
+      this.filteredList = this.idLists;
+      console.log(res.data.data.realNameId);
+    },
+  },
+}
 </script>

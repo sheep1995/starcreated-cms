@@ -47,7 +47,6 @@
                       <input type="text" id="userAppId" class="form-control" placeholder="1234567890" v-model="userAppId" @input="limitInput" />
                     </div>
                     <div v-if="isError" class="text-danger text-end"> {{ errorMessage }} </div>
-
                   </div>
                   <!--  -->
                   <div class="col-12 col-lg-4 mb-2">
@@ -117,7 +116,8 @@
                       <td>{{ item.date }}</td>
                       <td>{{ item.userAppId }}</td>
                       <td>{{ statusText[item.realNameState] }} </td>
-                      <td id="cash-state">
+                      <td id="cash-state" :id="item.userAppId" >
+                        <!-- {{ item.userAppId }} -->
                         <!-- btn -->
                         <router-link to="/member-id-info" class="btn btn-info text-light mb-2">
                           <i class="bi bi-eye-fill"></i> 檢視
@@ -129,11 +129,35 @@
                 </table>
               </div>
               <!--  -->
-              <div class="text-center h4 fs-bold mt-4 mb-4 text-primary">
-                <p v-if="!filteredList.length && isSearched"> <i class="bi bi-binoculars"></i> 找不到結果，麻煩您重新再輸入一次 !</p>
+              <div v-if="!filteredList.length && isSearched" class="text-center h4 fs-bold mt-4 mb-4 text-primary">
+                <p> <i class="bi bi-binoculars"></i> 找不到結果，麻煩您重新再輸入一次 !</p>
+                <div class="d-flex justify-content-center flex-column flex-lg-row">
+                  <button  class="btn btn-primary text-light mb-2" @click="reloadPage()">重新搜尋</button>
+                </div>
               </div>
               <!-- pagination  -->
-              <nav aria-label="">
+              <!--  -->
+              <!-- <ul>
+                <li v-for="(item, index) in idLists" :key="index">{{ item }}</li>
+              </ul> -->
+              <!-- <paginate
+              v-if="pageCount > 1"
+              :page-count="pageCount"
+              :page-range="3"
+              :margin-pages="2"
+              :click-handler="changePage"
+              :prev-text="'上一页'"
+              :next-text="'下一页'"
+              :container-class="'pagination'"
+              :page-class="'page-item'"
+              :prev-class="'page-item'"
+              :next-class="'page-item'"
+              :disabled-class="'disabled'"
+              :active-class="'active'"
+            >
+          </paginate> -->
+          <!-- <div>123456</div> -->
+              <!-- <nav aria-label="">
                 <ul class="pagination d-flex justify-content-center">
                   <li class="page-item disabled">
                     <span class="page-link">Previous</span>
@@ -147,23 +171,7 @@
                     <a class="page-link" href="#">Next</a>
                   </li>
                 </ul>
-              </nav>
-              <!--  -->
-              <!-- <ul>
-                <li v-for="item in paginatedData" :key="item.id">{{ item.title }}</li>
-              </ul>
-              <paginate
-              :page-count="pageCount"
-              :click-handler="changePage"
-              :prev-text="'上一页'"
-              :next-text="'下一页'"
-              :container-class="'pagination'"
-              :page-class="'page-item'"
-              :prev-class="'page-item'"
-              :next-class="'page-item'"
-              :disabled-class="'disabled'"
-              :active-class="'active'"
-            /> -->
+              </nav> -->
               <!--  -->
             </div>
             <!--  -->
@@ -178,14 +186,12 @@
 <script>
 import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
-// import Paginate from '@/vuejs-paginate';
 const api = `${import.meta.env.VITE_PATH}/realname`;
 export default {
   //name: "Member",
   components: {
     TopHeader,
     Sidebar,
-    // Paginate
   },
   data() {
     return {
@@ -193,7 +199,7 @@ export default {
       idLists: [],
       //
       customers: null,
-      //id type option
+      //id type option 
       selectedIdType: '',
       //idType: [],
       //
@@ -213,7 +219,7 @@ export default {
       //
       // currentPage: 1,
       // perPage: 10,
-      // data: [], // pages data
+      //item: [], // pages data
     };
   },
   mounted() {
@@ -222,12 +228,12 @@ export default {
   },
   computed: {
     pageCount() {
-      return Math.ceil(this.data.length / this.perPage);
+      return Math.ceil(this.idLists.length / this.perPage);
     },
-    paginatedData() {
+    displayedItems() {
       const start = (this.currentPage - 1) * this.perPage;
       const end = start + this.perPage;
-      return this.data.slice(start, end);
+      return this.idLists.slice(start, end);
     },
   },
   methods: {
@@ -296,6 +302,9 @@ export default {
         this.isError = false;
       }
     },
+    reloadPage() {
+      window.location.reload();
+    },
     //
     // limitInput() {
     //   const inputLength = this.inputValue.length;
@@ -309,9 +318,9 @@ export default {
     //     this.isError = false;
     //   }
     //
-    changePage(page) {
-      this.currentPage = page;
-    },
+    // changePage(page) {
+    //   this.currentPage = page;
+    // },
   },
 };
 </script>

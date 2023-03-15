@@ -143,7 +143,6 @@
           </div>
           <!--  -->
         </div>
-
         <div class="modal-footer d-flex justify-content-center border-top-0 mb-4">
           <!--  -->
           <div class="col-12">

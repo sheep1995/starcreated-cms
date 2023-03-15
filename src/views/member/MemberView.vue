@@ -48,24 +48,28 @@
                   "
                 >
                   <div class="col-auto">
-                    <label for="userAppId" class="col-form-label me-2 ms-1"
+                    <label for="userAppId" class="col-form-label me-2 ms-1" 
                       >星行號</label
                     >
                   </div>
                   <div class="col-md-4 mb-4">
                     <input
-                      type="password"
+                      type="text"
                       id="userAppId"
                       class="form-control"
-                      aria-describedby="passwordHelpInline"
                       placeholder="1234567890"
+                      v-model="userAppId"  @input="limitInput"
                     />
+                    <div v-if="isError" class="text-danger text-end"> {{ errorMessage }} </div>
                   </div>
                   <div class="col-auto">
                     <button
                       type="button"
                       class="btn btn-primary text-white mx-2"
                       data-bs-dismiss="modal"
+                      @click="searchUser()"
+                      :disabled="userAppId === '' "
+                      v-tooltip="'請新輸入星行者號碼'"
                     >
                       搜尋
                     </button>
@@ -101,7 +105,7 @@
                   </tr>
                 </thead>
                 <tbody class="table-group-divider">
-                  <tr v-for="(item, index) in members" :key="index">
+                  <tr v-for="(item, index) in filteredList" :key="index">
                     <th scope="row"> {{ index + 1 }}</th>
                     <td>{{ item.userAppId }}</td>
                     <td>{{ item.nickname }}</td>
@@ -173,6 +177,13 @@
             </div>
           </div>
           <!--  -->
+          <div v-if="!filteredList.length && isSearched" class="text-center h4 fs-bold mt-4 mb-4 text-primary">
+            <p> <i class="bi bi-binoculars"></i> 找不到結果，麻煩您重新再輸入一次 !</p>
+            <div class="d-flex justify-content-center flex-column flex-lg-row">
+              <button  class="btn btn-primary text-light mb-2" @click="reloadPage()">重新搜尋</button>
+            </div>
+          </div>
+          <!--  -->
         </div>
       </div>
     </div>
@@ -200,21 +211,65 @@ export default {
       },
       nullText: {
         "null": '無帳號'
-      }
+      },
+      filteredList: [],
+      //search
+      userAppId: '',
+      realNameState: '',
+      isSearched: false,
+      isError: false,
+      errorMessage: '',
     };
-  },
-  methods: {
-    getMembers() {
-      const vm = this;
-      this.$http.get(api).then((res) => {
-        //vm.isLoading = false;
-        this.members = res.data.data.userList;
-        //console.log(res.data.data.userList);
-      });
-    },
   },
   mounted() {
     this.getMembers();
+  },
+  methods: {
+    async getMembers() {
+      const res = await this.$http.get(api);
+      if (res.data.data.userList.length === 0) {
+        this.members = [];
+      } else {
+        this.members = res.data.data.userList;
+      }
+      this.filteredList = this.members;
+      //console.log(res.data.data);
+    },
+    // getMembers() {
+    //   const vm = this;
+    //   this.$http.get(api).then((res) => {
+    //     //vm.isLoading = false;
+    //     this.members = res.data.data.userList;
+    //     //console.log(res.data.data.userList);
+    //   });
+    // },
+    searchUser() {
+      this.isSearched = true;
+      if (this.userAppId ) {
+        this.filteredList = this.members.filter(item => {
+          return (
+            (!this.userAppId || item.userAppId === this.userAppId)
+          );
+        })
+      } else {
+        this.filteredList = [];
+      }
+    },
+    limitInput() {
+      const userAppId = this.userAppId.length;
+      if ( userAppId < 10 ) {
+        this.isError = true;
+        this.errorMessage = "請至少輸入10位數字!";
+      } else if ( userAppId > 10 ) {
+        this.isError = true;
+        this.errorMessage = "不能輸入超過10位數字!";
+      } else {
+        this.isError = false;
+      }
+    },
+    reloadPage() {
+      window.location.reload();
+    }
   },
 };
 </script>

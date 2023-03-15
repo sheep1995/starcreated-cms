@@ -170,7 +170,7 @@ export default {
             confirmButtonText: "關閉",
           }).then(function () {
           //self.$router.push({ name: "Add"});
-          location.reload();
+          window.location.reload();
           vm.isLoading = false;
           });
           } else {
