@@ -36,7 +36,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
-//import Paginate from 'vuejs-paginate/dist/index.js';
+//import Paginate from 'vuejs-paginate'
 
 
 const app = createApp(App);
@@ -68,7 +68,7 @@ app.component('VForm', Form);
 app.component('ErrorMessage', ErrorMessage);
 app.component('Loading', Loading);
 
-//app.component('paginate', Paginate)
+//app.component('paginate', Paginate);
 
 app.directive('tooltip', Tooltip);
 

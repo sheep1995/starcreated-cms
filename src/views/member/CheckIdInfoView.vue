@@ -33,29 +33,23 @@
               "
             >
               <li class="text-primary">
-                <span
-                  ><img
-                    class="me-1"
-                    src="@/assets/images/approve-step1.svg"
-                    alt="approve-step1"
-                /></span>
+                <span>
+                  <img class="me-1" src="@/assets/images/approve-step1.svg" alt="approve-step1"/>
+                  <img class="me-1" src="@/assets/images/approve-step1-gray.svg" alt="approve-step1"/>
+                </span>
                 實名認證 <i class="bi bi-chevron-right me-2"></i>
               </li>
               <li class="text-primary">
-                <span
-                  ><img
-                    class="me-1"
-                    src="@/assets/images/approve-step2.svg"
-                    alt="approve-step2" /></span
-                >人工審核 <i class="bi bi-chevron-right me-2"></i>
+                <span>
+                  <img class="me-1" src="@/assets/images/approve-step2.svg" alt="approve-step2" />
+                  <img class="me-1" src="@/assets/images/bank-step2-gray.svg" alt="approve-step2" />
+                  </span>人工審核 <i class="bi bi-chevron-right me-2"></i>
               </li>
               <li class="text-gray">
-                <span
-                  ><img
-                    class="me-1"
-                    src="@/assets/images/bank-step3-gray.svg"
-                    alt="bank-step3" /></span
-                >審核完成
+                <span>
+                  <img class="me-1" src="@/assets/images/bank-step3.svg" alt="bank-step3" />
+                  <img class="me-1" src="@/assets/images/bank-step3-gray.svg" alt="bank-step3" />
+                  </span> 審核完成
               </li>
             </ul>
           </div>
@@ -102,7 +96,7 @@
                       id="userName"
                       class="form-control"
                       aria-describedby="passwordHelpInline"
-                      value="王曉明"
+                      :value= idListInfo.nickname
                       disabled
                     />
                   </div>
@@ -120,7 +114,7 @@
                       id="starNumber"
                       class="form-control"
                       aria-describedby="passwordHelpInline"
-                      value="1234567890"
+                      :value= idListInfo.userAppId
                       disabled
                     />
                   </div>
@@ -134,9 +128,9 @@
                       >實名認證</label
                     >
                     <select class="form-select" id="specificSizeSelect">
-                      <option value="已認證">已認證</option>
-                      <option value="未認證">未認證</option>
-                      <option value="認證失敗">認證失敗</option>
+                      <option value="finish">已認證</option>
+                      <!-- <option value="未認證">未認證</option> -->
+                      <option value="fail">認證失敗</option>
                     </select>
                   </div>
                 </div>
@@ -145,10 +139,10 @@
           </div>
           <!--  -->
           <!--  -->
-          <div class="container">
+          <div class=" ">
             <!--  -->
             <div class="d-flex justify-content-between align-items-center mb-2">
-              <div>
+              <div class="col-12">
                 <h2 class="text-secondary mt-4 fs-5 fw-bold">實名認證資料</h2>
               </div>
             </div>
@@ -167,12 +161,12 @@
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      value="王曉明"
+                      :value=idListInfo.userName
                       id="checkName"
                       v-model="checkedNames"
                     />
                     <label class="form-check-label" for="checkName">
-                      姓名: 王曉明
+                      姓名: {{ idListInfo.userName }}
                     </label>
                   </div>
                 </div>
@@ -181,12 +175,12 @@
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      value=" 077/06/10"
+                      :value=idListInfo.birthday
                       id="checkDay"
                       v-model="checkedNames"
                     />
                     <label class="form-check-label" for="checkDay">
-                      出生年/月/日: 077/06/10
+                      出生年/月/日: {{ idListInfo.birthday }}
                     </label>
                   </div>
                 </div>
@@ -195,12 +189,12 @@
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      value="A123456789"
+                      :value=idListInfo.idNumber
                       id="checkId"
                       v-model="checkedNames"
                     />
                     <label class="form-check-label" for="checkId">
-                      身分證字號: A123456789
+                      身分證字號:  {{ idListInfo.idNumber }}
                     </label>
                   </div>
                 </div>
@@ -210,11 +204,12 @@
                       class="form-check-input"
                       type="checkbox"
                       value="077/06/30"
+                      :value=idListInfo.issueDate
                       id="checkIdDay"
                       v-model="checkedNames"
                     />
                     <label class="form-check-label" for="checkIdDay">
-                      發證日期: 077/06/30
+                      發證日期: {{ idListInfo.issueDate }}
                     </label>
                   </div>
                 </div>
@@ -223,12 +218,12 @@
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      value="初發"
+                      :value=idListInfo.issueType
                       id="checkIdType"
                       v-model="checkedNames"
                     />
                     <label class="form-check-label" for="checkIdType">
-                      發證類型: 初發
+                      發證類型: {{ idListInfo.issueType }}
                     </label>
                   </div>
                 </div>
@@ -237,18 +232,19 @@
                     <input
                       class="form-check-input"
                       type="checkbox"
-                      value="高雄市"
+                      :value=idListInfo.issueArea
                       id="checkIdCity"
                       v-model="checkedNames"
                     />
                     <label class="form-check-label" for="checkIdCity">
-                      發證地點: 高雄市
+                      發證地點: {{ idListInfo.issueArea }}
                     </label>
                   </div>
                 </div>
                 <!--  -->
                 <!--  -->
               </div>
+              <p  class="fs-6 mt-4 text-primary">*資料正確請在前面打勾</p>
             </div>
             <div class="col-12 col-md-6">
               <div class="col-12">
@@ -256,17 +252,19 @@
               </div>
               <div class="row">
                 <div class="col-12 col-lg-6">
-                  <img  data-bs-toggle="modal"
-                        data-bs-target="#idFrontmodal"
-                    class="img-fluid img-id"
-                    src="@/assets/images/img-id-2.png"
-                    alt="id-img-front"
-                  />
+                  <div class="img-id">
+                    <img v-if="idListInfo.frontImage === '' " src="@/assets/images/img-id-2.png" alt="img-404" class="img-fluid">
+                    <img v-else data-bs-toggle="modal"
+                          data-bs-target="#idFrontmodal"
+                      class="img-fluid"
+                      :src="idListInfo.frontImage"
+                      alt="id-img-front"
+                    />
+                  </div>
                   <div class="form-check d-flex justify-content-center" >
                     <input
                       class="form-check-input me-2"
                       type="checkbox"
-                      value="正面"
                       id="idImgFront"
                       v-model="checkedNames"
                     />
@@ -276,17 +274,19 @@
                   </div>
                 </div>
                 <div class="col-12 col-lg-6">
-                  <img data-bs-toggle="modal"
-                        data-bs-target="#idBackmodal"
-                    class="img-fluid img-id"
-                    src="@/assets/images/img-id-1.png"
-                    alt="id-img-back"
-                  />
+                  <div class="img-id">
+                    <img v-if="idListInfo.backImage === '' " src="@/assets/images/img-id-1.png" alt="id-img-back" class="img-fluid">
+                    <img v-else data-bs-toggle="modal"
+                          data-bs-target="#idBackmodal"
+                      class="img-fluid"
+                      :src="idListInfo.backImage"
+                      alt="id-img-front"
+                    />
+                  </div>
                   <div class="form-check d-flex justify-content-center">
                     <input
                       class="form-check-input  me-2"
                       type="checkbox"
-                      value="背面"
                       id="idImgBack"
                       v-model="checkedNames"
                     />
@@ -297,6 +297,7 @@
                 </div>
               </div>
             </div>
+
           </form>
           <!--  -->
           <div class="col-12 mt-4">
@@ -362,8 +363,16 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body text-center">
-        <img class="img-fluid" src="@/assets/images/img-id-2.png" alt="id-img-front"/>
+        <div class="modal-body text-center ">
+          <div class="img-id-modal">
+            <img v-if="idListInfo.frontImage === '' " src="@/assets/images/img-id-2.png" alt="img-404" class="img-fluid">
+            <img v-else data-bs-toggle="modal"
+                  data-bs-target="#idFrontmodal"
+              class="img-fluid"
+              :src="idListInfo.frontImage"
+              alt="id-img-front"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -389,7 +398,15 @@
           ></button>
         </div>
         <div class="modal-body text-center">
-        <img class="img-fluid" src="@/assets/images/img-id-1.png" alt="id-img-front"/>
+          <div class="img-id-modal">
+            <img v-if="idListInfo.backImage === '' " src="@/assets/images/img-id-1.png" alt="img-404" class="img-fluid">
+            <img v-else data-bs-toggle="modal"
+                  data-bs-target="#idFrontmodal"
+              class="img-fluid"
+              :src="idListInfo.backImage"
+              alt="id-img-back"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -399,7 +416,7 @@
 <script>
 import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
-const api = `${import.meta.env.VITE_PATH}/realname?realNameId=realName-1237370937-1678329764994`;
+const api = `${import.meta.env.VITE_PATH}/realname/info?realNameId=realName-1162608596-1678868707689`;
 
 export default {
   components: {
@@ -410,9 +427,13 @@ export default {
     return {
       checkedNames: [],
       realNameId: 'realName-1237370937-1678329764994',
-      idLists: [],
+      idListInfo: [],
       filteredList: [],
       cashState: '審核中',
+      statusText: {
+        "finish": '已認證',
+        "fail": '認證失敗',
+      },
     };
   },
   // components: {
@@ -429,8 +450,8 @@ export default {
       // } else {
       //   this.idLists = res.data.data.realNameId;
       // }
-      this.filteredList = this.idLists;
-      console.log(res.data.data.realNameId);
+      this.idListInfo = res.data.data;
+      console.log(res.data.data);
     },
   },
 }
