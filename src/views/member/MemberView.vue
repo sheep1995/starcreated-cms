@@ -184,6 +184,24 @@
             </div>
           </div>
           <!--  -->
+              <!-- pagination  -->
+              <!--  -->
+              <!-- <paginate v-model="currentPage" :total="filteredList.length" :perPage="perPage"
+                :page-count="pageCount" :click-handler="onPageChange"  :prev-text="'上一頁'"
+                :next-text="'下一頁'"
+                :container-class="'pagination d-flex justify-content-center'">
+                <template #prev-label>
+                  <span class="pagination-label">Prev</span>
+                </template>
+                <template #next-label>
+                  <span class="pagination-label">Next</span>
+                </template>
+                <template #page="{ page, isCurrent }">
+                  <div class="pagination-item" :class="{ 'pagination-item--active': isCurrent }">
+                    {{ page }}
+                  </div>
+                </template>
+              </paginate> -->
         </div>
       </div>
     </div>
@@ -193,12 +211,15 @@
 <script>
 import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
+import Paginate from 'vuejs-paginate-next';
+
 const api = `${import.meta.env.VITE_PATH}/member`;
 export default {
   name: "Member",
   components: {
     TopHeader,
     Sidebar,
+    paginate: Paginate,
   },
   data() {
     return {
@@ -219,10 +240,30 @@ export default {
       isSearched: false,
       isError: false,
       errorMessage: '',
+      // 當前頁碼
+      currentPage: 1,
+      // 每頁要顯示的數據數量
+      perPage: 10,
+      // 從 API 取得的所有數據
+      // allData: [],
+      // 經過分頁後要顯示的數據
+      paginatedData: [],
+      //firstIndex: ''
     };
   },
   mounted() {
     this.getMembers();
+    //this.onStateChange();
+  },
+  computed: {
+    pageCount() {
+      return Math.ceil(this.filteredList.length / this.perPage);
+    },
+    displayedItems() {
+      const start = (this.currentPage - 1) * this.perPage;
+      //const end = start + this.perPage;
+      return this.filteredList.slice(start, start + this.perPage);
+    },
   },
   methods: {
     async getMembers() {
@@ -269,7 +310,17 @@ export default {
     },
     reloadPage() {
       window.location.reload();
-    }
+    },
+    updatePaginatedData() {
+      const start = (this.currentPage - 1) * this.perPage;
+      const end = start + this.perPage;
+      this.paginatedData = this.filteredList.slice(start, end);
+    },
+    onPageChange(pageNum) {
+      this.currentPage = pageNum;
+      this.updatePaginatedData();
+      console.log(pageNum);
+    },
   },
 };
 </script>

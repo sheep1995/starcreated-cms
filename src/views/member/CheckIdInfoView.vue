@@ -32,30 +32,51 @@
                 fw-bold
               "
             >
-              <li class="text-primary">
+              <li v-if="realNameState === 'finish' || realNameState === 'review'" class="text-primary">
                 <span>
                   <img class="me-1" src="@/assets/images/approve-step1.svg" alt="approve-step1"/>
+                </span>
+                實名認證 <i class="bi bi-chevron-right me-2"></i>
+              </li>
+              <li v-else class="text-gray">
+                <span>
                   <img class="me-1" src="@/assets/images/approve-step1-gray.svg" alt="approve-step1"/>
                 </span>
                 實名認證 <i class="bi bi-chevron-right me-2"></i>
               </li>
-              <li class="text-primary">
+              <li v-if="realNameState === 'finish' || realNameState === 'review'" class="text-primary">
                 <span>
                   <img class="me-1" src="@/assets/images/approve-step2.svg" alt="approve-step2" />
+                  </span>人工審核 <i class="bi bi-chevron-right me-2"></i>
+              </li>
+              <li v-else class="text-gray">
+                <span>
                   <img class="me-1" src="@/assets/images/bank-step2-gray.svg" alt="approve-step2" />
                   </span>人工審核 <i class="bi bi-chevron-right me-2"></i>
               </li>
-              <li class="text-gray">
+              <li v-if="realNameState === 'finish'" class="text-primary">
                 <span>
                   <img class="me-1" src="@/assets/images/bank-step3.svg" alt="bank-step3" />
+                  </span> 審核完成
+              </li>
+              <li v-else class="text-gray">
+                <span>
                   <img class="me-1" src="@/assets/images/bank-step3-gray.svg" alt="bank-step3" />
                   </span> 審核完成
               </li>
             </ul>
           </div>
           <!--  -->
+          <!-- 已完成實名認證 -->
+          <div v-if="realNameState === 'finish'"
+            class="alert bg-success mt-4 mb-4 pb-0 text-dark fw-medium"
+            role="alert"
+          >
+            <p><i class="bi bi-check-circle-fill me-2"></i>已完成實名認證</p>
+          </div>
+          <!--  -->
           <!-- 實名認證-失敗 -->
-          <div
+          <div v-if="realNameState === 'fail'"
             class="alert bg-danger mt-4 mb-4 pb-0 text-light fw-medium"
             role="alert"
           >
@@ -64,14 +85,6 @@
               身份證與實名認證資料不相符，待用戶重新上傳身分證照片
             </p>
           </div>
-          <!-- 已完成實名認證 -->
-          <div
-            class="alert bg-success mt-4 mb-4 pb-0 text-dark fw-medium"
-            role="alert"
-          >
-            <p><i class="bi bi-check-circle-fill me-2"></i>已完成實名認證</p>
-          </div>
-          <!--  -->
           <div class="mb-4">
             <form class="fs-6 border border-1 rounded-4 pt-4">
               <!--  -->
@@ -128,9 +141,9 @@
                       >實名認證</label
                     >
                     <select class="form-select" id="specificSizeSelect">
-                      <option value="finish">已認證</option>
+                      <option :value="finish">已認證</option>
                       <!-- <option value="未認證">未認證</option> -->
-                      <option value="fail">認證失敗</option>
+                      <option :value="fail">認證失敗</option>
                     </select>
                   </div>
                 </div>
@@ -152,7 +165,9 @@
           <!--  -->
           <form class="row mb-4" action="">
             <div class="col-12">
-              <div class="mb-2">審核通的資料: {{ checkedNames }}</div>
+              <!-- <div class="mb-2">審核通的資料: {{ checkedNames }}</div> -->
+              <!-- <div>{{ idListInfo.realNameState }}</div>
+              <div>{{ realNameState }}</div> -->
             </div>
             <div class="col-12 col-md-6">
               <div class="fs-6 p-4 border border-0 shadow rounded-4">
@@ -302,21 +317,20 @@
           <!--  -->
           <div class="col-12 mt-4">
             <div
-              v-if="cashState === '審核中'"
+            v-if="realNameState === 'review'"
               class="d-flex justify-content-center flex-column flex-lg-row"
             >
               <button
                 type="button"
                 class="btn btn-primary text-light mb-2 me-2"
                 data-bs-toggle="modal"
-                data-bs-target="#viewTaskModal"
+                data-bs-target="#passModal"
               >
                 審核通過</button
               ><button
                 type="button"
                 class="btn btn-danger mb-2"
-                data-bs-toggle="modal"
-                data-bs-target="#delModal"
+                @click="unpassIdinfo()"
               >
                 未通過
               </button>
@@ -412,12 +426,35 @@
     </div>
   </div>
   <!--  -->
+  <!-- Modal -->
+  <div class="modal fade" id="passModal" tabindex="-1" aria-labelledby="passModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="passModalLabel">審核通過</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          確認要審核通過此筆訂單?</div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+            取消
+          </button>
+          <button type="button" class="btn btn-primary text-white" @click="passIdinfo()" data-bs-dismiss="modal">
+            確認
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  -->
 </template>
 <script>
 import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
-const api = `${import.meta.env.VITE_PATH}/realname/info?realNameId=realName-1162608596-1678868707689`;
-
+// const api = `${import.meta.env.VITE_PATH}/realname/info?realNameId=realName-1162608596-1678868707689`;
+const api = `${import.meta.env.VITE_PATH}/realname/info?realNameId=realName-1237370937-1678329708869`;
+//realName-1237370937-1678329708869
 export default {
   components: {
     TopHeader,
@@ -429,11 +466,14 @@ export default {
       realNameId: 'realName-1237370937-1678329764994',
       idListInfo: [],
       filteredList: [],
-      cashState: '審核中',
+      //cashState: '審核中',
       statusText: {
         "finish": '已認證',
         "fail": '認證失敗',
       },
+      //realNameState: 'fail',
+      //realNameState: 'review',
+      realNameState: 'finish',
     };
   },
   // components: {
@@ -453,6 +493,25 @@ export default {
       this.idListInfo = res.data.data;
       console.log(res.data.data);
     },
+    passIdinfo() {
+      this.$swal({
+        title: "通過審核",
+        //text: "請相關人員到信箱查看是否有收到驗證信",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    },
+    unpassIdinfo() {
+      this.$swal({
+        title: "未通過審核",
+        //text: "請相關人員到信箱查看是否有收到驗證信",
+        icon: "warning",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+
   },
 }
 </script>

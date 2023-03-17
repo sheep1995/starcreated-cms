@@ -135,7 +135,7 @@
               </div>
               <!-- pagination  -->
               <!--  -->
-              <!-- <paginate v-model="currentPage" :total="filteredList.length" :perPage="perPage"
+              <paginate v-if="currentPage===1" v-model="currentPage" :total="filteredList.length" :perPage="perPage"
                 :page-count="pageCount" :click-handler="onPageChange"  :prev-text="'上一頁'"
                 :next-text="'下一頁'"
                 :container-class="'pagination d-flex justify-content-center'">
@@ -150,7 +150,7 @@
                     {{ page }}
                   </div>
                 </template>
-              </paginate> -->
+              </paginate>
               <!-- <div>123456</div> -->
               <!-- <nav aria-label="">
                 <ul class="pagination d-flex justify-content-center">
@@ -181,9 +181,7 @@
 <script>
 import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
-//import Pagination from '@/components/Pagination.vue';
 import Paginate from 'vuejs-paginate-next';
-// import 'vuejs-paginate-next/dist/index.css';
 
 const api = `${import.meta.env.VITE_PATH}/realname`;
 export default {
@@ -191,7 +189,6 @@ export default {
   components: {
     TopHeader,
     Sidebar,
-    //Pagination,
     paginate: Paginate,
   },
   data() {
@@ -221,11 +218,11 @@ export default {
       // 當前頁碼
       currentPage: 1,
       // 每頁要顯示的數據數量
-      perPage: 30,
+      perPage: 60,
       // 從 API 取得的所有數據
       // allData: [],
       // 經過分頁後要顯示的數據
-      //paginatedData: [],
+      paginatedData: [],
       //firstIndex: ''
     };
   },
@@ -322,6 +319,7 @@ export default {
     onPageChange(pageNum) {
       this.currentPage = pageNum;
       this.updatePaginatedData();
+      console.log(pageNum);
     },
   },
   // watch: {
