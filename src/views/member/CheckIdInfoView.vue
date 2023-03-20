@@ -86,7 +86,7 @@
             </p>
           </div>
           <div class="mb-4">
-            <form class="fs-6 border border-1 rounded-4 pt-4">
+            <div class="fs-6 border border-1 rounded-4 pt-4">
               <!--  -->
               <div
                 class="
@@ -140,7 +140,7 @@
                       class="col-auto col-form-label me-2 ms-1"
                       >實名認證</label
                     >
-                    <select class="form-select" id="specificSizeSelect">
+                    <select class="form-select" id="specificSizeSelect" v-model="userInfo.realNameState">
                       <option :value="finish">已認證</option>
                       <!-- <option value="未認證">未認證</option> -->
                       <option :value="fail">認證失敗</option>
@@ -148,7 +148,7 @@
                   </div>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
           <!--  -->
           <!--  -->
@@ -163,11 +163,11 @@
             <!--  -->
           </div>
           <!--  -->
-          <form class="row mb-4" action="">
+          <div class="row mb-4" >
             <div class="col-12">
-              <!-- <div class="mb-2">審核通的資料: {{ checkedNames }}</div> -->
-              <!-- <div>{{ idListInfo.realNameState }}</div>
-              <div>{{ realNameState }}</div> -->
+              <div class="mb-2">審核通的資料: {{ checkedNames }}</div>
+              <div>{{ idListInfo.realNameState }}</div>
+              <div>{{ realNameState }}</div>
             </div>
             <div class="col-12 col-md-6">
               <div class="fs-6 p-4 border border-0 shadow rounded-4">
@@ -178,7 +178,7 @@
                       type="checkbox"
                       :value=idListInfo.userName
                       id="checkName"
-                      v-model="checkedNames"
+                      v-model="checkedNames.userNameValid"
                     />
                     <label class="form-check-label" for="checkName">
                       姓名: {{ idListInfo.userName }}
@@ -192,7 +192,7 @@
                       type="checkbox"
                       :value=idListInfo.birthday
                       id="checkDay"
-                      v-model="checkedNames"
+                      v-model="checkedNames.birthdayValid"
                     />
                     <label class="form-check-label" for="checkDay">
                       出生年/月/日: {{ idListInfo.birthday }}
@@ -206,7 +206,7 @@
                       type="checkbox"
                       :value=idListInfo.idNumber
                       id="checkId"
-                      v-model="checkedNames"
+                      v-model="checkedNames.idNumberValid"
                     />
                     <label class="form-check-label" for="checkId">
                       身分證字號:  {{ idListInfo.idNumber }}
@@ -221,7 +221,7 @@
                       value="077/06/30"
                       :value=idListInfo.issueDate
                       id="checkIdDay"
-                      v-model="checkedNames"
+                      v-model="checkedNames.issueDateValid"
                     />
                     <label class="form-check-label" for="checkIdDay">
                       發證日期: {{ idListInfo.issueDate }}
@@ -235,7 +235,7 @@
                       type="checkbox"
                       :value=idListInfo.issueType
                       id="checkIdType"
-                      v-model="checkedNames"
+                      v-model="checkedNames.issueTypeValid"
                     />
                     <label class="form-check-label" for="checkIdType">
                       發證類型: {{ idListInfo.issueType }}
@@ -249,7 +249,7 @@
                       type="checkbox"
                       :value=idListInfo.issueArea
                       id="checkIdCity"
-                      v-model="checkedNames"
+                      v-model="checkedNames.issueAreaValid"
                     />
                     <label class="form-check-label" for="checkIdCity">
                       發證地點: {{ idListInfo.issueArea }}
@@ -281,7 +281,7 @@
                       class="form-check-input me-2"
                       type="checkbox"
                       id="idImgFront"
-                      v-model="checkedNames"
+                      v-model="checkedNames.frontImageValid"
                     />
                     <label class="form-check-label" for="idImgFront">
                       正面
@@ -303,7 +303,7 @@
                       class="form-check-input  me-2"
                       type="checkbox"
                       id="idImgBack"
-                      v-model="checkedNames"
+                      v-model="checkedNames.backImageValid"
                     />
                     <label class="form-check-label" for="idImgBack">
                       背面
@@ -313,11 +313,16 @@
               </div>
             </div>
 
-          </form>
+          </div>
+          <!--  -->
+          <div>Real Name ID: *** {{ $route.params.realNameId }} ***</div>
+          <div>
+            <button @click="passIdinfo">{{ api }}</button>
+          </div>
           <!--  -->
           <div class="col-12 mt-4">
-            <div
-            v-if="realNameState === 'review'"
+            <!-- <div v-if="realNameState === 'finish'" -->
+            <div v-if="realNameState === 'review'"
               class="d-flex justify-content-center flex-column flex-lg-row"
             >
               <button
@@ -325,9 +330,10 @@
                 class="btn btn-primary text-light mb-2 me-2"
                 data-bs-toggle="modal"
                 data-bs-target="#passModal"
-              >
-                審核通過</button
-              ><button
+                @click.prevent="passIdinfo()"
+                :disabled="!isAllRequiredFieldsValid"
+              >審核通過</button>
+              <button
                 type="button"
                 class="btn btn-danger mb-2"
                 @click="unpassIdinfo()"
@@ -453,17 +459,39 @@
 import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
 // const api = `${import.meta.env.VITE_PATH}/realname/info?realNameId=realName-1162608596-1678868707689`;
-const api = `${import.meta.env.VITE_PATH}/realname/info?realNameId=realName-1237370937-1678329708869`;
+const api = `${import.meta.env.VITE_PATH}/realname/info?realNameId=realName-1237370937-1678326993181`;
+
+//TESTT
+//const api = `${import.meta.env.VITE_PATH}/realname`;
+//const apiPost = `${import.meta.env.VITE_PATH}/realname/info`;
+
+
 //realName-1237370937-1678329708869
 export default {
+  props: {
+    realNameId: {
+      type: String,
+      required: true,
+    },
+  },
   components: {
     TopHeader,
     Sidebar,
   },
   data() {
     return {
-      checkedNames: [],
-      realNameId: 'realName-1237370937-1678329764994',
+      checkedNames: {
+        userNameValid: false,
+        birthdayValid: false,
+        idNumberValid: false,
+        issueDateValid: false,
+        issueTypeValid: false,
+        issueAreaValid: false,
+        frontImageValid: false,
+        backImageValid: false,
+      },
+      // realNameId: 'realName-1237370937-1678329764994',
+      realNameId: '',
       idListInfo: [],
       filteredList: [],
       //cashState: '審核中',
@@ -474,6 +502,36 @@ export default {
       //realNameState: 'fail',
       //realNameState: 'review',
       realNameState: 'finish',
+      //2.5 post
+      userInfo: {
+        realNameId: 'realName-1237370937-1678329708869',
+        realNameState: 'finish',
+        errorItems: {
+          userName: true,
+          birthday: true,
+          idNumber: true,
+          issueDate: true,
+          issueType: true,
+          issueArea: true,
+          frontImage: true,
+          backImage: true
+      }
+      },
+      userInfoFail: {
+        realNameId: 'realName-1237370937-1678329708869',
+        realNameState: 'fail',
+        errorItems: {
+          userName: false,
+          birthday: false,
+          idNumber: false,
+          issueDate: false,
+          issueType: false,
+          issueArea: false,
+          frontImage: false,
+          backImage: false
+      }
+      },
+      isLoading: false,
     };
   },
   // components: {
@@ -481,6 +539,12 @@ export default {
   // },
   mounted() {
     this.getMembers();
+  },
+  computed: {
+// const apiinfo = `${import.meta.env.VITE_PATH}/realname/info?realNameId=${this.realNameId}`;
+    apiinfo() {
+      return `${import.meta.env.VITE_PATH}/realname/info?realNameId=${this.realNameId}`;
+    },
   },
   methods: {
     async getMembers() {
@@ -494,15 +558,35 @@ export default {
       console.log(res.data.data);
     },
     passIdinfo() {
-      this.$swal({
-        title: "通過審核",
-        //text: "請相關人員到信箱查看是否有收到驗證信",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 1500,
+      const vm = this;
+      vm.isLoading = true;
+      // this.$https.post(apiName, this.addUser).then((res) => {
+      this.$http.post(apiPost, this.userInfo).then((res) => {
+        const code = res.data.result.code;
+        console.log(res.data.result);
       });
     },
+    // async passIdinfo() {
+    //   try {
+    //     // const res = await axios.post(api,{ realNameState: 'finish' });
+    //     const res = await this.axios.post(api);
+    //     this.$swal({
+    //     title: "通過審核",
+    //     //text: "請相關人員到信箱查看是否有收到驗證信",
+    //     icon: "success",
+    //     showConfirmButton: false,
+    //     timer: 1500,
+    //   });
+    //   console.log('Real name state updated successfully: ', res.data);
+    //   } catch (error) {
+    //     console.error('Failed to update real name state: ', error);
+    //   }
+    // },
     unpassIdinfo() {
+      //userInfoFail
+      this.$http.post(apiPost, this.userInfoFail).then((res) => {
+        const code = res.data.result.code;
+        console.log(res.data.result);
       this.$swal({
         title: "未通過審核",
         //text: "請相關人員到信箱查看是否有收到驗證信",
@@ -510,8 +594,39 @@ export default {
         showConfirmButton: false,
         timer: 1500,
       });
-    }
-
+      });
+    },
+    isAllRequiredFieldsValid() {
+      if (!this.realNameId) {
+        return false;
+      }
+      const requiredFields = [
+        this.userNameValid,
+        this.birthdayValid,
+        this.idNumberValid,
+        this.issueDateValid,
+        this.issueTypeValid,
+        this.issueAreaValid,
+        this.frontImageValid,
+        this.backImageValid,
+      ];
+      console.log(isAllRequiredFieldsValid);
+      return requiredFields.every(field => field === true);
+    },
+    errorItems() {
+      return {
+        userName: !this.userNameValid,
+        birthday: !this.birthdayValid,
+        idNumber: !this.idNumberValid,
+        issueDate: !this.issueDateValid,
+        issueType: !this.issueTypeValid,
+        issueArea: !this.issueAreaValid,
+        frontImage: !this.frontImageValid,
+        backImage: !this.backImageValid,
+      };
+    },
+    //
+    //
   },
 }
 </script>

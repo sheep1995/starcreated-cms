@@ -114,12 +114,18 @@
                       <td>{{ item.date }}</td>
                       <td>{{ item.userAppId }}</td>
                       <td>{{ statusText[item.realNameState] }} </td>
-                      <td id="cash-state" :id="item.userAppId">
+                      <!-- <td id="cash-state" :id="item.realNameId" @click="selectItem(item)"> -->
+                        <td id="cash-state">
                         <!-- {{ item.userAppId }} -->
                         <!-- btn -->
-                        <router-link to="/member-id-info" class="btn btn-info text-light mb-2">
+                        <!-- <router-link to="/member-id-info" class="btn btn-info text-light mb-2">
                           <i class="bi bi-eye-fill"></i> 檢視
-                        </router-link>
+                        </router-link> -->
+                        <!-- <router-link :to="{ name: 'MemberCheckIdInfo', params: { realNameId: item.realNameId } }" class="btn btn-info text-light mb-2">
+                          <i class="bi bi-eye-fill"></i> 檢視
+                        </router-link> -->
+
+                        <button @click="showDetail()" :id="item.realNameId"  class="btn btn-info text-light mb-2"><i class="bi bi-eye-fill"></i>檢視</button>
                         <!-- btn end  -->
                       </td>
                     </tr>
@@ -134,6 +140,7 @@
                 </div>
               </div>
               <!-- pagination  -->
+              <!-- <CheckIdInfoView :realNameId="realNameId" /> -->
               <!--  -->
               <paginate v-if="currentPage===1" v-model="currentPage" :total="filteredList.length" :perPage="perPage"
                 :page-count="pageCount" :click-handler="onPageChange"  :prev-text="'上一頁'"
@@ -182,6 +189,7 @@
 import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import Paginate from 'vuejs-paginate-next';
+import CheckIdInfoView from '@/views/member/CheckIdInfoView.vue';
 
 const api = `${import.meta.env.VITE_PATH}/realname`;
 export default {
@@ -190,6 +198,11 @@ export default {
     TopHeader,
     Sidebar,
     paginate: Paginate,
+    CheckIdInfoView
+  },
+  props: {
+    id: String,
+    state: String
   },
   data() {
     return {
@@ -224,6 +237,8 @@ export default {
       // 經過分頁後要顯示的數據
       paginatedData: [],
       //firstIndex: ''
+      //test
+      realNameId: 'realName-1237370937-1678326993181',
     };
   },
   mounted() {
@@ -321,11 +336,39 @@ export default {
       this.updatePaginatedData();
       console.log(pageNum);
     },
-  },
+    // /
+    showDetail() {
+      // 將選中的行的 realNameId 和 realNameState 傳遞到下一個組件
+      const realNameId = this.id;
+      this.$router.push({
+        name: 'MemberCheckIdInfo',
+        params: {
+          realNameId: realNameId,
+          //realNameState: item.realNameState
+        }
+      })
+    },
+  //   async showDetail() {
+  //     try {
+  //       const res = await this.$http.post(api,{ realNameId: item.realNameId });
+  //       this.$router.push({
+  //       name: 'MemberCheckIdInfo',
+  //       params: {
+  //         realNameId: item.realNameId,
+  //         //realNameState: item.realNameState
+  //       }
+  //     })
+  //     console.log('Real name state updated successfully: ', res.data);
+  //     } catch (error) {
+  //       console.error('Failed to update real name state: ', error);
+  //     }
+  // },
+}
   // watch: {
   //   selectedState() {
   //     this.currentPage = 1;
   //   },
   // },
-};
+}
+
 </script>

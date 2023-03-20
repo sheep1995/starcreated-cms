@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import MemberCheckIdInfo from "../views/member/CheckIdInfoView.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 
 
@@ -7,6 +8,7 @@ const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
   linkActiveClass: 'active-link',
   linkExactActiveClass: 'exact-active-link',
+  props: true,
   routes: [
     {
       path: "/",
@@ -163,6 +165,9 @@ const router = createRouter({
     {
       path: '/member-id-info',
       name: 'MemberCheckIdInfo',
+      props: route => ({
+        realNameId: route.params.id,
+      }),
       component: () => import('../views/member/CheckIdInfoView.vue'),
     },
     {
@@ -186,6 +191,7 @@ const router = createRouter({
       component: () => import('../views/member/MemberBlockListView.vue'),
     },
   ],
+  
 });
 
 export default router;
