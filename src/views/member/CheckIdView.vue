@@ -12,7 +12,7 @@
                 <router-link to="/dshboard" class="breadcrumb-item">首頁</router-link>
                 <router-link to="/member-control" class="breadcrumb-item">會員管理</router-link>
                 <li class="breadcrumb-item active" aria-current="page">
-                  實名認證
+                  實名認證列表
                 </li>
               </ol>
             </nav>
@@ -125,7 +125,7 @@
                           <i class="bi bi-eye-fill"></i> 檢視
                         </router-link> -->
 
-                        <button @click="showDetail()" :id="item.realNameId"  class="btn btn-info text-light mb-2"><i class="bi bi-eye-fill"></i>檢視</button>
+                        <button @click="showDetail(item.realNameId)" :id="item.realNameId"  class="btn btn-info text-light mb-2"><i class="bi bi-eye-fill"></i>檢視</button>
                         <!-- btn end  -->
                       </td>
                     </tr>
@@ -190,20 +190,31 @@ import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
 import Paginate from 'vuejs-paginate-next';
 import CheckIdInfoView from '@/views/member/CheckIdInfoView.vue';
+// import { useRouter } from 'vue-router';
+// import { ref } from 'vue';
 
 const api = `${import.meta.env.VITE_PATH}/realname`;
 export default {
-  //name: "Member",
+  name: "CheckIdView",
   components: {
     TopHeader,
     Sidebar,
     paginate: Paginate,
     CheckIdInfoView
   },
-  props: {
-    id: String,
-    state: String
-  },
+  // props: {
+  //   id: {
+  //     type: String,
+  //     required: true,
+  //   },
+  // },
+  // props: {
+  //   realNameIdClick: {
+  //     type: String,
+  //     required: true,
+  //     //item: Object,
+  //   },
+  // },
   data() {
     return {
       products: null,
@@ -238,7 +249,11 @@ export default {
       paginatedData: [],
       //firstIndex: ''
       //test
-      realNameId: 'realName-1237370937-1678326993181',
+      //realNameId: 'realName-1237370937-1678326993181',
+      //
+      realNameId: this.$route.params.realNameId,
+      //realNameInfo: null,
+      //realNameId: null,
     };
   },
   mounted() {
@@ -337,16 +352,40 @@ export default {
       console.log(pageNum);
     },
     // /
-    showDetail() {
+    async showDetail(realNameId) {
       // 將選中的行的 realNameId 和 realNameState 傳遞到下一個組件
-      const realNameId = this.id;
+      // const realNameId =       this.realNameId = this.$route.params.realNameId;
+      //const realNameId =  this.realNameId;
+      //this.realNameId = realNameId;
+      this.realNameId = this.$refs.id;
+      this.realNameIdClick = this.$refs.id;
+      //realNameIdClick
+      //const router = useRouter();
+      // try {
+      //   this.$router.push({ name: 'checkIdInfoView', query: {realNameId: realNameId,data: response.data.data, } });
+      // } catch (error) {
+      //   this.$emit('error', error);
+      // }
       this.$router.push({
-        name: 'MemberCheckIdInfo',
+        name: 'CheckIdInfoView',
         params: {
           realNameId: realNameId,
+          //realNameId,
           //realNameState: item.realNameState
-        }
-      })
+          //id: realNameId,
+          id: realNameId,
+        },
+        //query: { id: 'realNameId' }
+      });
+      // this.realNameId = this.$route.params.realNameId;
+      // this.realNameId = this.id;
+      // //console.log(this.realNameId);
+      // const url = `https://stage.westar-cms.com/v1/realname/info?realNameId=${this.realNameId}`;
+      // const response = await this.$http.get(url);
+      // this.realNameInfo = response.data;
+      console.log(realNameId);
+      
+
     },
   //   async showDetail() {
   //     try {
@@ -363,7 +402,7 @@ export default {
   //       console.error('Failed to update real name state: ', error);
   //     }
   // },
-}
+},
   // watch: {
   //   selectedState() {
   //     this.currentPage = 1;

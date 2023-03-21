@@ -13,6 +13,7 @@
             <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
               <router-link to="/dshboard" class="breadcrumb-item">首頁</router-link>
               <router-link to="/member-control" class="breadcrumb-item">會員管理</router-link>
+              <router-link to="/member-check-id" class="breadcrumb-item">實名認證列表</router-link>
               <li class="breadcrumb-item active" aria-current="page">
                 實名認證
               </li>
@@ -32,7 +33,7 @@
                 fw-bold
               "
             >
-              <li v-if="realNameState === 'finish' || realNameState === 'review'" class="text-primary">
+              <li v-if="idListInfo.realNameState === 'finish' || idListInfo.realNameState === 'review'" class="text-primary">
                 <span>
                   <img class="me-1" src="@/assets/images/approve-step1.svg" alt="approve-step1"/>
                 </span>
@@ -44,7 +45,7 @@
                 </span>
                 實名認證 <i class="bi bi-chevron-right me-2"></i>
               </li>
-              <li v-if="realNameState === 'finish' || realNameState === 'review'" class="text-primary">
+              <li v-if="idListInfo.realNameState === 'finish' || idListInfo.realNameState === 'review'" class="text-primary">
                 <span>
                   <img class="me-1" src="@/assets/images/approve-step2.svg" alt="approve-step2" />
                   </span>人工審核 <i class="bi bi-chevron-right me-2"></i>
@@ -54,7 +55,7 @@
                   <img class="me-1" src="@/assets/images/bank-step2-gray.svg" alt="approve-step2" />
                   </span>人工審核 <i class="bi bi-chevron-right me-2"></i>
               </li>
-              <li v-if="realNameState === 'finish'" class="text-primary">
+              <li v-if="idListInfo.realNameState === 'finish'" class="text-primary">
                 <span>
                   <img class="me-1" src="@/assets/images/bank-step3.svg" alt="bank-step3" />
                   </span> 審核完成
@@ -68,7 +69,7 @@
           </div>
           <!--  -->
           <!-- 已完成實名認證 -->
-          <div v-if="realNameState === 'finish'"
+          <div v-if="idListInfo.realNameState === 'finish'"
             class="alert bg-success mt-4 mb-4 pb-0 text-dark fw-medium"
             role="alert"
           >
@@ -76,7 +77,7 @@
           </div>
           <!--  -->
           <!-- 實名認證-失敗 -->
-          <div v-if="realNameState === 'fail'"
+          <div v-if="idListInfo.realNameState === 'fail'"
             class="alert bg-danger mt-4 mb-4 pb-0 text-light fw-medium"
             role="alert"
           >
@@ -140,10 +141,17 @@
                       class="col-auto col-form-label me-2 ms-1"
                       >實名認證</label
                     >
-                    <select class="form-select" id="specificSizeSelect" v-model="userInfo.realNameState">
-                      <option :value="finish">已認證</option>
-                      <!-- <option value="未認證">未認證</option> -->
-                      <option :value="fail">認證失敗</option>
+                    <!-- "idListInfo.realNameState === 'finish'" -->
+                    <select v-if="idListInfo.realNameState === 'finish'" class="form-select" id="specificSizeSelect">
+                      <!-- <option :value="finish">已認證</option>
+                      <option :value="fail">認證失敗</option> -->
+                      <option disabled value="">已認證</option>
+                    </select>
+                    <select v-else class="form-select" id="specificSizeSelect" v-model="userInfo.realNameStateDone">
+                      <!-- <option :value="finish">已認證</option>
+                      <option :value="fail">認證失敗</option> -->
+                      <option>已認證</option>
+                      <option>認證失敗</option>
                     </select>
                   </div>
                 </div>
@@ -167,7 +175,7 @@
             <div class="col-12">
               <div class="mb-2">審核通的資料: {{ checkedNames }}</div>
               <div>{{ idListInfo.realNameState }}</div>
-              <div>{{ realNameState }}</div>
+              <!-- <div>{{ realNameState }}</div> -->
             </div>
             <div class="col-12 col-md-6">
               <div class="fs-6 p-4 border border-0 shadow rounded-4">
@@ -179,6 +187,7 @@
                       :value=idListInfo.userName
                       id="checkName"
                       v-model="checkedNames.userNameValid"
+                      :disabled="idListInfo.realNameState === 'finish'"
                     />
                     <label class="form-check-label" for="checkName">
                       姓名: {{ idListInfo.userName }}
@@ -193,6 +202,7 @@
                       :value=idListInfo.birthday
                       id="checkDay"
                       v-model="checkedNames.birthdayValid"
+                      :disabled="idListInfo.realNameState === 'finish'"
                     />
                     <label class="form-check-label" for="checkDay">
                       出生年/月/日: {{ idListInfo.birthday }}
@@ -207,6 +217,7 @@
                       :value=idListInfo.idNumber
                       id="checkId"
                       v-model="checkedNames.idNumberValid"
+                      :disabled="idListInfo.realNameState === 'finish'"
                     />
                     <label class="form-check-label" for="checkId">
                       身分證字號:  {{ idListInfo.idNumber }}
@@ -222,6 +233,7 @@
                       :value=idListInfo.issueDate
                       id="checkIdDay"
                       v-model="checkedNames.issueDateValid"
+                      :disabled="idListInfo.realNameState === 'finish'"
                     />
                     <label class="form-check-label" for="checkIdDay">
                       發證日期: {{ idListInfo.issueDate }}
@@ -236,6 +248,7 @@
                       :value=idListInfo.issueType
                       id="checkIdType"
                       v-model="checkedNames.issueTypeValid"
+                      :disabled="idListInfo.realNameState === 'finish'"
                     />
                     <label class="form-check-label" for="checkIdType">
                       發證類型: {{ idListInfo.issueType }}
@@ -250,6 +263,7 @@
                       :value=idListInfo.issueArea
                       id="checkIdCity"
                       v-model="checkedNames.issueAreaValid"
+                      :disabled="idListInfo.realNameState === 'finish'"
                     />
                     <label class="form-check-label" for="checkIdCity">
                       發證地點: {{ idListInfo.issueArea }}
@@ -282,6 +296,7 @@
                       type="checkbox"
                       id="idImgFront"
                       v-model="checkedNames.frontImageValid"
+                      :disabled="idListInfo.realNameState === 'finish'"
                     />
                     <label class="form-check-label" for="idImgFront">
                       正面
@@ -304,6 +319,7 @@
                       type="checkbox"
                       id="idImgBack"
                       v-model="checkedNames.backImageValid"
+                      :disabled="idListInfo.realNameState === 'finish'"
                     />
                     <label class="form-check-label" for="idImgBack">
                       背面
@@ -315,14 +331,13 @@
 
           </div>
           <!--  -->
-          <div>Real Name ID: *** {{ $route.params.realNameId }} ***</div>
-          <div>
-            <button @click="passIdinfo">{{ api }}</button>
-          </div>
+          <!-- <div>v Real Name ID: *** {{ $route.params.realNameId }} ***$route.params.realNameId </div>
+          <div>v Real Name ID: *** {{ realNameId }} ***</div>
+            <p>v Real Name ID  apiinfo: {{ apiinfo }}</p> -->
           <!--  -->
           <div class="col-12 mt-4">
             <!-- <div v-if="realNameState === 'finish'" -->
-            <div v-if="realNameState === 'review'"
+            <div v-if="idListInfo.realNameState === 'review'"
               class="d-flex justify-content-center flex-column flex-lg-row"
             >
               <button
@@ -458,21 +473,43 @@
 <script>
 import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
-// const api = `${import.meta.env.VITE_PATH}/realname/info?realNameId=realName-1162608596-1678868707689`;
-const api = `${import.meta.env.VITE_PATH}/realname/info?realNameId=realName-1237370937-1678326993181`;
+const api = `${import.meta.env.VITE_PATH}/realname/info`;
+//const api = `${import.meta.env.VITE_PATH}/realname/info?realNameId=realName-1162608596-1678868707689`;
+//const api = `${import.meta.env.VITE_PATH}/realname/info?realNameId=realName-1237370937-1678326993181`;
+//const api2 = `${import.meta.env.VITE_PATH}`;
 
 //TESTT
 //const api = `${import.meta.env.VITE_PATH}/realname`;
-//const apiPost = `${import.meta.env.VITE_PATH}/realname/info`;
+const apiPost = `${import.meta.env.VITE_PATH}/realname/info`;
 
 
 //realName-1237370937-1678329708869
 export default {
+  name: 'CheckIdInfoView',
   props: {
     realNameId: {
       type: String,
-      required: true,
+      //required: true,
     },
+  },
+  // props: ['id'],
+  // props: {
+  //   id: {
+  //     type: String,
+  //     required: true,
+  //   },
+  // },
+  computed: {
+// const apiinfo = `${import.meta.env.VITE_PATH}/realname/info?realNameId=${this.realNameId}`;
+    apiinfo() {
+      //return this.$route.params.id;
+      return this.$route.params.realNameId;
+      //return this.id
+      //return `${import.meta.env.VITE_PATH}/realname/info?realNameId=${this.realNameId}`;
+    },
+    // realNameId() {
+    //   return this.$route.params.realNameId;
+    // }
   },
   components: {
     TopHeader,
@@ -491,7 +528,7 @@ export default {
         backImageValid: false,
       },
       // realNameId: 'realName-1237370937-1678329764994',
-      realNameId: '',
+      //realNameId: '',
       idListInfo: [],
       filteredList: [],
       //cashState: '審核中',
@@ -501,11 +538,12 @@ export default {
       },
       //realNameState: 'fail',
       //realNameState: 'review',
+      realNameStateDone: '',
       realNameState: 'finish',
       //2.5 post
       userInfo: {
-        realNameId: 'realName-1237370937-1678329708869',
-        realNameState: 'finish',
+        realNameId: '',
+        realNameState: null,
         errorItems: {
           userName: true,
           birthday: true,
@@ -532,31 +570,63 @@ export default {
       }
       },
       isLoading: false,
+      //
+      //realNameId: this.$route.params.realNameId,
+      //realNameInfo: null,
+      //realNameId: 'item.realNameId',
     };
+    
   },
   // components: {
   //   MemberCashView,
   // },
   mounted() {
     this.getMembers();
-  },
-  computed: {
-// const apiinfo = `${import.meta.env.VITE_PATH}/realname/info?realNameId=${this.realNameId}`;
-    apiinfo() {
-      return `${import.meta.env.VITE_PATH}/realname/info?realNameId=${this.realNameId}`;
-    },
+    // const realNameId = this.$route.params.realNameId;
+    // console.log(realNameId);
+    //console.log('ID:', this.id);
   },
   methods: {
-    async getMembers() {
-      const res = await this.$http.get(api);
-      // if (res.data.data.realNameId.length === 0) {
-      //   this.idLists = [];
-      // } else {
-      //   this.idLists = res.data.data.realNameId;
-      // }
-      this.idListInfo = res.data.data;
+    getMembers() {
+      const getid = this.$route.params.realNameId;
+      this.$http.get(`https://stage.westar-cms.com/v1/realname/info?realNameId=${getid}`).then((res) => {
+        //const editStaff = res.data.data.list;
+        this.idListInfo = res.data.data;
+        this.realNameStateDone = res.data.data.realNameState;
+        if (this.idListInfo.realNameState === 'finish') {
+          // 实名认证已完成，全部禁用
+          //this.checkedItems = [];
+          this.checkedNames.userNameValid = true;
+          this.checkedNames.birthdayValid = true;
+          this.checkedNames.idNumberValid = true;
+          this.checkedNames.issueDateValid = true;
+          this.checkedNames.issueTypeValid = true;
+          this.checkedNames.issueAreaValid = true;
+          this.checkedNames.frontImageValid = true;
+          this.checkedNames.backImageValid = true;
+        } else {
+          // 实名认证未完成，全部启用
+          this.errorItems = [];
+        }
+        //
       console.log(res.data.data);
+      });
+      console.log(`api+?realNameId=${getid}`);
     },
+    // async getMembers() {
+    //   const getid = $route.params.realNameId;
+    //   this.$http.get( api+`/?userId=${this.saveUserId}`
+    //   //const url = `https://stage.westar-cms.com/v1/realname/info?realNameId=${getid}`;
+    //   const res = await this.$http.get( api+`${realNameId}` );
+    //   // if (res.data.data.realNameId.length === 0) {
+    //   //   this.idLists = [];
+    //   // } else {
+    //   //   this.idLists = res.data.data.realNameId;
+    //   // }
+    //   //this.idListInfo = res.data.data;
+    //   console.log(res.data);
+    //   console.log(getid);
+    // },
     passIdinfo() {
       const vm = this;
       vm.isLoading = true;
@@ -625,7 +695,6 @@ export default {
         backImage: !this.backImageValid,
       };
     },
-    //
     //
   },
 }

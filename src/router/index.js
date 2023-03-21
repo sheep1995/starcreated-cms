@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import MemberCheckIdInfo from "../views/member/CheckIdInfoView.vue";
+import CheckIdInfoView from "../views/member/CheckIdInfoView.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 
 
@@ -159,16 +159,23 @@ const router = createRouter({
     },
     {
       path: '/member-check-id',
-      name: 'MemberCheckId',
+      //name: 'MemberCheckId',
+      name: 'CheckIdView',
+      props: true,
       component: () => import('../views/member/CheckIdView.vue'),
     },
     {
-      path: '/member-id-info',
-      name: 'MemberCheckIdInfo',
-      props: route => ({
-        realNameId: route.params.id,
-      }),
+      path: '/member-id-info/:realNameId',
+      //path: '/member-id-info',
+      name: 'CheckIdInfoView',
+      //MemberCheckIdInfo
       component: () => import('../views/member/CheckIdInfoView.vue'),
+      //component: CheckIdInfoView,
+      props: true,
+      // props: route => ({
+        //realNameId: route.params.id,
+        //id:route.query.id,
+      // }),
     },
     {
       path: '/member-fans-list',
