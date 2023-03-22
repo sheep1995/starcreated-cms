@@ -1,8 +1,3 @@
-<script setup>
-import { RouterLink, RouterView } from "vue-router";
-import TopHeader from "@/components/TopHeader.vue";
-import Sidebar from "@/components/Sidebar.vue";
-</script>
 <template>
   <div class="wrapper">
     <!-- Sidebar Menu -->
@@ -19,7 +14,7 @@ import Sidebar from "@/components/Sidebar.vue";
               <router-link to="/dshboard" class="breadcrumb-item">首頁</router-link>
               <router-link to="/member-control" class="breadcrumb-item">會員管理</router-link>
               <li class="breadcrumb-item active" aria-current="page">
-                提領狀態
+                提領狀態列表
               </li>
             </ol>
           </nav>
@@ -149,7 +144,6 @@ import Sidebar from "@/components/Sidebar.vue";
                     <td id="cash-state">
                       <!-- btn -->
                       <!-- {{ cashStateVal }} -->
-
                       <router-link
                         v-if="item.cashState === '審核中'"
                         to="/member-cash-info"
@@ -222,11 +216,18 @@ import Sidebar from "@/components/Sidebar.vue";
   </div>
 </template>
 <script>
+//import { RouterLink, RouterView } from "vue-router";
+import TopHeader from "@/components/TopHeader.vue";
+import Sidebar from "@/components/Sidebar.vue";
 //import { provide } from "vue";
-import mitt from "mitt";
-const emitter = mitt();
+// import mitt from "mitt";
+// const emitter = mitt();
 export default {
   name: "MemberCashView",
+  components: {
+    TopHeader,
+    Sidebar,
+  },
   data() {
     return {
       products: null,

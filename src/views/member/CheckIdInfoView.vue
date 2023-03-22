@@ -142,16 +142,40 @@
                       >實名認證</label
                     >
                     <!-- "idListInfo.realNameState === 'finish'" -->
-                    <select v-if="idListInfo.realNameState === 'finish'" class="form-select" id="specificSizeSelect">
+                    <!-- <select v-if="idListInfo.realNameState === 'finish'" class="form-select" id="specificSizeSelect">
+                      <option value="finish" class="text-gray-500" disabled>已認證</option>
+                    </select> -->
+                    <input v-if="idListInfo.realNameState === 'finish'"
+                    type="text"
+                    id="specificSizeSelect"
+                    class="form-control"
+                    aria-describedby="passwordHelpInline"
+                    value="已認證"
+                    disabled
+                  />
+                  <input v-else-if="idListInfo.realNameState === 'fail'"
+                  type="text"
+                  id="specificSizeSelect"
+                  class="form-control"
+                  aria-describedby="passwordHelpInline"
+                  value="認證失敗"
+                  disabled
+                />
+                <input v-else-if="idListInfo.realNameState === 'review'"
+                type="text"
+                id="specificSizeSelect"
+                class="form-control"
+                aria-describedby="passwordHelpInline"
+                value="未認證"
+                disabled
+              />
+                    <select v-else class="form-select" id="specificSizeSelect" v-model="idListInfo.realNameState">
                       <!-- <option :value="finish">已認證</option>
                       <option :value="fail">認證失敗</option> -->
-                      <option disabled value="">已認證</option>
-                    </select>
-                    <select v-else class="form-select" id="specificSizeSelect" v-model="userInfo.realNameStateDone">
-                      <!-- <option :value="finish">已認證</option>
-                      <option :value="fail">認證失敗</option> -->
-                      <option>已認證</option>
-                      <option>認證失敗</option>
+                      <option disabled value=" " class="text-gray-500" >選擇類型</option>
+                      <option value="finish">已認證</option>
+                      <option value="review">未認證</option>
+                      <option value="fail">認證失敗</option>
                     </select>
                   </div>
                 </div>
@@ -173,8 +197,8 @@
           <!--  -->
           <div class="row mb-4" >
             <div class="col-12">
-              <div class="mb-2">審核通的資料: {{ checkedNames }}</div>
-              <div>{{ idListInfo.realNameState }}</div>
+              <!-- <div class="mb-2">審核通的資料: {{ checkedNames }}</div>
+              <div>{{ idListInfo.realNameState }}</div> -->
               <!-- <div>{{ realNameState }}</div> -->
             </div>
             <div class="col-12 col-md-6">
@@ -187,9 +211,9 @@
                       :value=idListInfo.userName
                       id="checkName"
                       v-model="checkedNames.userNameValid"
-                      :disabled="idListInfo.realNameState === 'finish'"
+                      :disabled="idListInfo.realNameState === 'finish' || idListInfo.realNameState === 'fail' "
                     />
-                    <label class="form-check-label" for="checkName">
+                    <label class="form-check-label" for="checkName" :class="{ 'changed': this.checkedNames.userNameValid === false }" >
                       姓名: {{ idListInfo.userName }}
                     </label>
                   </div>
@@ -202,9 +226,9 @@
                       :value=idListInfo.birthday
                       id="checkDay"
                       v-model="checkedNames.birthdayValid"
-                      :disabled="idListInfo.realNameState === 'finish'"
+                      :disabled="idListInfo.realNameState === 'finish' || idListInfo.realNameState === 'fail' "
                     />
-                    <label class="form-check-label" for="checkDay">
+                    <label class="form-check-label" for="checkDay" :class="{ 'changed': this.checkedNames.birthdayValid === false }" >
                       出生年/月/日: {{ idListInfo.birthday }}
                     </label>
                   </div>
@@ -217,10 +241,10 @@
                       :value=idListInfo.idNumber
                       id="checkId"
                       v-model="checkedNames.idNumberValid"
-                      :disabled="idListInfo.realNameState === 'finish'"
+                      :disabled="idListInfo.realNameState === 'finish' || idListInfo.realNameState === 'fail' "
                     />
-                    <label class="form-check-label" for="checkId">
-                      身分證字號:  {{ idListInfo.idNumber }}
+                    <label class="form-check-label" for="checkId" :class="{ 'changed': this.checkedNames.idNumberValid === false }">
+                      身分證字號:  {{ idListInfo.idNumber }} 
                     </label>
                   </div>
                 </div>
@@ -233,9 +257,9 @@
                       :value=idListInfo.issueDate
                       id="checkIdDay"
                       v-model="checkedNames.issueDateValid"
-                      :disabled="idListInfo.realNameState === 'finish'"
+                      :disabled="idListInfo.realNameState === 'finish' || idListInfo.realNameState === 'fail' "
                     />
-                    <label class="form-check-label" for="checkIdDay">
+                    <label class="form-check-label" for="checkIdDay" :class="{ 'changed': this.checkedNames.issueDateValid === false }">
                       發證日期: {{ idListInfo.issueDate }}
                     </label>
                   </div>
@@ -248,9 +272,9 @@
                       :value=idListInfo.issueType
                       id="checkIdType"
                       v-model="checkedNames.issueTypeValid"
-                      :disabled="idListInfo.realNameState === 'finish'"
+                      :disabled="idListInfo.realNameState === 'finish' || idListInfo.realNameState === 'fail' "
                     />
-                    <label class="form-check-label" for="checkIdType">
+                    <label class="form-check-label" for="checkIdType" :class="{ 'changed': this.checkedNames.issueTypeValid === false }">
                       發證類型: {{ idListInfo.issueType }}
                     </label>
                   </div>
@@ -263,9 +287,9 @@
                       :value=idListInfo.issueArea
                       id="checkIdCity"
                       v-model="checkedNames.issueAreaValid"
-                      :disabled="idListInfo.realNameState === 'finish'"
+                      :disabled="idListInfo.realNameState === 'finish' || idListInfo.realNameState === 'fail' "
                     />
-                    <label class="form-check-label" for="checkIdCity">
+                    <label class="form-check-label" for="checkIdCity" :class="{ 'changed': this.checkedNames.issueAreaValid === false }">
                       發證地點: {{ idListInfo.issueArea }}
                     </label>
                   </div>
@@ -296,21 +320,21 @@
                       type="checkbox"
                       id="idImgFront"
                       v-model="checkedNames.frontImageValid"
-                      :disabled="idListInfo.realNameState === 'finish'"
+                      :disabled="idListInfo.realNameState === 'finish' || idListInfo.realNameState === 'fail' "
                     />
-                    <label class="form-check-label" for="idImgFront">
+                    <label class="form-check-label" for="idImgFront" :class="{ 'changed': this.checkedNames.frontImageValid === false }">
                       正面
                     </label>
                   </div>
                 </div>
                 <div class="col-12 col-lg-6">
                   <div class="img-id">
-                    <img v-if="idListInfo.backImage === '' " src="@/assets/images/img-id-1.png" alt="id-img-back" class="img-fluid">
+                    <img v-if="idListInfo.backImage === '' " src="@/assets/images/img-id-1.png" alt="img-404" class="img-fluid">
                     <img v-else data-bs-toggle="modal"
                           data-bs-target="#idBackmodal"
                       class="img-fluid"
                       :src="idListInfo.backImage"
-                      alt="id-img-front"
+                      alt="id-img-back"
                     />
                   </div>
                   <div class="form-check d-flex justify-content-center">
@@ -319,9 +343,9 @@
                       type="checkbox"
                       id="idImgBack"
                       v-model="checkedNames.backImageValid"
-                      :disabled="idListInfo.realNameState === 'finish'"
+                      :disabled="idListInfo.realNameState === 'finish' || idListInfo.realNameState === 'fail' "
                     />
-                    <label class="form-check-label" for="idImgBack">
+                    <label class="form-check-label" for="idImgBack" :class="{ 'changed': this.checkedNames.backImageValid === false }">
                       背面
                     </label>
                   </div>
@@ -336,7 +360,7 @@
             <p>v Real Name ID  apiinfo: {{ apiinfo }}</p> -->
           <!--  -->
           <div class="col-12 mt-4">
-            <!-- <div v-if="realNameState === 'finish'" -->
+            <!-- <div v-if="realNameState === 'fail' || idListInfo.realNameState === 'finish'" -->
             <div v-if="idListInfo.realNameState === 'review'"
               class="d-flex justify-content-center flex-column flex-lg-row"
             >
@@ -373,6 +397,7 @@
           </div>
           <!--  -->
         </section>
+            <!--  -->
             <!--  -->
         </div>
       </div>
@@ -473,7 +498,7 @@
 <script>
 import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
-const api = `${import.meta.env.VITE_PATH}/realname/info`;
+//const api = `${import.meta.env.VITE_PATH}/realname/info`;
 //const api = `${import.meta.env.VITE_PATH}/realname/info?realNameId=realName-1162608596-1678868707689`;
 //const api = `${import.meta.env.VITE_PATH}/realname/info?realNameId=realName-1237370937-1678326993181`;
 //const api2 = `${import.meta.env.VITE_PATH}`;
@@ -481,8 +506,6 @@ const api = `${import.meta.env.VITE_PATH}/realname/info`;
 //TESTT
 //const api = `${import.meta.env.VITE_PATH}/realname`;
 const apiPost = `${import.meta.env.VITE_PATH}/realname/info`;
-
-
 //realName-1237370937-1678329708869
 export default {
   name: 'CheckIdInfoView',
@@ -518,14 +541,14 @@ export default {
   data() {
     return {
       checkedNames: {
-        userNameValid: false,
-        birthdayValid: false,
-        idNumberValid: false,
-        issueDateValid: false,
-        issueTypeValid: false,
-        issueAreaValid: false,
-        frontImageValid: false,
-        backImageValid: false,
+        userNameValid: '',
+        birthdayValid: '',
+        idNumberValid: '',
+        issueDateValid: '',
+        issueTypeValid: '',
+        issueAreaValid: '',
+        frontImageValid: '',
+        backImageValid: '',
       },
       // realNameId: 'realName-1237370937-1678329764994',
       //realNameId: '',
@@ -541,32 +564,32 @@ export default {
       realNameStateDone: '',
       realNameState: 'finish',
       //2.5 post
+      // userInfo: {
+      //   realNameId: '',
+      //   realNameState: null,
+      //   errorItems: {
+      //     userName: true,
+      //     birthday: true,
+      //     idNumber: true,
+      //     issueDate: true,
+      //     issueType: true,
+      //     issueArea: true,
+      //     frontImage: true,
+      //     backImage: true
+      // }
+      // },
       userInfo: {
         realNameId: '',
-        realNameState: null,
+        realNameState: '',
         errorItems: {
-          userName: true,
-          birthday: true,
-          idNumber: true,
-          issueDate: true,
-          issueType: true,
-          issueArea: true,
-          frontImage: true,
-          backImage: true
-      }
-      },
-      userInfoFail: {
-        realNameId: 'realName-1237370937-1678329708869',
-        realNameState: 'fail',
-        errorItems: {
-          userName: false,
-          birthday: false,
-          idNumber: false,
-          issueDate: false,
-          issueType: false,
-          issueArea: false,
-          frontImage: false,
-          backImage: false
+          userName: '',
+          birthday: '',
+          idNumber: '',
+          issueDate: '',
+          issueType: '',
+          issueArea: '',
+          frontImage: '',
+          backImage: ''
       }
       },
       isLoading: false,
@@ -593,6 +616,8 @@ export default {
         //const editStaff = res.data.data.list;
         this.idListInfo = res.data.data;
         this.realNameStateDone = res.data.data.realNameState;
+        this.userInfo.realNameId = this.$route.params.realNameId;
+        this.userInfo.errorItems = res.data.data.errorItems;
         if (this.idListInfo.realNameState === 'finish') {
           // 实名认证已完成，全部禁用
           //this.checkedItems = [];
@@ -606,7 +631,15 @@ export default {
           this.checkedNames.backImageValid = true;
         } else {
           // 实名认证未完成，全部启用
-          this.errorItems = [];
+          //this.errorItems = [];
+          this.checkedNames.userNameValid = res.data.data.errorItems.userName;
+          this.checkedNames.birthdayValid = res.data.data.errorItems.birthday;
+          this.checkedNames.idNumberValid = res.data.data.errorItems.idNumber;
+          this.checkedNames.issueDateValid = res.data.data.errorItems.issueDate;
+          this.checkedNames.issueTypeValid = res.data.data.errorItems.issueType;
+          this.checkedNames.issueAreaValid = res.data.data.errorItems.issueArea;
+          this.checkedNames.frontImageValid = res.data.data.errorItems.frontImage;
+          this.checkedNames.backImageValid = res.data.data.errorItems.backImage;
         }
         //
       console.log(res.data.data);
@@ -632,29 +665,23 @@ export default {
       vm.isLoading = true;
       // this.$https.post(apiName, this.addUser).then((res) => {
       this.$http.post(apiPost, this.userInfo).then((res) => {
-        const code = res.data.result.code;
+        this.userInfo.realNameState = "finish";
+        //const code = res.data.result.code;
+        // if (this.userInfo.realNameState = "finish") {
+        //   this.$swal({
+        //     title: "通過審核",
+        //     icon: "success",
+        //     showConfirmButton: false,
+        //   });
+        //   } 
         console.log(res.data.result);
       });
     },
-    // async passIdinfo() {
-    //   try {
-    //     // const res = await axios.post(api,{ realNameState: 'finish' });
-    //     const res = await this.axios.post(api);
-    //     this.$swal({
-    //     title: "通過審核",
-    //     //text: "請相關人員到信箱查看是否有收到驗證信",
-    //     icon: "success",
-    //     showConfirmButton: false,
-    //     timer: 1500,
-    //   });
-    //   console.log('Real name state updated successfully: ', res.data);
-    //   } catch (error) {
-    //     console.error('Failed to update real name state: ', error);
-    //   }
-    // },
     unpassIdinfo() {
       //userInfoFail
       this.$http.post(apiPost, this.userInfoFail).then((res) => {
+      // this.$http.post(apiPost, this.idListInfo).then((res) => {
+        this.userInfo.realNameState = "fail";
         const code = res.data.result.code;
         console.log(res.data.result);
       this.$swal({
@@ -699,3 +726,8 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.changed {
+  color: rgb(226, 20, 20);
+}
+</style>
