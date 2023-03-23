@@ -148,7 +148,7 @@ const router = createRouter({
       component: () => import('../views/member/MemberCashView.vue'),
     },
     {
-      path: '/member-cash-info',
+      path: '/member-cash-info:cashId',
       name: 'MemberCashInfo',
       component: () => import('../views/member/MemberCashInfoView.vue'),
     },

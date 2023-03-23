@@ -350,6 +350,12 @@ import MemberCashView from "@/views/member/MemberCashView.vue";
 import mitt from "mitt";
 const emitter = mitt();
 export default {
+  name: 'MemberCashView',
+  props: {
+    cashId: {
+      type: String,
+    },
+  },
   data() {
     return {
       products: null,
