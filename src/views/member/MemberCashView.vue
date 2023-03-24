@@ -11,8 +11,12 @@
             <TopHeader />
             <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
               <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
-                <router-link to="/dshboard" class="breadcrumb-item">首頁</router-link>
-                <router-link to="/member-control" class="breadcrumb-item">會員管理</router-link>
+                <router-link to="/dshboard" class="breadcrumb-item"
+                  >首頁</router-link
+                >
+                <router-link to="/member-control" class="breadcrumb-item"
+                  >會員管理</router-link
+                >
                 <li class="breadcrumb-item active" aria-current="page">
                   提領狀態列表
                 </li>
@@ -31,29 +35,44 @@
             <div class="mb-4">
               <form class="fs-6 border border-1 rounded-4 pt-4">
                 <!--  -->
-                <div class="
-                    d-flex
-                    align-items-center align-items-sm-start
-                    pb-4
-                    flex-column flex-lg-row
-                    p-2
-                  ">
+                <div
+                  class="d-flex align-items-center align-items-sm-start pb-4 flex-column flex-lg-row p-2"
+                >
                   <div class="col-12 col-lg-4 mb-2">
                     <div class="d-flex">
-                      <label for="userAppId" class="col-auto col-form-label me-2 ms-1">星行號</label>
-                      <input type="text" id="userAppId" class="form-control" placeholder="1234567890" v-model="userAppId"
-                        @input="limitInput" />
+                      <label
+                        for="userAppId"
+                        class="col-auto col-form-label me-2 ms-1"
+                        >星行號</label
+                      >
+                      <input
+                        type="text"
+                        id="userAppId"
+                        class="form-control"
+                        placeholder="1234567890"
+                        v-model="userAppId"
+                        @input="limitInput"
+                      />
                     </div>
-                    <div v-if="isError" class="text-danger text-end"> {{ errorMessage }} </div>
-
+                    <div v-if="isError" class="text-danger text-end">
+                      {{ errorMessage }}
+                    </div>
                   </div>
                   <!--  -->
                   <div class="col-12 col-lg-4 mb-2">
                     <div class="d-flex">
-                      <label for="specificSizeSelect" class="col-auto col-form-label me-2 ms-1">提領狀態</label>
-                      <select class="form-select" id="specificSizeSelect" v-model="cashState">
+                      <label
+                        for="specificSizeSelect"
+                        class="col-auto col-form-label me-2 ms-1"
+                        >提領狀態</label
+                      >
+                      <select
+                        class="form-select"
+                        id="specificSizeSelect"
+                        v-model="cashState"
+                      >
                         <option disabled value="">選擇類型</option>
-                        <option value="all">所有類型</option>
+                        <!-- <option value="">所有類型</option> -->
                         <option value="審核中">審核中</option>
                         <option value="處理中">處理中</option>
                         <option value="提領成功">提領成功</option>
@@ -64,7 +83,11 @@
                 </div>
                 <!-- btn -->
                 <div class="col-12 d-flex justify-content-center mb-4">
-                  <button type="button" class="btn btn-primary text-white mx-2" @click="searchUser()">
+                  <button
+                    type="button"
+                    class="btn btn-primary text-white mx-2"
+                    @click="searchUser()"
+                  >
                     搜尋
                   </button>
                 </div>
@@ -75,18 +98,27 @@
             <!--  -->
             <div class="">
               <!--  -->
-              <div class="d-flex justify-content-between align-items-center mb-2">
+              <div
+                class="d-flex justify-content-between align-items-center mb-2"
+              >
                 <div>
                   <h2 class="text-primary mt-4 fs-5 fw-bold">提領狀態</h2>
                 </div>
                 <div class="d-flex align-items-center;">
                   <div class="row g-3 align-items-center">
                     <div class="col-auto">
-                      <label for="inputType" class="col-form-label">提領狀態</label>
+                      <label for="inputType" class="col-form-label"
+                        >提領狀態</label
+                      >
                     </div>
                     <div class="col-auto">
-                      <select v-model="selectedState" @change="onStateChange" class="form-select"
-                        aria-label="Default select example" :value="selectedState === '' ? null : selectedState">
+                      <select
+                        v-model="selectedState"
+                        @change="onStateChange"
+                        class="form-select"
+                        aria-label="Default select example"
+                        :value="selectedState === '' ? null : selectedState"
+                      >
                         <!-- <option selected>提領狀態</option> -->
                         <option value="all">所有類型</option>
                         <option value="審核中">審核中</option>
@@ -113,7 +145,7 @@
                     </tr>
                   </thead>
                   <tbody class="table-group-divider">
-                    <tr v-for="(item, index) in idLists" :key="index">
+                    <tr v-for="(item, index) in filteredList" :key="index">
                       <th scope="row">{{ index + 1 }}</th>
                       <td>{{ item.date }}</td>
                       <td>{{ item.userAppId }}</td>
@@ -132,8 +164,13 @@
                       >
                       <i class="bi bi-eye-fill"></i> 檢視
                       </router-link> -->
-                        <button @click="showDetail(item.cashId)" :id="item.cashId" class="btn btn-info text-light mb-2"><i
-                            class="bi bi-eye-fill"></i>檢視</button>
+                        <button
+                          @click="showDetail(item.cashId)"
+                          :id="item.cashId"
+                          class="btn btn-info text-light mb-2"
+                        >
+                          <i class="bi bi-eye-fill"></i>檢視
+                        </button>
                         <!-- btn end  -->
                       </td>
                     </tr>
@@ -141,14 +178,27 @@
                 </table>
               </div>
               <!--  -->
-              <div v-if="!filteredList.length && isSearched" class="text-center h4 fs-bold mt-4 mb-4 text-primary">
-                <p> <i class="bi bi-binoculars"></i> 找不到結果，麻煩您重新再輸入一次 !</p>
-                <div class="d-flex justify-content-center flex-column flex-lg-row">
-                  <button class="btn btn-primary text-light mb-2" @click="reloadPage()">重新搜尋</button>
+              <div
+                v-if="!filteredList.length && isSearched"
+                class="text-center h4 fs-bold mt-4 mb-4 text-primary"
+              >
+                <p>
+                  <i class="bi bi-binoculars"></i>
+                  找不到結果，麻煩您重新再輸入一次 !
+                </p>
+                <div
+                  class="d-flex justify-content-center flex-column flex-lg-row"
+                >
+                  <button
+                    class="btn btn-primary text-light mb-2"
+                    @click="reloadPage()"
+                  >
+                    重新搜尋
+                  </button>
                 </div>
               </div>
               <!-- pagination  -->
-              <paginate v-if="currentPage === 1" v-model="currentPage" :total="filteredList.length" :perPage="perPage"
+              <!-- <paginate v-if="currentPage === 1" v-model="currentPage" :total="filteredList.length" :perPage="perPage"
                 :page-count="pageCount" :click-handler="onPageChange" :prev-text="'上一頁'" :next-text="'下一頁'"
                 :container-class="'pagination d-flex justify-content-center'">
                 <template #prev-label>
@@ -162,17 +212,17 @@
                     {{ page }}
                   </div>
                 </template>
-              </paginate>
+              </paginate> -->
               <!-- pagination  -->
             </div>
             <!-- cashList -->
-            <div>
+            <!-- <div>
               {{ idLists }}
             </div>
             <div>
               {{ startKey }}
             </div>
-            <button @click="fetchRealNameList()">Get Data</button>
+            <button @click="fetchRealNameList()">Get Data</button> -->
             <!--  -->
           </section>
           <!--  -->
@@ -186,8 +236,8 @@
 //import { RouterLink, RouterView } from "vue-router";
 import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
-import Paginate from 'vuejs-paginate-next';
-import MemberInfoView from '@/views/member/MemberInfoView.vue';
+import Paginate from "vuejs-paginate-next";
+import MemberInfoView from "@/views/member/MemberInfoView.vue";
 //import { provide } from "vue";
 // import mitt from "mitt";
 // const emitter = mitt();
@@ -198,43 +248,42 @@ export default {
     TopHeader,
     Sidebar,
     paginate: Paginate,
-    MemberInfoView
+    MemberInfoView,
   },
   data() {
     return {
       //
       idLists: [],
-      startKey: '',
+      startKey: "",
       //search
-      userAppId: '',
-      cashState: '',
+      userAppId: "",
+      cashState: "",
       isSearched: false,
       isError: false,
-      errorMessage: '',
+      errorMessage: "",
       //
-      selectedState: 'all',
+      selectedState: "all",
       filteredList: [],
       //
       customers: null,
-      //id type option 
-      selectedIdType: '',
+      //id type option
+      selectedIdType: "",
       //
       cashId: this.$route.params.cashId,
       //
       //startKey: null,
       error: null,
       //
-      currentPage: 1,
-      perPage: 10,
-      pageCount: 0,
-      paginatedData: [],
-
+      // currentPage: 1,
+      // perPage: 10,
+      // pageCount: 0,
+      // paginatedData: [],
     };
   },
   mounted() {
     this.getMembers();
     this.onStateChange();
-    this.fetchRealNameList();
+    //this.fetchRealNameList();
   },
   methods: {
     // viewCashInfo() {
@@ -271,24 +320,32 @@ export default {
       // }
     },
     onStateChange() {
-      this.filteredList = this.selectedState === 'all' ? this.idLists : this.idLists.filter(item => item.cashState === this.selectedState);
+      this.filteredList =
+        this.selectedState === "all"
+          ? this.idLists
+          : this.idLists.filter(
+              (item) => item.cashState === this.selectedState
+            );
       //this.currentPage = 1;
       //this.$forceUpdate();
       console.log(this.filteredList);
     },
     searchUser() {
       this.isSearched = true;
-      if (this.userAppId || this.cashState) {
-        this.filteredList = this.idLists.filter(item => {
-          return (
-            (!this.userAppId || item.userAppId === this.userAppId) &&
-            (!this.cashState || item.cashState === this.cashState)
-          );
-        })
-        //this.currentPage = 1;
-      } else {
-        this.filteredList = [];
-      }
+      this.$http.get(api).then((res) => {
+        if (this.userAppId || this.cashState) {
+          this.filteredList = this.idLists.filter((item) => {
+            return (
+              (!this.userAppId || item.userAppId === this.userAppId) &&
+              (!this.cashState || item.cashState === this.cashState)
+            );
+          });
+          //this.currentPage = 1;
+        } else {
+          this.filteredList = [];
+        }
+        console.log(res.data.data);
+      });
     },
     //search
     limitInput() {
@@ -315,13 +372,13 @@ export default {
     //   this.pageCount = Math.ceil(this.filteredList.length / this.perPage);
     //   console.log(response);
     // },
-    async onPageChange(pageNum) {
-      this.currentPage = pageNum;
-      if (pageNum * this.perPage >= this.filteredList.length) {
-        await this.fetchRealNameList();
-      }
-      console.log(pageNum);
-    },
+    // async onPageChange(pageNum) {
+    //   this.currentPage = pageNum;
+    //   if (pageNum * this.perPage >= this.filteredList.length) {
+    //     await this.fetchRealNameList();
+    //   }
+    //   console.log(pageNum);
+    // },
     // async fetchWithdrawList() {
     //   const url = api+`?startKey=${this.startKey}&cashState=${this.cashState}&userAppId=${this.userAppId}`;
     //   try {
@@ -332,48 +389,48 @@ export default {
     //     console.log(error);
     //   }
     // },
-    async fetchRealNameList() {
-      const url = api+`?startKey=${this.startKey}`;
-      try {
-        const res = await this.$http.get(url);
-        //const data = res.data.data;
-        this.idLists = this.idLists.concat(data.list);
-        this.startKey = res.data.data.startKey ?? null; // 若無 startKey，設為 null
-        if (this.startKey) {
-          await this.fetchRealNameList(); // 繼續查詢下一頁
-        }
-      } catch (error) {
-        this.error = error;
-      }
-      if (!this.startKey) {
-        // 第一次请求
-        const url = api;
-        const res = await this.$http.get(url);
-        this.idLists = res.data.data.cashList;
-        this.startKey = res.data.data.startKey;
-        this.filteredList = this.idLists;
-      } else {
-        // 第二次请求
-        const url = api+`?startKey=${this.startKey}&cashState=${this.cashState}&userAppId=${this.userAppId}`;
-        const res = await this.$http.get(url);
-        this.idLists = this.items.concat(res.data.data.cashList);
-        this.startKey = res.data.data.startKey;
-      }
-      //
-      console.log(this.startKey);
-    },
+    // async fetchRealNameList() {
+    //   const url = api+`?startKey=${this.startKey}`;
+    //   try {
+    //     const res = await this.$http.get(url);
+    //     //const data = res.data.data;
+    //     this.idLists = this.idLists.concat(data.list);
+    //     this.startKey = res.data.data.startKey ?? null; // 若無 startKey，設為 null
+    //     if (this.startKey) {
+    //       await this.fetchRealNameList(); // 繼續查詢下一頁
+    //     }
+    //   } catch (error) {
+    //     this.error = error;
+    //   }
+    //   if (!this.startKey) {
+    //     // 第一次请求
+    //     const url = api;
+    //     const res = await this.$http.get(url);
+    //     this.idLists = res.data.data.cashList;
+    //     this.startKey = res.data.data.startKey;
+    //     this.filteredList = this.idLists;
+    //   } else {
+    //     // 第二次请求
+    //     const url = api+`?startKey=${this.startKey}&cashState=${this.cashState}&userAppId=${this.userAppId}`;
+    //     const res = await this.$http.get(url);
+    //     this.idLists = this.items.concat(res.data.data.cashList);
+    //     this.startKey = res.data.data.startKey;
+    //   }
+
+    //   console.log(this.startKey);
+    // },
     //
     //child
     async showDetail(cashId) {
       this.cashId = this.$refs.id;
       this.$router.push({
-        name: 'MemberCashInfo',
+        name: "MemberCashInfo",
         params: {
           cashId: cashId,
           //id: realNameId,
         },
       });
-    }
+    },
   },
 };
 </script>

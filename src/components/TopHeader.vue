@@ -2,12 +2,12 @@
   <header class="mb-3 border-bottom top-header">
     <div>
       <div class="d-flex flex-wrap align-items-center justify-content-between">
-      <div class="d-flex">
-      <button class="btn btn-default fs-3 menu-toggle">
-      <!-- <i class="bi bi-list text-primary"></i> -->
-      </button>
-      </div>
-        <ul class="nav  me-lg-right mb-md-0 text-end">
+        <div class="d-flex">
+          <button class="btn btn-default fs-3 menu-toggle">
+            <!-- <i class="bi bi-list text-primary"></i> -->
+          </button>
+        </div>
+        <ul class="nav me-lg-right mb-md-0 text-end">
           <!-- <li><a href="#" class="nav-link px-2 link-secondary">設定</a></li> -->
           <!-- <li class="position-relative nav-link px-2 link-dark dropdown">
             <span
@@ -81,7 +81,9 @@
             >
           </li> -->
           <li class="nav-link px-2 link-dark mt-2">
-            <RouterLink class="text-decoration-none fw-bold d-flex align-items-center" to="/"
+            <RouterLink
+              class="text-decoration-none fw-bold d-flex align-items-center"
+              to="/"
               ><i class="bi bi-box-arrow-right fs-4 mx-2"></i> 登出</RouterLink
             >
           </li>
@@ -98,7 +100,7 @@ const wrapper = document.querySelector(".wrapper");
 //   wrapper.classList.toggle("toggled");
 // });
 export default {
-    data() {
+  data() {
     return {
       isActive: false,
     };
@@ -106,7 +108,7 @@ export default {
   methods: {
     toggleMenu() {
       this.isActive = this.isActive ? false : true;
-      this.$emit('toggle-menu');
+      this.$emit("toggle-menu");
     },
   },
   // mounted() {
@@ -116,5 +118,5 @@ export default {
   //     })
   //   });
   // },
-}
+};
 </script>

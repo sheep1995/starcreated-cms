@@ -7,12 +7,12 @@
       <div class="container-fluid">
         <div class="row">
           <!--  -->
-        <section class="container">
-          <TopHeader />
-          <!--  -->
-          <!--  -->
-        </section>
+          <section class="container">
+            <TopHeader />
             <!--  -->
+            <!--  -->
+          </section>
+          <!--  -->
         </div>
       </div>
     </div>
@@ -24,12 +24,11 @@ import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
 export default {
   data() {
-    return {
-    }
+    return {};
   },
-    components: {
+  components: {
     TopHeader,
-    Sidebar
+    Sidebar,
   },
-}
+};
 </script>

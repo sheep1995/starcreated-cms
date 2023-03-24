@@ -5,24 +5,22 @@ import "@/assets/text/text.css";
 import axios from "axios";
 import VueAxios from "vue-axios";
 
-import Loading from 'vue-loading-overlay';
-
+import Loading from "vue-loading-overlay";
 
 // 引入 VeeValidate 元件跟功能
-import { Field, Form, ErrorMessage, defineRule, configure } from 'vee-validate';
+import { Field, Form, ErrorMessage, defineRule, configure } from "vee-validate";
 // 引入 VeeValidate 的驗證規則
-import AllRules from '@vee-validate/rules';
+import AllRules from "@vee-validate/rules";
 // 引入 VeeValidate 的 i18n 功能
-import { localize, setLocale } from '@vee-validate/i18n';
+import { localize, setLocale } from "@vee-validate/i18n";
 // 引入 VeeValidate 的繁體中文語系檔
-import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
-
+import zhTW from "@vee-validate/i18n/dist/locale/zh_TW.json";
 
 import App from "./App.vue";
 import router from "./router";
 
 import PrimeVue from "primevue/config";
-import Tooltip from 'primevue/tooltip';
+import Tooltip from "primevue/tooltip";
 
 //loading
 //import Loading from 'vue-loading-overlay';
@@ -34,13 +32,12 @@ import "bootstrap";
 import "./assets/scss/all.scss";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-import VueSweetalert2 from 'vue-sweetalert2';
-import 'sweetalert2/dist/sweetalert2.min.css';
-//import Paginate from 'vuejs-paginate'
-
+import VueSweetalert2 from "vue-sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
+import Paginate from "vuejs-paginate";
 
 const app = createApp(App);
-const pinia = createPinia()
+//const pinia = createPinia()
 // 使用 Object.keys 將 AllRules 轉為陣列並使用 forEach 迴圈將驗證規則加入 VeeValidate
 Object.keys(AllRules).forEach((rule) => {
   defineRule(rule, AllRules[rule]);
@@ -51,7 +48,7 @@ configure({
   generateMessage: localize({ zh_TW: zhTW }),
   validateOnInput: true,
 });
-setLocale('zh_TW');
+setLocale("zh_TW");
 //
 
 app.use(createPinia());
@@ -63,15 +60,21 @@ app.use(VueSweetalert2);
 // app.use(DialogService);
 
 // 掛載 Global 的 VeeValidate 元件
-app.component('VField', Field);
-app.component('VForm', Form);
-app.component('ErrorMessage', ErrorMessage);
-app.component('Loading', Loading);
+app.component("VField", Field);
+app.component("VForm", Form);
+app.component("ErrorMessage", ErrorMessage);
+//app.component("Loading", Loading);
 
-//app.component('paginate', Paginate);
+//app.component("paginate", Paginate);
 
-app.directive('tooltip', Tooltip);
+app.directive("tooltip", Tooltip);
 
 app.use(router);
-app.use(pinia)
+//app.use(pinia);
+//
+// app.use((_, res, next) => {
+//   res.setHeader('Permissions-Policy', 'interest-cohort=()')
+//   next()
+// })
+//
 app.mount("#app");

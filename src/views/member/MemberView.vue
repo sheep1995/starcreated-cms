@@ -9,10 +9,12 @@
           <!--  -->
           <section class="col-lg-12">
             <TopHeader />
-          <!-- <Breadcrumb /> -->
+            <!-- <Breadcrumb /> -->
             <nav class="bg-light pt-2 pb-2 rounded" aria-label="breadcrumb">
               <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
-                <router-link to="/dshboard" class="breadcrumb-item">首頁</router-link>
+                <router-link to="/dshboard" class="breadcrumb-item"
+                  >首頁</router-link
+                >
                 <li class="breadcrumb-item active" aria-current="page">
                   會員管理
                 </li>
@@ -37,18 +39,10 @@
               <form class="fs-6">
                 <!--  -->
                 <div
-                  class="
-                    d-flex
-                    align-items-center align-items-sm-start
-                    border border-1
-                    rounded-4
-                    pt-4
-                    pb-4 pb-lg-0
-                    flex-column flex-lg-row
-                  "
+                  class="d-flex align-items-center align-items-sm-start border border-1 rounded-4 pt-4 pb-4 pb-lg-0 flex-column flex-lg-row"
                 >
                   <div class="col-auto">
-                    <label for="userAppId" class="col-form-label me-2 ms-1" 
+                    <label for="userAppId" class="col-form-label me-2 ms-1"
                       >星行號</label
                     >
                   </div>
@@ -58,9 +52,12 @@
                       id="userAppId"
                       class="form-control"
                       placeholder="1234567890"
-                      v-model="userAppId"  @input="limitInput"
+                      v-model="userAppId"
+                      @input="limitInput"
                     />
-                    <div v-if="isError" class="text-danger text-end"> {{ errorMessage }} </div>
+                    <div v-if="isError" class="text-danger text-end">
+                      {{ errorMessage }}
+                    </div>
                   </div>
                   <div class="col-auto">
                     <button
@@ -68,7 +65,7 @@
                       class="btn btn-primary text-white mx-2"
                       data-bs-dismiss="modal"
                       @click="searchUser()"
-                      :disabled="userAppId === '' "
+                      :disabled="userAppId === ''"
                       v-tooltip="'請新輸入星行者號碼'"
                     >
                       搜尋
@@ -106,24 +103,46 @@
                 </thead>
                 <tbody class="table-group-divider">
                   <tr v-for="(item, index) in filteredList" :key="index">
-                    <th scope="row"> {{ index + 1 }}</th>
+                    <th scope="row">{{ index + 1 }}</th>
                     <td>{{ item.userAppId }}</td>
                     <td>{{ item.nickname }}</td>
                     <td>
                       <div class="d-flex justify-content-center">
-                        <img v-if="item.avatar === '' " src="@/assets/images/img-user.svg" alt="img-404" class="rounded-circle img-user">
-                        <img v-else :src="item.avatar" alt="img-user" class="rounded-circle img-user">
+                        <img
+                          v-if="item.avatar === ''"
+                          src="@/assets/images/img-user.svg"
+                          alt="img-404"
+                          class="rounded-circle img-user"
+                        />
+                        <img
+                          v-else
+                          :src="item.avatar"
+                          alt="img-user"
+                          class="rounded-circle img-user"
+                        />
                       </div>
                     </td>
                     <td>
                       <div class="d-flex justify-content-center">
-                        <img v-if="item.background === '' " class="img-user-bg" src="@/assets/images/img-login-bg.png" alt="img-404"/>
-                        <img v-else class="img-user-bg" :src="item.background" alt="img-user-bg"/>
+                        <img
+                          v-if="item.background === ''"
+                          class="img-user-bg"
+                          src="@/assets/images/img-login-bg.png"
+                          alt="img-404"
+                        />
+                        <img
+                          v-else
+                          class="img-user-bg"
+                          :src="item.background"
+                          alt="img-user-bg"
+                        />
                       </div>
                     </td>
-                    <td v-if="item.account === 'null'" >{{ nullText[item.account] }} </td>
+                    <td v-if="item.account === 'null'">
+                      {{ nullText[item.account] }}
+                    </td>
                     <td v-else>{{ item.account }}</td>
-                    <td>{{ statusText[item.realNameVerify] }} </td>
+                    <td>{{ statusText[item.realNameVerify] }}</td>
                     <td id="cash-state">
                       <!-- btn -->
                       <!-- member-control -->
@@ -134,8 +153,8 @@
                         <i class="bi bi-person-gear"></i> 管理
                       </router-link>
                     </td>
-                      <!-- btn end  -->
-                    <td>{{ item.loginType }} </td>
+                    <!-- btn end  -->
+                    <td>{{ item.loginType }}</td>
                   </tr>
                   <!--  -->
                   <!-- <tr>
@@ -177,16 +196,27 @@
             </div>
           </div>
           <!--  -->
-          <div v-if="!filteredList.length && isSearched" class="text-center h4 fs-bold mt-4 mb-4 text-primary">
-            <p> <i class="bi bi-binoculars"></i> 找不到結果，麻煩您重新再輸入一次 !</p>
+          <div
+            v-if="!filteredList.length && isSearched"
+            class="text-center h4 fs-bold mt-4 mb-4 text-primary"
+          >
+            <p>
+              <i class="bi bi-binoculars"></i> 找不到結果，麻煩您重新再輸入一次
+              !
+            </p>
             <div class="d-flex justify-content-center flex-column flex-lg-row">
-              <button  class="btn btn-primary text-light mb-2" @click="reloadPage()">重新搜尋</button>
+              <button
+                class="btn btn-primary text-light mb-2"
+                @click="reloadPage()"
+              >
+                重新搜尋
+              </button>
             </div>
           </div>
           <!--  -->
-              <!-- pagination  -->
-              <!--  -->
-              <!-- <paginate v-model="currentPage" :total="filteredList.length" :perPage="perPage"
+          <!-- pagination  -->
+          <!--  -->
+          <!-- <paginate v-model="currentPage" :total="filteredList.length" :perPage="perPage"
                 :page-count="pageCount" :click-handler="onPageChange"  :prev-text="'上一頁'"
                 :next-text="'下一頁'"
                 :container-class="'pagination d-flex justify-content-center'">
@@ -211,7 +241,7 @@
 <script>
 import TopHeader from "@/components/TopHeader.vue";
 import Sidebar from "@/components/Sidebar.vue";
-import Paginate from 'vuejs-paginate-next';
+import Paginate from "vuejs-paginate-next";
 
 const api = `${import.meta.env.VITE_PATH}/member`;
 export default {
@@ -227,19 +257,19 @@ export default {
       members: [],
       //
       statusText: {
-        "false": '未認證',
-        "true": '已認證',
+        false: "未認證",
+        true: "已認證",
       },
       nullText: {
-        "null": '無帳號'
+        null: "無帳號",
       },
       filteredList: [],
       //search
-      userAppId: '',
-      realNameState: '',
+      userAppId: "",
+      realNameState: "",
       isSearched: false,
       isError: false,
-      errorMessage: '',
+      errorMessage: "",
       // 當前頁碼
       currentPage: 1,
       // 每頁要顯示的數據數量
@@ -286,22 +316,20 @@ export default {
     // },
     searchUser() {
       this.isSearched = true;
-      if (this.userAppId ) {
-        this.filteredList = this.members.filter(item => {
-          return (
-            (!this.userAppId || item.userAppId === this.userAppId)
-          );
-        })
+      if (this.userAppId) {
+        this.filteredList = this.members.filter((item) => {
+          return !this.userAppId || item.userAppId === this.userAppId;
+        });
       } else {
         this.filteredList = [];
       }
     },
     limitInput() {
       const userAppId = this.userAppId.length;
-      if ( userAppId < 10 ) {
+      if (userAppId < 10) {
         this.isError = true;
         this.errorMessage = "請至少輸入10位數字!";
-      } else if ( userAppId > 10 ) {
+      } else if (userAppId > 10) {
         this.isError = true;
         this.errorMessage = "不能輸入超過10位數字!";
       } else {

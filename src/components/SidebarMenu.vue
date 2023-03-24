@@ -15,7 +15,7 @@
 
 <script>
 import { computed } from "vue";
-import { SidebarMenu } from "vue-sidebar-menu";
+//import { SidebarMenu } from "vue-sidebar-menu";
 //import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
 //import "@/vendors/vueSidebarMenu";
 
@@ -148,14 +148,14 @@ export default {
       ],
     };
   },
-  components: {
-    SidebarMenu,
-  },
-  props: {
-    widthCollapsed: {
-      type: String,
-      default: "105px",
-    },
-  },
+  // components: {
+  //   SidebarMenu,
+  // },
+  // props: {
+  //   widthCollapsed: {
+  //     type: String,
+  //     default: "105px",
+  //   },
+  // },
 };
 </script>

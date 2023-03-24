@@ -63,16 +63,16 @@
     </ul>
   </div>
 </template>
-<script lang="ts" >
-const toggleBtn = document.querySelector(".menu-toggle");
-const sidebar = document.querySelector(".sidebar-wrapper");
-const wrapper = document.querySelector(".wrapper");
+<script>
+// const toggleBtn = document.querySelector(".menu-toggle");
+// const sidebar = document.querySelector(".sidebar-wrapper");
+// const wrapper = document.querySelector(".wrapper");
 // toggleBtn.addEventListener("click", function () {
 //   wrapper.classList.toggle("toggled");
 // });
 //const isActive = ref(false)
 export default {
-    data() {
+  data() {
     return {
       isActive: false,
     };
@@ -80,7 +80,7 @@ export default {
   methods: {
     toggleMenu() {
       this.isActive = this.isActive ? false : true;
-      this.$emit('toggle-menu');
+      this.$emit("toggle-menu");
     },
   },
   // mounted() {
@@ -90,6 +90,5 @@ export default {
   //     })
   //   });
   // },
-  
-}
+};
 </script>
