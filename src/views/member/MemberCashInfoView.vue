@@ -500,8 +500,13 @@ export default {
     passMember() {
       const vm = this;
       vm.isLoading = true;
-      this.$http.post(api, this.memberInfo).then((res) => {
-        this.memberInfo.cashState = "處理中";
+      vm.memberInfo.cashId = this.$route.params.cashId;
+      vm.memberInfo.cashState = "處理中";
+      // this.$http.post(api, this.memberInfo).then((res) => {
+      this.$http.post(api, {
+        cashId: vm.memberInfo.cashId,
+        cashState: vm.memberInfo.cashState,
+      }).then((res) => {
         //this.memberInfo.cashState = "審核中";
         //   this.$swal({
         //   title: "狀態更新成功",
@@ -515,8 +520,12 @@ export default {
     unPassMember() {
       const vm = this;
       vm.isLoading = true;
-      this.$http.post(api, this.memberInfo).then((res) => {
-        this.memberInfo.cashState = "提領失敗";
+      vm.memberInfo.cashId = this.$route.params.cashId;
+      vm.memberInfo.cashState = "提領失敗";
+      this.$http.post(api, {
+        cashId: vm.memberInfo.cashId,
+        cashState: vm.memberInfo.cashState,
+      }).then((res) => {
         this.$swal({
           title: "未通過",
           //text: "請相關人員到信箱查看是否有收到驗證信",
@@ -528,8 +537,13 @@ export default {
       });
     },
     passMemberCash() {
-      this.$http.post(api, this.memberInfo).then((res) => {
-        this.memberInfo.cashState = "提領成功";
+      const vm = this;
+      vm.memberInfo.cashId = this.$route.params.cashId;
+      vm.memberInfo.cashState = "提領成功";
+      this.$http.post(api, {
+        cashId: vm.memberInfo.cashId,
+        cashState: vm.memberInfo.cashState,
+      }).then((res) => {
         this.$swal({
           title: "狀態更新成功",
           //text: "請相關人員到信箱查看是否有收到驗證信",
