@@ -269,7 +269,7 @@
                         class="form-check-label"
                         for="checkName"
                         :class="{
-                          changed: this.checkedNames.userNameValid === false,
+                          changed: this.checkedNames.userNameValid === false && idListInfo.realNameState === 'fail'
                         }"
                       >
                         姓名: {{ idListInfo.userName }}
@@ -293,7 +293,7 @@
                         class="form-check-label"
                         for="checkDay"
                         :class="{
-                          changed: this.checkedNames.birthdayValid === false,
+                          changed: this.checkedNames.birthdayValid === false && idListInfo.realNameState === 'fail',
                         }"
                       >
                         出生年/月/日: {{ idListInfo.birthday }}
@@ -317,7 +317,7 @@
                         class="form-check-label"
                         for="checkId"
                         :class="{
-                          changed: this.checkedNames.idNumberValid === false,
+                          changed: this.checkedNames.idNumberValid === false && idListInfo.realNameState === 'fail',
                         }"
                       >
                         身分證字號: {{ idListInfo.idNumber }}
@@ -341,7 +341,7 @@
                         class="form-check-label"
                         for="checkIdDay"
                         :class="{
-                          changed: this.checkedNames.issueDateValid === false,
+                          changed: this.checkedNames.issueDateValid === false && idListInfo.realNameState === 'fail',
                         }"
                       >
                         發證日期: {{ idListInfo.issueDate }}
@@ -365,7 +365,7 @@
                         class="form-check-label"
                         for="checkIdType"
                         :class="{
-                          changed: this.checkedNames.issueTypeValid === false,
+                          changed: this.checkedNames.issueTypeValid === false && idListInfo.realNameState === 'fail',
                         }"
                       >
                         發證類型: {{ idListInfo.issueType }}
@@ -389,7 +389,7 @@
                         class="form-check-label"
                         for="checkIdCity"
                         :class="{
-                          changed: this.checkedNames.issueAreaValid === false,
+                          changed: this.checkedNames.issueAreaValid === false && idListInfo.realNameState === 'fail',
                         }"
                       >
                         發證地點: {{ idListInfo.issueArea }}
@@ -438,7 +438,7 @@
                         class="form-check-label"
                         for="idImgFront"
                         :class="{
-                          changed: this.checkedNames.frontImageValid === false,
+                          changed: this.checkedNames.frontImageValid === false && idListInfo.realNameState === 'fail',
                         }"
                       >
                         正面
@@ -477,7 +477,7 @@
                         class="form-check-label"
                         for="idImgBack"
                         :class="{
-                          changed: this.checkedNames.backImageValid === false,
+                          changed: this.checkedNames.backImageValid === false && idListInfo.realNameState === 'fail',
                         }"
                       >
                         背面
@@ -493,9 +493,9 @@
             <p>v Real Name ID  apiinfo: {{ apiinfo }}</p> -->
             <!--  -->
             <div class="col-12 mt-4">
-              <!-- <div v-if="realNameState === 'fail' || idListInfo.realNameState === 'finish'" -->
-              <div
-                v-if="idListInfo.realNameState === 'review'"
+              <!-- <div v-if="idListInfo.realNameState === 'review'" -->
+              <!-- <div v-if="realNameState === 'fail' || idListInfo.realNameState === 'finish' || idListInfo.realNameState === 'review' " -->
+              <div  v-if="idListInfo.realNameState === 'review'"
                 class="d-flex justify-content-center flex-column flex-lg-row"
               >
                 <button
@@ -503,15 +503,15 @@
                   class="btn btn-primary text-light mb-2 me-2"
                   data-bs-toggle="modal"
                   data-bs-target="#passModal"
-                  @click.prevent="passIdinfo()"
-                  :disabled="!isAllRequiredFieldsValid"
+                  :disabled="isPassBtnDisabled"
                 >
                   審核通過
                 </button>
                 <button
                   type="button"
                   class="btn btn-danger mb-2"
-                  @click="unpassIdinfo()"
+                  @click.prevent="unpassIdinfo()"
+                  :disabled="isUnpassBtnDisabled"
                 >
                   未通過
                 </button>
@@ -649,7 +649,8 @@
           <button
             type="button"
             class="btn btn-primary text-white"
-            @click="passIdinfo()"
+            :disabled="!isAllRequiredFieldsValid"
+            @click.prevent="passIdinfo()"
             data-bs-dismiss="modal"
           >
             確認
@@ -691,6 +692,14 @@ export default {
     // realNameId() {
     //   return this.$route.params.realNameId;
     // }
+    isPassBtnDisabled() {
+      // 判断 passIdinfo 按钮是否禁用
+      return Object.values(this.checkedNames).some((info) => info !== true);
+    },
+    isUnpassBtnDisabled() {
+      // 判断 unpassIdinfo 按钮是否禁用
+      return Object.values(this.checkedNames).every((info) => info == true);
+    },
   },
   components: {
     TopHeader,
@@ -748,6 +757,14 @@ export default {
           issueArea: "",
           frontImage: "",
           backImage: "",
+          // userName: true,
+          // birthday: true,
+          // idNumber: true,
+          // issueDate: true,
+          // issueType: true,
+          // issueArea: true,
+          // frontImage: true,
+          // backImage: true
         },
       },
       isLoading: false,
@@ -777,33 +794,21 @@ export default {
           //const editStaff = res.data.data.list;
           this.idListInfo = res.data.data;
           this.realNameStateDone = res.data.data.realNameState;
+          this.userInfo = this.idListInfo;
           this.userInfo.realNameId = this.$route.params.realNameId;
-          this.userInfo.errorItems = res.data.data.errorItems;
+          //this.userInfo.errorItems = res.data.data.errorItems;
           if (this.idListInfo.realNameState === "finish") {
             //this.checkedItems = [];
-            this.checkedNames.userNameValid = true;
-            this.checkedNames.birthdayValid = true;
-            this.checkedNames.idNumberValid = true;
-            this.checkedNames.issueDateValid = true;
-            this.checkedNames.issueTypeValid = true;
-            this.checkedNames.issueAreaValid = true;
-            this.checkedNames.frontImageValid = true;
-            this.checkedNames.backImageValid = true;
+            const permissions = ['userNameValid', 'birthdayValid', 'idNumberValid', 'issueDateValid', 'issueTypeValid', 'issueAreaValid', 'frontImageValid', 'backImageValid'];
+            permissions.forEach((permission) => {
+              this.checkedNames[permission] = true;
+            });
           } else {
-            //this.errorItems = [];
-            this.checkedNames.userNameValid = res.data.data.errorItems.userName;
-            this.checkedNames.birthdayValid = res.data.data.errorItems.birthday;
-            this.checkedNames.idNumberValid = res.data.data.errorItems.idNumber;
-            this.checkedNames.issueDateValid =
-              res.data.data.errorItems.issueDate;
-            this.checkedNames.issueTypeValid =
-              res.data.data.errorItems.issueType;
-            this.checkedNames.issueAreaValid =
-              res.data.data.errorItems.issueArea;
-            this.checkedNames.frontImageValid =
-              res.data.data.errorItems.frontImage;
-            this.checkedNames.backImageValid =
-              res.data.data.errorItems.backImage;
+            const permissions = ['userNameValid', 'birthdayValid', 'idNumberValid', 'issueDateValid', 'issueTypeValid', 'issueAreaValid', 'frontImageValid', 'backImageValid'];
+            permissions.forEach((permission) => {
+              this.checkedNames[permission] = false;
+            });
+            //
           }
           //
           console.log(res.data.data);
@@ -827,25 +832,43 @@ export default {
     passIdinfo() {
       const vm = this;
       vm.isLoading = true;
+      if (this.isPassBtnDisabled) {
+      }
       // this.$https.post(apiName, this.addUser).then((res) => {
-      this.$http.post(apiPost, this.userInfo).then((res) => {
+        this.$http.post(apiPost, this.userInfo).then((res) => {
         this.userInfo.realNameState = "finish";
         //const code = res.data.result.code;
-        // if (this.userInfo.realNameState = "finish") {
-        //   this.$swal({
-        //     title: "通過審核",
-        //     icon: "success",
-        //     showConfirmButton: false,
-        //   });
-        //   }
+        if (this.userInfo.realNameState = "finish") {
+          this.$swal({
+            title: "通過審核",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          window.location.reload();
+          }
         console.log(res.data.result);
       });
     },
     unpassIdinfo() {
       //userInfoFail
-      this.$http.post(apiPost, this.userInfoFail).then((res) => {
-        // this.$http.post(apiPost, this.idListInfo).then((res) => {
-        this.userInfo.realNameState = "fail";
+      const vm = this.userInfo;
+      // this.$http.post(apiPost, this.userInfoFail).then((res) => {
+      this.$http.post(apiPost, {
+        realNameId: this.$route.params.realNameId,
+        realNameState: "fail",
+        // this.userInfo.errorItems
+        errorItems: {
+          userName:  this.checkedNames.userNameValid,
+          birthday: this.checkedNames.birthdayValid,
+          idNumber: this.checkedNames.idNumberValid,
+          issueDate: this.checkedNames.issueDateValid,
+          issueType: this.checkedNames.issueTypeValid,
+          issueArea: this.checkedNames.issueAreaValid,
+          frontImage: this.checkedNames.frontImageValid,
+          backImage: this.checkedNames.backImageValid 
+        }     
+      }).then((res) => {
         //const code = res.data.result.code;
         console.log(res.data.result);
         this.$swal({
@@ -855,7 +878,9 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
+        window.location.reload();
       });
+      console.log(vm.errorItems);
     },
     isAllRequiredFieldsValid() {
       if (!this.realNameId) {
@@ -892,6 +917,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .changed {
-  color: rgb(226, 20, 20);
+  color: #dc3545;
 }
 </style>
