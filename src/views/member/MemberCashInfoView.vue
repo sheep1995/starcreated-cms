@@ -310,8 +310,7 @@
                 <button
                   type="button"
                   class="btn btn-primary text-light mb-2 me-2"
-                  data-bs-toggle="modal"
-                  data-bs-target="#viewTaskModal"
+                  @click="passMemberCash()"
                 >
                   確定轉帳</button
                 ><button
@@ -387,7 +386,7 @@
     </div>
   </div>
   <!-- Modal -->
-  <div
+  <!-- <div
     class="modal fade"
     id="viewTaskModal"
     tabindex="-1"
@@ -424,7 +423,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <!--  -->
   <!--  -->
 </template>

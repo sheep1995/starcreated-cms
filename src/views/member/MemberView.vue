@@ -60,16 +60,13 @@
             <!--  -->
           </section>
           <!--  -->
-          <div class="col-lg-12">
-            <!--  -->
+          <!-- <div class="col-lg-12">
             <div>
               <h2 class="text-primary mt-4 fs-5 fw-bold">會員列表</h2>
             </div>
-            <!--  -->
             <div class="table-responsive">
               <table class="table table-bordered align-middle star-table">
                 <thead class="table-primary">
-                  <!-- <tr v-for="(item, index) in products" :key="index" ></tr> -->
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">星行號</th>
@@ -107,56 +104,18 @@
                     <td v-else>{{ item.account }}</td>
                     <td>{{ statusText[item.realNameVerify] }}</td>
                     <td id="cash-state">
-                      <!-- btn -->
-                      <!-- member-control -->
                       <router-link to="/member-control" class="btn btn-info text-light">
                         <i class="bi bi-person-gear"></i> 管理
                       </router-link>
                     </td>
-                    <!-- btn end  -->
                     <td>{{ item.loginType }}</td>
                   </tr>
-                  <!--  -->
-                  <!-- <tr>
-                    <th scope="row">2</th>
-                    <td>4543413131</td>
-                    <td>Meow</td>
-                    <td>
-                      <div class="d-flex justify-content-center">
-                        <img
-                          class="rounded-circle img-user"
-                          src="http://placekitten.com/200/300"
-                          alt="img-user"
-                        />
-                      </div>
-                    </td>
-                    <td>
-                      <div class="d-flex justify-content-center">
-                        <img
-                          class="img-user-bg"
-                          src="https://images.unsplash.com/photo-1587713714775-fa70364f6445?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=782&q=80"
-                          alt="img-user-bg"
-                        />
-                      </div>
-                    </td>
-                    <td>123@gmail.com</td>
-                    <td>未認證</td>
-                    <td>
-                      <router-link
-                        to="/member-control"
-                        class="btn btn-info text-light"
-                      >
-                        <i class="bi bi-person-gear"></i> 管理</router-link
-                      >
-                    </td>
-                    <td>apple</td>
-                  </tr> -->
                 </tbody>
               </table>
             </div>
-          </div>
+          </div> -->
           <!--  -->
-          <div v-if="!filteredList.length && isSearched" class="text-center h4 fs-bold mt-4 mb-4 text-primary">
+          <!-- <div v-if="!filteredList.length && isSearched" class="text-center h4 fs-bold mt-4 mb-4 text-primary">
             <p>
               <i class="bi bi-binoculars"></i> 找不到結果，麻煩您重新再輸入一次!
             </p>
@@ -165,11 +124,11 @@
                 重新搜尋
               </button>
             </div>
-          </div>
+          </div> -->
           <!--  -->
           <!-- pagination  -->
           <!--  -->
-          <paginate v-model="currentPage" :total="filteredList.length" :perPage="perPage" :page-count="pageCount"
+          <!-- <paginate v-model="currentPage" :total="filteredList.length" :perPage="perPage" :page-count="pageCount"
             :click-handler="onPageChange" :prev-text="'上一頁'" :next-text="'下一頁'"
             :container-class="'pagination d-flex justify-content-center'">
             <template #prev-label>
@@ -183,10 +142,10 @@
                 {{ page }}
               </div>
             </template>
-          </paginate>
+          </paginate> -->
           <!-- test -->
           <!--  -->
-          <h1>Next PAGE CLICK TEST</h1>
+          <!-- <h1>Next PAGE CLICK TEST</h1> -->
           <div class="col-lg-12">
             <!--  -->
             <div>
@@ -247,6 +206,18 @@
                 </tbody>
               </table>
             </div>
+          <!--  -->
+          <div v-if="!withdrawalsUsers.length && isSearched" class="text-center h4 fs-bold mt-4 mb-4 text-primary">
+            <p>
+              <i class="bi bi-binoculars"></i> 找不到結果，麻煩您重新再輸入一次!
+            </p>
+            <div class="d-flex justify-content-center flex-column flex-lg-row">
+              <button class="btn btn-primary text-light mb-2" @click="reloadPage()">
+                重新搜尋
+              </button>
+            </div>
+          </div>
+          <!--  -->            
           </div>
           <!--  -->
           <!--  -->
@@ -256,9 +227,24 @@
               <p>{{ withdrawal.userList }}</p>
             </div> -->
             <div class="pagination d-flex justify-content-center">
-              <button class="pagination-item" @click="getNextWithdrawals" v-if="!isLastPage">下一頁</button>
+              <!-- <button class="pagination-item btn btn-outline-primary pagebtn" @click="prevPage()"
+                :disabled="isPrevPage">上一頁</button> -->
+                <button
+                class="pagination-item btn btn-outline-primary pagebtn"
+                @click="reloadPage()"
+              >
+                重新整理
+              </button>
+              <button class="pagination-item btn btn-outline-primary pagebtn" @click="getNextWithdrawals()"
+                v-if="!isLastPage">下一頁</button>
             </div>
           </div>
+          <!-- pagination  -->
+          <!--  -->
+          <!-- 顯示當前 startKey -->
+          <!-- <p>Current startKey: {{ startKey }}</p> -->
+          <!-- 顯示上一頁 startKey -->
+          <!-- <p>Previous startKey: {{ prevStartKey }}</p> -->
           <!-- test  -->
 
           <!--  -->
@@ -305,7 +291,7 @@ export default {
       // 每頁要顯示的數據數量
       perPage: 10,
       // 總頁數
-      pageCount: 0, 
+      pageCount: 0,
       startKey: '',
       // 從 API 取得的所有數據
       // allData: [],
@@ -313,9 +299,11 @@ export default {
       paginatedData: [],
       //firstIndex: '',
       //test
-      withdrawals:[],
+      withdrawals: [],
       isLastPage: '',
-      withdrawalsUsers:[]
+      isPrevPage: '',
+      withdrawalsUsers: [],
+      prevStartKey: null,
     };
   },
   mounted() {
@@ -338,6 +326,10 @@ export default {
       const end = start + this.perPage;
       return this.filteredList.slice(start, end);
     },
+    //
+    prevPageStartKey() {
+      return this.startKey !== '' ? this.startKey : this.prevStartKey;
+    }
   },
   methods: {
     async getMembers() {
@@ -345,6 +337,8 @@ export default {
       // 更新 startKey，用於下次 API 請求
       this.startKey = res.data.data.startKey;
       this.filteredList = res.data.data.userList;
+      this.withdrawals = this.filteredList;
+
       this.pageCount = Math.ceil(this.filteredList.length / this.perPage);
       if (!this.filteredList) {
         return;
@@ -365,7 +359,27 @@ export default {
     //     //console.log(res.data.data.userList);
     //   });
     // },
-    searchUser() {
+    // searchUser() {
+    //   this.isSearched = true;
+    //   if (this.userAppId) {
+    //     this.filteredList = this.members.filter((item) => {
+    //       return !this.userAppId || item.userAppId === this.userAppId;
+    //     });
+    //   } else {
+    //     this.filteredList = [];
+    //   }
+    // },
+    //
+async searchUser() {
+  try {
+    const response = await this.$http.get(api + `?userAppId=${this.userAppId}`);
+    if (response.data.data.userList) {
+      this.withdrawals = response.data;
+      this.withdrawalsUsers = response.data.data.userList;
+      this.prevuserAppId = this.userAppId;
+      if (!this.userAppId) {
+        this.isLastPage = true;
+      }
       this.isSearched = true;
       if (this.userAppId) {
         this.filteredList = this.members.filter((item) => {
@@ -374,7 +388,12 @@ export default {
       } else {
         this.filteredList = [];
       }
-    },
+    }
+  } catch (error) {
+    console.error(error);
+  }
+},
+    //
     limitInput() {
       const userAppId = this.userAppId.length;
       if (userAppId < 10) {
@@ -407,43 +426,84 @@ export default {
     },
     //
     async getWithdrawals() {
-  try {
-    // 第一次 API 呼叫
-    const response1 = await this.$http.get(api);
-    this.withdrawals = response1.data;
-    this.withdrawalsUsers = response1.data.data.userList;
-    // this.startKey = response1.headers['start-key'];
-    this.startKey = response1.data.data.startKey;
-    // 判斷是否為最後一頁
-    if (!this.startKey) {
-      this.isLastPage = true;
-    }
-  } catch (error) {
-    console.error(error);
-  }
-},
-
-async getNextWithdrawals() {
-  try {
-    // 判斷是否為最後一頁，如果是最後一頁則不執行第二次 API 呼叫
-    if (this.isLastPage) {
-      return;
-    }
-    // 第二次 API 呼叫
-    const response2 = await this.$http.get( api+`?startKey=${this.startKey}`);
-    // const response2 = await axios.get(`https://stage.westar-cms.com/v1/withdraw?startKey=${this.startKey}&cashState=${this.cashState}&userAppId=${this.userAppId}`);
-    this.withdrawals = response2.data;
-    this.withdrawalsUsers = response2.data.data.userList;
-    this.startKey = response2.data.data.startKey;
-    // this.startKey = response2.headers['start-key'];
-    // 判斷是否為最後一頁
-    if (!this.startKey) {
-      this.isLastPage = true;
-    }
-  } catch (error) {
-    console.error(error);
-  }
-},
+      try {
+        // 第一次 API 呼叫
+        const response1 = await this.$http.get(api);
+        this.withdrawals = response1.data;
+        this.withdrawalsUsers = response1.data.data.userList;
+        // this.startKey = response1.headers['start-key'];
+        this.startKey = response1.data.data.startKey;
+        this.isPrevPage = null;
+        // 記錄上一頁的 startKey
+        this.prevStartKey = this.startKey;
+        // 判斷是否為最後一頁
+        if (!this.startKey) {
+          this.isLastPage = true;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    //btn page
+    async getNextWithdrawals() {
+      try {
+        // 判斷是否為最後一頁，如果是最後一頁則不執行第二次 API 呼叫
+        if (this.isLastPage) {
+          return;
+        }
+        // 第二次 API 呼叫
+        const response2 = await this.$http.get(api + `?startKey=${this.startKey}`);
+        if (response2.data.data) {
+          this.withdrawals = response2.data;
+          this.withdrawalsUsers = response2.data.data.userList;
+          this.startKey = response2.data.data.startKey;
+          this.prevStartKey = this.startKey;
+          if (!this.startKey) {
+            this.isLastPage = true;
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    //
+    async getPrevWithdrawals() {
+      try {
+        const response = await this.$http.get(api + `?startKey=${this.startKey}`);
+        if (response.data.data) {
+          this.withdrawals = response.data;
+          this.withdrawalsUsers = response.data.data.userList;
+          this.prevStartKey = response.data.data.prevStartKey;
+          if (response.data.data.prevStartKey) {
+            this.prevStartKey = response.data.data.prevStartKey;
+          } else {
+            this.prevStartKey = null;
+          }
+          this.isLastPage = false;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async prevPage() {
+      try {
+        if (!this.prevStartKey) {
+          return;
+        }
+        const response = await this.$http.get(api + `?startKey=${this.prevStartKey}`);
+        this.withdrawals = response.data;
+        this.withdrawalsUsers = response.data.data.userList;
+        this.startKey = response.data.data.startKey;
+        if (response.data.data.prevStartKey) {
+          this.prevStartKey = response.data.data.prevStartKey;
+        } else {
+          this.prevStartKey = null;
+        }
+        this.isLastPage = false;
+      } catch (error) {
+        console.error(error);
+      }
+    },
     //
   },
 };

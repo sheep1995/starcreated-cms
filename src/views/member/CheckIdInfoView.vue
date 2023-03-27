@@ -259,7 +259,7 @@
                         type="checkbox"
                         :value="idListInfo.userName"
                         id="checkName"
-                        v-model="checkedNames.userNameValid"
+                        v-model.trim="checkedNames.userNameValid"
                         :disabled="
                           idListInfo.realNameState === 'finish' ||
                           idListInfo.realNameState === 'fail'
@@ -782,6 +782,7 @@ export default {
     // const realNameId = this.$route.params.realNameId;
     // console.log(realNameId);
     //console.log('ID:', this.id);
+    //this.checkedNames = !this.checkedNames;
   },
   methods: {
     getMembers() {
@@ -832,11 +833,29 @@ export default {
     passIdinfo() {
       const vm = this;
       vm.isLoading = true;
+      //this.checkedNames = !this.checkedNames;
       if (this.isPassBtnDisabled) {
       }
       // this.$https.post(apiName, this.addUser).then((res) => {
-        this.$http.post(apiPost, this.userInfo).then((res) => {
-        this.userInfo.realNameState = "finish";
+        this.$http.post(apiPost, {
+        realNameId: this.$route.params.realNameId,
+        realNameState: "finish",
+        // this.userInfo.errorItems
+        errorItems: {
+          userName:  !this.checkedNames.userNameValid,
+          birthday: !this.checkedNames.birthdayValid,
+          idNumber: !this.checkedNames.idNumberValid,
+          issueDate: !this.checkedNames.issueDateValid,
+          issueType: !this.checkedNames.issueTypeValid,
+          issueArea: !this.checkedNames.issueAreaValid,
+          frontImage: !this.checkedNames.frontImageValid,
+          backImage: !this.checkedNames.backImageValid 
+        }     
+      }).then((res) => {
+      //   this.$http.post(apiPost, this.userInfo).then((res) => {
+      //   this.userInfo.realNameState = "finish";
+      // this.checkedNames = !this.checkedNames;
+
         //const code = res.data.result.code;
         if (this.userInfo.realNameState = "finish") {
           this.$swal({
@@ -853,20 +872,23 @@ export default {
     unpassIdinfo() {
       //userInfoFail
       const vm = this.userInfo;
+//       Object.keys(this.checkedNames).forEach(key => {
+//   this.checkedNames[key] = true;
+// });
       // this.$http.post(apiPost, this.userInfoFail).then((res) => {
       this.$http.post(apiPost, {
         realNameId: this.$route.params.realNameId,
         realNameState: "fail",
         // this.userInfo.errorItems
         errorItems: {
-          userName:  this.checkedNames.userNameValid,
-          birthday: this.checkedNames.birthdayValid,
-          idNumber: this.checkedNames.idNumberValid,
-          issueDate: this.checkedNames.issueDateValid,
-          issueType: this.checkedNames.issueTypeValid,
-          issueArea: this.checkedNames.issueAreaValid,
-          frontImage: this.checkedNames.frontImageValid,
-          backImage: this.checkedNames.backImageValid 
+          userName:  !this.checkedNames.userNameValid,
+          birthday: !this.checkedNames.birthdayValid,
+          idNumber: !this.checkedNames.idNumberValid,
+          issueDate: !this.checkedNames.issueDateValid,
+          issueType: !this.checkedNames.issueTypeValid,
+          issueArea: !this.checkedNames.issueAreaValid,
+          frontImage: !this.checkedNames.frontImageValid,
+          backImage: !this.checkedNames.backImageValid 
         }     
       }).then((res) => {
         //const code = res.data.result.code;

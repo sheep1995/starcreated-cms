@@ -145,7 +145,9 @@
                     </tr>
                   </thead>
                   <tbody class="table-group-divider">
+                    <!-- //withdrawalsCashList -->
                     <tr v-for="(item, index) in filteredList" :key="index">
+                      <!-- <tr v-for="(item, index) in withdrawalsCashList" :key="index"> -->
                       <th scope="row">{{ index + 1 }}</th>
                       <td>{{ item.date }}</td>
                       <td>{{ item.userAppId }}</td>
@@ -224,6 +226,20 @@
             </div>
             <button @click="fetchRealNameList()">Get Data</button> -->
             <!--  -->
+              <div class="pagination d-flex justify-content-center">
+                <!-- <button class="pagination-item btn btn-outline-primary pagebtn" @click="prevPage()"
+                  :disabled="isPrevPage">上一頁</button> -->
+                  <button
+                  class="pagination-item btn btn-outline-primary pagebtn"
+                  @click="reloadPage()"
+                >
+                  重新整理
+                </button>
+                <button class="pagination-item btn btn-outline-primary pagebtn" @click="getNextWithdrawals()"
+                  v-if="!isLastPage">下一頁</button>
+
+              </div>
+            <!--  -->
           </section>
           <!--  -->
         </div>
@@ -271,19 +287,26 @@ export default {
       //
       cashId: this.$route.params.cashId,
       //
-      //startKey: null,
       error: null,
       //
       // currentPage: 1,
       // perPage: 10,
       // pageCount: 0,
       // paginatedData: [],
+      //
+      //startKey: null,
+      withdrawals: [],
+      isLastPage: '',
+      isPrevPage: '',
+      withdrawalsCashList: [],
+      prevStartKey: null,
     };
   },
   mounted() {
     this.getMembers();
     this.onStateChange();
     //this.fetchRealNameList();
+    this.getWithdrawals();
   },
   methods: {
     // viewCashInfo() {
@@ -303,6 +326,7 @@ export default {
       this.idLists = res.data.data.cashList;
       this.startKey = res.data.data.startKey;
       this.filteredList = this.idLists;
+      this.withdrawals = this.filteredList;
       //this.updatePaginatedData();
       // if (!this.startKey) {
       //   // 第一次请求
@@ -431,6 +455,102 @@ export default {
         },
       });
     },
+    //
+    //
+    async getWithdrawals() {
+      try {
+        // 第一次 API 呼叫
+        const response1 = await this.$http.get(api);
+        //filteredList
+        // this.withdrawals = response1.data;
+        this.filteredList = response1.data.data.cashList;
+        this.withdrawalsCashList = response1.data.data.cashList;
+        // this.startKey = response1.headers['start-key'];
+        this.startKey = response1.data.data.startKey;
+        this.isPrevPage = null;
+        // 記錄上一頁的 startKey
+        this.prevStartKey = this.startKey;
+        // 判斷是否為最後一頁
+        if (!this.startKey) {
+          this.isLastPage = true;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    //btn page
+    async getNextWithdrawals() {
+      try {
+        // 判斷是否為最後一頁，如果是最後一頁則不執行第二次 API 呼叫
+        if (this.isLastPage) {
+          return;
+        }
+        // 第二次 API 呼叫
+        const response2 = await this.$http.get(api + `?startKey=${this.startKey}`);
+        if (response2.data.data) {
+          // filteredList
+          // this.withdrawals = response2.data;
+          this.filteredList = response2.data.data.cashList;
+          this.withdrawalsCashList = response2.data.data.cashList;
+          this.startKey = response2.data.data.startKey;
+          this.prevStartKey = this.startKey;
+          if (!this.startKey) {
+            this.isLastPage = true;
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    //
+    async getPrevWithdrawals() {
+      try {
+        const response = await this.$http.get(api + `?startKey=${this.startKey}`);
+        if (response.data.data) {
+          //filteredList
+          // this.withdrawals = response.data;
+          this.filteredList = response.data.data.cashList;
+          this.withdrawalsCashList = response.data.data.cashList;
+          this.prevStartKey = response.data.data.prevStartKey;
+          if (response.data.data.prevStartKey) {
+            this.prevStartKey = response.data.data.prevStartKey;
+          } else {
+            this.prevStartKey = null;
+          }
+          this.isLastPage = false;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async prevPage() {
+      try {
+        if (!this.prevStartKey) {
+          return;
+        }
+        const response = await this.$http.get(api + `?startKey=${this.prevStartKey}`);
+        this.data = response.data.data;
+        //this.withdrawals = response.data;
+        //this.withdrawalsCashList = response.data.data.cashList;
+        // this.startKey = response.data.data.startKey;
+        // if (response.data.data.prevStartKey) {
+        //   this.prevStartKey = response.data.data.prevStartKey;
+        // } else {
+        //   this.prevStartKey = null;
+        // }
+            // 保存当前页的 startKey 到 prevStartKey
+    const temp = this.prevStartKey;
+    this.prevStartKey = this.startKey;
+    // 更新当前页的 startKey
+    this.startKey = temp;
+
+        this.isLastPage = false;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    //
+    //
   },
 };
 </script>

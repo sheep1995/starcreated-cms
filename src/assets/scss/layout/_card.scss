@@ -53,3 +53,9 @@
       object-fit: cover;
   }
 }
+//pagebtn
+.pagebtn{
+  &:hover, &:active {
+    color: $white;
+  }
+}
