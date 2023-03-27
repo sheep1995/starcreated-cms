@@ -1,0 +1,1 @@
+import{_ as e}from"./index-24b5c249.js";import{o,a as r}from"./calendar.esm-ab6b2a00.js";const n={};function c(t,a){return o(),r("h1",null,"MemberInfoView.vue")}const _=e(n,[["render",c]]);export{_ as default};
