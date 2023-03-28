@@ -8,15 +8,18 @@
       </li>
     </ol> -->
     <ol class="breadcrumb d-flex align-items-center mb-0 px-2">
-      <li v-for="(item, i) in breadcrumbList" :key="i" class="pl-2 breadcrumb-item">
+      <li
+        v-for="(item, i) in breadcrumbList"
+        :key="i"
+        class="pl-2 breadcrumb-item"
+      >
         <router-link :to="item.path">{{ item.meta.title }}</router-link>
       </li>
-      
     </ol>
   </nav>
-<!-- 0 -->
+  <!-- 0 -->
 
-<!-- <Breadcrumb :home="home" :model="items">
+  <!-- <Breadcrumb :home="home" :model="items">
   <template #item="{item}">
       <router-link :to="item.to" custom v-slot="{href, route, navigate, isActive, isExactActive}">
           <a :href="href" @click="navigate" :class="{'active-link': isActive, 'active-link-exact': isExactActive}">{{route.fullPath}}</a>
@@ -24,38 +27,36 @@
   </template>
 </Breadcrumb> -->
 
-
-<!--  -->
+  <!--  -->
 </template>
 <script>
-import { ref, watch, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, watch, onMounted } from "vue";
+import { useRoute } from "vue-router";
 
 // import Breadcrumb from 'primevue/breadcrumb';
 
-
 export default {
-  name: 'Breadcrumb',
-  setup () {
-    const route = useRoute()
-    const breadcrumbList = ref([])
+  //name: "Breadcrumb",
+  setup() {
+    const route = useRoute();
+    const breadcrumbList = ref([]);
     const isHome = () => {
-      return route.name === 'Home'
-    }
+      return route.name === "Home";
+    };
     const getBreadcrumbs = () => {
-      let matched = route.matched
+      let matched = route.matched;
       if (!isHome(matched[0])) {
-        matched = [{ path: '/', meta: { title: '首頁' } }].concat(matched)
+        matched = [{ path: "/", meta: { title: "首頁" } }].concat(matched);
       }
-      breadcrumbList.value = matched
-    }
+      breadcrumbList.value = matched;
+    };
     watch(route, () => {
-      getBreadcrumbs()
-    })
+      getBreadcrumbs();
+    });
     onMounted(() => {
-      getBreadcrumbs()
-    })
-    return { breadcrumbList, getBreadcrumbs }
-  }
-}
+      getBreadcrumbs();
+    });
+    return { breadcrumbList, getBreadcrumbs };
+  },
+};
 </script>

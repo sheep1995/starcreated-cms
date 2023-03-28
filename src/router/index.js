@@ -1,13 +1,12 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import MemberCheckIdInfo from "../views/member/CheckIdInfoView.vue";
+import CheckIdInfoView from "../views/member/CheckIdInfoView.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
-
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
-  linkActiveClass: 'active-link',
-  linkExactActiveClass: 'exact-active-link',
+  linkActiveClass: "active-link",
+  linkExactActiveClass: "exact-active-link",
   props: true,
   routes: [
     {
@@ -15,63 +14,75 @@ const router = createRouter({
       name: "Login",
       component: () => import("../views/LoginView.vue"),
       meta: {
-        breadcrumb: [{
-          name: '登入'
-        }]
-      }
+        breadcrumb: [
+          {
+            name: "登入",
+          },
+        ],
+      },
     },
     {
       path: "/dshboard",
       name: "Home",
       component: HomeView,
       meta: {
-        breadcrumb: [{
-          name: '首頁'
-        }]
+        breadcrumb: [
+          {
+            name: "首頁",
+          },
+        ],
       },
       children: [
-    //member
-    {
-      path: '/member',
-      name: "Member",
-      component: () => import('../views/member/MemberView.vue'),
-      meta: {
-        breadcrumb: [{
-          name: '會員管理'
-        }]
-      }
-    },
-    {
-      path: '/member-order-list',
-      name: "MemberOrderList",
-      component: () => import('../views/member/MemberOrderListView.vue'),
-      meta: {
-        breadcrumb: [{
-          name: '訂閱人數'
-        }]
-      }
-    },
-      ]
+        //member
+        {
+          path: "/member",
+          name: "Member",
+          component: () => import("../views/member/MemberView.vue"),
+          meta: {
+            breadcrumb: [
+              {
+                name: "會員管理",
+              },
+            ],
+          },
+        },
+        {
+          path: "/member-order-list",
+          name: "MemberOrderList",
+          component: () => import("../views/member/MemberOrderListView.vue"),
+          meta: {
+            breadcrumb: [
+              {
+                name: "訂閱人數",
+              },
+            ],
+          },
+        },
+      ],
     },
     {
       path: "/notice",
       name: "notice",
       component: () => import("../views/NoticeView.vue"),
       meta: {
-        breadcrumb: [{
-          name: '通知'
-        }]
-      }
+        breadcrumb: [
+          {
+            name: "通知",
+          },
+        ],
+      },
     },
     {
       path: "/setting",
       name: "setting",
       component: () => import("../views/SettingView.vue"),
       meta: {
-        breadcrumb: [{
-          name: '設定'
-        }]
-      }
+        breadcrumb: [
+          {
+            name: "設定",
+          },
+        ],
+      },
     },
     {
       path: "/about",
@@ -81,16 +92,18 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import("../views/AboutView.vue"),
       meta: {
-        breadcrumb: [{
-          name: '關於'
-        }]
-      }
+        breadcrumb: [
+          {
+            name: "關於",
+          },
+        ],
+      },
     },
     //
     {
-      path: '/staff',
+      path: "/staff",
       name: "Staff",
-      component: () => import('../views/staff/StaffView.vue'),
+      component: () => import("../views/staff/StaffView.vue"),
       // children: [
       //   {
       //     path: 'add',
@@ -105,93 +118,103 @@ const router = createRouter({
       // ],
     },
     {
-      path: '/staff-add',
+      path: "/staff-add",
       name: "Add",
-      component: () => import('../views/staff/StaffAddView.vue'),
+      component: () => import("../views/staff/StaffAddView.vue"),
     },
     {
-      path: '/staff-permissions',
-      name: 'Permissions',
-      component: () => import('../views/staff/StaffPermissionsView.vue'),
+      path: "/staff-permissions",
+      name: "Permissions",
+      component: () => import("../views/staff/StaffPermissionsView.vue"),
     },
     //member
     {
-      path: '/member',
+      path: "/member",
       name: "Member",
-      component: () => import('../views/member/MemberView.vue'),
+      component: () => import("../views/member/MemberView.vue"),
       // children: [
-      //   { 
+      //   {
       //     path: 'member-control',
       //     component: () => import('../views/member/MemberControlView.vue'),
       //   }
       // ]
       meta: {
-        breadcrumb: [{
-          name: '會員管理'
-        }]
-      }
+        breadcrumb: [
+          {
+            name: "會員管理",
+          },
+        ],
+      },
     },
     {
-      path: '/member-control',
+      path: "/member-control",
       name: "MemberControl",
-      component: () => import('../views/member/MemberControlView.vue'),
+      component: () => import("../views/member/MemberControlView.vue"),
     },
     //MemberControlView.vue
     {
-      path: '/member-info',
-      name: 'MemberInfo',
-      component: () => import('../views/member/MemberInfoView.vue'),
+      path: "/member-info",
+      name: "MemberInfo",
+      component: () => import("../views/member/MemberInfoView.vue"),
     },
     {
-      path: '/member-cash',
+      path: "/member-cash",
       name: "MemberCash",
-      component: () => import('../views/member/MemberCashView.vue'),
+      component: () => import("../views/member/MemberCashView.vue"),
     },
     {
-      path: '/member-cash-info',
-      name: 'MemberCashInfo',
-      component: () => import('../views/member/MemberCashInfoView.vue'),
+      path: "/member-cash-info/:cashId",
+      name: "MemberCashInfo",
+      component: () => import("../views/member/MemberCashInfoView.vue"),
     },
     {
-      path: '/member-creator-income',
-      name: 'MemberCreatorIncome',
-      component: () => import('../views/member/CreatorIncomeView.vue'),
+      path: "/member-creator-income",
+      name: "MemberCreatorIncome",
+      component: () => import("../views/member/CreatorIncomeView.vue"),
     },
     {
-      path: '/member-check-id',
-      name: 'MemberCheckId',
-      component: () => import('../views/member/CheckIdView.vue'),
+      path: "/member-check-id",
+      //name: 'MemberCheckId',
+      name: "CheckIdView",
+      props: true,
+      component: () => import("../views/member/CheckIdView.vue"),
     },
     {
-      path: '/member-id-info',
-      name: 'MemberCheckIdInfo',
-      props: route => ({
-        realNameId: route.params.id,
-      }),
-      component: () => import('../views/member/CheckIdInfoView.vue'),
+      path: "/member-id-info/:realNameId",
+      //path: '/member-id-info',
+      name: "CheckIdInfoView",
+      //MemberCheckIdInfo
+      component: () => import("../views/member/CheckIdInfoView.vue"),
+      //component: CheckIdInfoView,
+      props: true,
+      // props: route => ({
+      //realNameId: route.params.id,
+      //id:route.query.id,
+      // }),
     },
     {
-      path: '/member-fans-list',
+      path: "/member-fans-list",
       name: "MemberFansList",
-      component: () => import('../views/member/MemberFansListView.vue'),
+      component: () => import("../views/member/MemberFansListView.vue"),
     },
     {
-      path: '/member-order-list',
+      path: "/member-order-list",
       name: "MemberOrderList",
-      component: () => import('../views/member/MemberOrderListView.vue'),
+      component: () => import("../views/member/MemberOrderListView.vue"),
       meta: {
-        breadcrumb: [{
-          name: '訂閱人數'
-        }]
-      }
+        breadcrumb: [
+          {
+            name: "訂閱人數",
+          },
+        ],
+      },
     },
     {
-      path: '/member-block-list',
+      path: "/member-block-list",
       name: "MemberBlockList",
-      component: () => import('../views/member/MemberBlockListView.vue'),
+      component: () => import("../views/member/MemberBlockListView.vue"),
     },
   ],
-  
 });
 
 export default router;

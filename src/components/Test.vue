@@ -11,35 +11,34 @@
         <td>2</td>
         <td>3</td>
         <td><button v-on:click="deleteUser(user.id)">DEL</button></td>
-      </tr>     
+      </tr>
     </table>
   </div>
 </template>
 <script>
 export default {
-  name: 'Test',
+  name: "Test",
   data() {
     return {
-      test:null
-    }
+      test: null,
+    };
   },
   methods: {
-    getData(){
-      this.axios.get('apiurl').then((result)=>{
+    getData() {
+      this.axios.get("apiurl").then((result) => {
         console.warn(result);
         this.user = result.data;
-      })
+      });
     },
-    deleteUser(id){
-      this.axios.delete("apiurl"+id).then(()=>{
+    deleteUser(id) {
+      this.axios.delete("apiurl" + id).then(() => {
         // console.warn(result);
         this.getData();
-      })
-    }
+      });
+    },
   },
   mounted() {
     this.getData();
   },
-}
-
+};
 </script>

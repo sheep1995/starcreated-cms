@@ -2,7 +2,7 @@ import { fileURLToPath, URL } from "node:url";
 
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
-import pluginRewriteAll from 'vite-plugin-rewrite-all';
+import pluginRewriteAll from "vite-plugin-rewrite-all";
 //import Pages from 'vite-plugin-pages'
 //import Paginate from "vuejs-paginate-next";
 //const config = loadEnv(mode, './')
@@ -11,7 +11,7 @@ import pluginRewriteAll from 'vite-plugin-rewrite-all';
 export default defineConfig({
   base: "/starcreated-cms/",
   plugins: [
-    vue(), 
+    vue(),
     pluginRewriteAll(),
     // Pages({
     //   pagesDir: 'src/pages',
@@ -25,17 +25,21 @@ export default defineConfig({
     },
   },
   //https://blog.csdn.net/Dawnchen1/article/details/118994062
-  build:{
-    chunkSizeWarningLimit:1500,
+  build: {
+    chunkSizeWarningLimit: 1500,
     rollupOptions: {
-      output:{
+      output: {
         manualChunks(id) {
-          if (id.includes('node_modules')) {
-            return id.toString().split('node_modules')[1].split('/')[0].toString();
+          if (id.includes("node_modules")) {
+            return id
+              .toString()
+              .split("node_modules")[1]
+              .split("/")[0]
+              .toString();
           }
-        }
-      }
-    }
+        },
+      },
+    },
   },
   // server: {
   //   //open: true,

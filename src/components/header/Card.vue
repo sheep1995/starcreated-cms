@@ -50,8 +50,8 @@
     </div>
   </div>
 </template>
-  
-  <script>
+
+<script>
 export default {
   name: "card",
   data() {
@@ -97,4 +97,3 @@ export default {
   },
 };
 </script>
-  
